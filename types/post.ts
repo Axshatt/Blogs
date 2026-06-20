@@ -9,6 +9,8 @@ export interface PostFrontmatter {
   canonical_url?: string;
   coverImage?: string;
   draft: boolean;
+  author?: string;
+  featured?: boolean;
 }
 
 export interface Post {

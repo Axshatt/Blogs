@@ -17,35 +17,48 @@ export function PostCard({ post }: PostCardProps) {
   return (
     <Link
       href={`/blog/${slug}`}
-      className="group block rounded-xl border border-white/5 bg-white/[0.02] p-6 transition-all duration-300 hover:border-white/10 hover:bg-white/[0.04] hover:shadow-lg hover:shadow-black/20"
+      className="group flex flex-col md:flex-row gap-lg bg-white p-lg transition-all duration-300 hairline-a hover:bg-surface-container-low"
     >
-      <div className="mb-3 flex items-center gap-3">
-        <CategoryBadge category={frontmatter.category} />
-        <span className="font-mono text-[11px] text-zinc-500">{date}</span>
-        <span className="font-mono text-[11px] text-zinc-600">·</span>
-        <span className="font-mono text-[11px] text-zinc-500">{readingTime}</span>
-      </div>
-
-      <h2 className="mb-2 text-lg font-semibold leading-snug text-zinc-100 transition-colors duration-200 group-hover:text-white">
-        {frontmatter.title}
-      </h2>
-
-      <p className="mb-4 text-sm leading-relaxed text-zinc-400 line-clamp-2">
-        {frontmatter.excerpt}
-      </p>
-
-      {frontmatter.tags.length > 0 && (
-        <div className="flex flex-wrap gap-1.5">
-          {frontmatter.tags.slice(0, 4).map((tag) => (
-            <span
-              key={tag}
-              className="rounded border border-white/5 bg-white/[0.03] px-2 py-0.5 font-mono text-[10px] text-zinc-500"
-            >
-              #{tag}
-            </span>
-          ))}
+      {frontmatter.coverImage && (
+        <div className="w-full md:w-[240px] shrink-0 h-[160px] md:h-auto relative overflow-hidden bg-surface-container border border-outline-variant/30">
+          <img
+            src={frontmatter.coverImage}
+            alt={frontmatter.title}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
         </div>
       )}
+      <div className="flex-1 flex flex-col justify-between">
+        <div>
+          <div className="mb-sm flex items-center gap-lg">
+            <CategoryBadge category={frontmatter.category} />
+            <span className="text-label-sm text-on-surface-variant">{date}</span>
+            <span className="text-label-sm text-outline">·</span>
+            <span className="text-label-sm text-on-surface-variant">{readingTime}</span>
+          </div>
+
+          <h2 className="text-headline-lg mb-sm tracking-tight text-primary transition-colors duration-200 group-hover:text-secondary">
+            {frontmatter.title}
+          </h2>
+
+          <p className="text-body-md mb-md text-on-surface-variant line-clamp-2">
+            {frontmatter.excerpt}
+          </p>
+        </div>
+
+        {frontmatter.tags.length > 0 && (
+          <div className="flex flex-wrap gap-sm">
+            {frontmatter.tags.slice(0, 4).map((tag) => (
+              <span
+                key={tag}
+                className="text-label-sm rounded-full border border-outline-variant px-sm py-0.5 uppercase"
+              >
+                #{tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
     </Link>
   );
 }

@@ -1,11 +1,92 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  /* ── Font Family ── */
+  --font-sans: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-inter: 'Inter', system-ui, sans-serif;
+
+  /* ── Material Design 3 Color Palette ── */
+  --color-primary: #000000;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #1c1c1a;
+  --color-on-primary-container: #858481;
+  --color-primary-fixed: #e5e2de;
+  --color-primary-fixed-dim: #c9c6c3;
+  --color-on-primary-fixed: #1c1c1a;
+  --color-on-primary-fixed-variant: #474744;
+  --color-inverse-primary: #c9c6c3;
+
+  --color-secondary: #566500;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #d2f03c;
+  --color-on-secondary-container: #5b6b00;
+  --color-secondary-fixed: #d2f03c;
+  --color-secondary-fixed-dim: #b6d319;
+  --color-on-secondary-fixed: #181e00;
+  --color-on-secondary-fixed-variant: #404c00;
+
+  --color-tertiary: #000000;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #0f0069;
+  --color-on-tertiary-container: #7671ff;
+  --color-tertiary-fixed: #e2dfff;
+  --color-tertiary-fixed-dim: #c3c0ff;
+  --color-on-tertiary-fixed: #0f0069;
+  --color-on-tertiary-fixed-variant: #2e06e3;
+
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  --color-background: #fdf8f7;
+  --color-on-background: #1c1b1b;
+  --color-surface: #fdf8f7;
+  --color-on-surface: #1c1b1b;
+  --color-surface-dim: #ddd9d8;
+  --color-surface-bright: #fdf8f7;
+  --color-surface-tint: #5f5e5c;
+  --color-surface-variant: #e5e2e1;
+  --color-on-surface-variant: #474741;
+  --color-surface-container: #f1edec;
+  --color-surface-container-low: #f7f3f2;
+  --color-surface-container-high: #ebe7e6;
+  --color-surface-container-highest: #e5e2e1;
+  --color-surface-container-lowest: #ffffff;
+  --color-inverse-surface: #313030;
+  --color-inverse-on-surface: #f4f0ef;
+
+  --color-outline: #777771;
+  --color-outline-variant: #c8c7bf;
+
+  /* ── Spacing Scale ── */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 48px;
+  --spacing-xxl: 80px;
+  --spacing-gutter: 24px;
+  --spacing-margin-mobile: 16px;
+  --spacing-margin-desktop: 64px;
 }
 
-/* Scrollbar */
+/* ── Base Styles ── */
+body {
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Material Symbols ── */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+}
+
+/* ── Scrollbar ── */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -14,39 +95,88 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--color-outline-variant);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.14);
+  background: var(--color-outline);
 }
 
-/* Selection */
+/* ── Selection ── */
 ::selection {
-  background: rgba(139, 92, 246, 0.3);
-  color: white;
+  background: rgba(86, 101, 0, 0.2);
+  color: var(--color-on-surface);
 }
 
-/* Prose reset for MDX */
+/* ── Hairline Borders ── */
+.hairline-b { border-bottom: 1px solid rgba(26, 26, 24, 0.1); }
+.hairline-r { border-right: 1px solid rgba(26, 26, 24, 0.1); }
+.hairline-l { border-left: 1px solid rgba(26, 26, 24, 0.1); }
+.hairline-a { border: 1px solid rgba(26, 26, 24, 0.1); }
+
+/* ── Editorial Grid ── */
+.editorial-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+
+/* ── Typography Utility Classes ── */
+.text-display-lg {
+  font-size: 72px;
+  line-height: 0.9em;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+}
+.text-display-lg-mobile {
+  font-size: 48px;
+  line-height: 0.95em;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+}
+.text-headline-xl {
+  font-size: 40px;
+  line-height: 1.1em;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+.text-headline-lg {
+  font-size: 32px;
+  line-height: 1.2em;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+}
+.text-body-lg {
+  font-size: 18px;
+  line-height: 1.6em;
+  letter-spacing: 0em;
+  font-weight: 400;
+}
+.text-body-md {
+  font-size: 16px;
+  line-height: 1.5em;
+  letter-spacing: 0.01em;
+  font-weight: 400;
+}
+.text-label-bold {
+  font-size: 14px;
+  line-height: 1em;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}
+.text-label-sm {
+  font-size: 12px;
+  line-height: 1em;
+  letter-spacing: 0.02em;
+  font-weight: 500;
+}
+
+/* ── Prose Content (MDX) ── */
 .prose-content > *:first-child {
   margin-top: 0;
 }
 
-/* Animated gradient background */
-@keyframes gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient-shift 8s ease infinite;
-}
-
-/* Grid background pattern */
-.bg-grid {
-  background-image:
-    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-  background-size: 40px 40px;
+/* ── Nav hide/show transition ── */
+nav {
+  transition: transform 0.3s ease-out;
 }

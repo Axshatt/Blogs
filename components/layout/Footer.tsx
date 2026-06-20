@@ -1,32 +1,78 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+const SOCIAL_LINKS = [
+  { href: 'https://github.com', label: 'Github' },
+  { href: 'https://x.com', label: 'X / Twitter' },
+  { href: 'https://linkedin.com', label: 'LinkedIn' },
+  { href: 'mailto:hello@akshatcodes.dev', label: 'Email' },
+];
 
 export function Footer() {
+  const pathname = usePathname();
   const year = new Date().getFullYear();
+
   return (
-    <footer className="border-t border-white/5 py-10">
-      <div className="mx-auto flex max-w-4xl flex-col items-center justify-between gap-4 px-6 sm:flex-row">
-        <p className="font-mono text-xs text-zinc-600">
-          © {year} Dev &amp; AI Blog — built with Next.js + MDX
-        </p>
-        <div className="flex items-center gap-4">
-          <Link
-            href="/blog"
-            className="font-mono text-xs text-zinc-600 transition-colors hover:text-zinc-400"
+    <footer className="border-t border-outline-variant px-margin-mobile py-xl md:px-margin-desktop">
+      {/* Conditionally render mini newsletter if NOT on base route (/) */}
+      {pathname !== '/' && (
+        <div className="mb-lg pb-lg border-b border-outline-variant/30 flex flex-col md:flex-row md:items-center md:justify-between gap-md">
+          <div className="flex flex-col font-inter">
+            <h4 className="text-[18px] md:text-[20px] font-bold uppercase tracking-tight text-primary">
+              Sign up for our newsletter.
+            </h4>
+            <p className="text-[12px] uppercase text-on-surface-variant mt-[2px]">
+              Sent every Saturday morning.
+            </p>
+          </div>
+          <form
+            className="flex items-center w-full md:w-[320px] bg-white rounded-full p-[3px] pl-md border border-outline-variant/30"
+            onSubmit={(e) => e.preventDefault()}
           >
-            /blog
-          </Link>
-          <Link
-            href="/rss.xml"
-            className="font-mono text-xs text-zinc-600 transition-colors hover:text-zinc-400"
-          >
-            /rss
-          </Link>
-          <Link
-            href="/about"
-            className="font-mono text-xs text-zinc-600 transition-colors hover:text-zinc-400"
-          >
-            /about
-          </Link>
+            <input
+              type="email"
+              placeholder="email@company.com"
+              className="w-full bg-transparent border-none outline-none text-primary placeholder:text-outline-variant/70 text-[14px] focus:ring-0 py-[2px]"
+            />
+            <button
+              type="submit"
+              className="w-[32px] h-[32px] rounded-full bg-secondary-container flex items-center justify-center shrink-0 hover:bg-secondary-fixed transition-colors duration-200"
+              aria-label="Subscribe"
+            >
+              <span className="material-symbols-outlined text-primary font-bold !text-[18px]">
+                chevron_right
+              </span>
+            </button>
+          </form>
+        </div>
+      )}
+
+      <div className="flex flex-col items-start justify-between space-y-lg md:flex-row md:items-center md:space-y-0">
+        {/* Brand */}
+        <div className="text-[24px] font-black tracking-tighter text-primary">
+          AKSHATCODES © {year}
+        </div>
+
+        {/* Social Links */}
+        <div className="flex flex-wrap gap-xl">
+          {SOCIAL_LINKS.map(({ href, label }) => (
+            <Link
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-label-bold uppercase transition-colors hover:text-secondary"
+            >
+              {label}
+            </Link>
+          ))}
+        </div>
+
+        {/* Tagline */}
+        <div className="text-label-sm uppercase text-on-surface-variant">
+          Designed with discipline.
         </div>
       </div>
     </footer>

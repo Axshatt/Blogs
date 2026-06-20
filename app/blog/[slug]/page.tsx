@@ -39,40 +39,41 @@ export default async function PostPage({ params }: PostPageProps) {
     day: 'numeric',
   });
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const components = useMDXComponents({});
 
   return (
-    <article className="mx-auto max-w-3xl px-6 py-16">
+    <article className="mx-auto max-w-3xl px-margin-mobile py-xxl md:px-margin-desktop">
       {/* Breadcrumb */}
-      <div className="mb-8 flex items-center gap-2 font-mono text-xs text-zinc-600">
-        <Link href="/blog" className="transition-colors hover:text-zinc-400">
+      <div className="text-label-sm mb-lg flex items-center gap-sm text-on-surface-variant">
+        <Link href="/blog" className="transition-colors hover:text-primary">
           /blog
         </Link>
         <span>/</span>
-        <span className="text-zinc-500">{slug}</span>
+        <span className="text-primary">{slug}</span>
       </div>
 
       {/* Post header */}
-      <header className="mb-10">
-        <div className="mb-4 flex flex-wrap items-center gap-3">
+      <header className="mb-xl">
+        <div className="mb-md flex flex-wrap items-center gap-lg">
           <CategoryBadge category={frontmatter.category} size="md" />
-          <span className="font-mono text-xs text-zinc-500">{date}</span>
-          <span className="font-mono text-xs text-zinc-600">·</span>
-          <span className="font-mono text-xs text-zinc-500">{readingTime}</span>
+          <span className="text-label-sm text-on-surface-variant">{date}</span>
+          <span className="text-label-sm text-outline">·</span>
+          <span className="text-label-sm text-on-surface-variant">{readingTime}</span>
         </div>
 
-        <h1 className="mb-4 text-3xl font-bold leading-tight tracking-tight text-zinc-100 sm:text-4xl">
+        <h1 className="text-headline-xl mb-md tracking-tight text-primary md:text-display-lg-mobile">
           {frontmatter.title}
         </h1>
 
-        <p className="text-base leading-7 text-zinc-400">{frontmatter.excerpt}</p>
+        <p className="text-body-lg text-on-surface-variant">{frontmatter.excerpt}</p>
 
         {frontmatter.tags.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-1.5">
+          <div className="mt-md flex flex-wrap gap-sm">
             {frontmatter.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded border border-white/5 bg-white/[0.03] px-2 py-0.5 font-mono text-[11px] text-zinc-500"
+                className="text-label-sm rounded-full border border-outline-variant px-sm py-0.5 uppercase"
               >
                 #{tag}
               </span>
@@ -81,11 +82,11 @@ export default async function PostPage({ params }: PostPageProps) {
         )}
 
         {frontmatter.canonical_url && (
-          <p className="mt-4 font-mono text-[11px] text-zinc-600">
+          <p className="text-label-sm mt-md text-on-surface-variant">
             Originally published at{' '}
             <a
               href={frontmatter.canonical_url}
-              className="text-zinc-500 underline hover:text-zinc-300"
+              className="text-secondary underline underline-offset-2 hover:text-primary"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -95,7 +96,7 @@ export default async function PostPage({ params }: PostPageProps) {
         )}
       </header>
 
-      <hr className="mb-10 border-white/5" />
+      <hr className="mb-xl border-outline-variant" />
 
       {/* MDX Content */}
       <div className="prose-content">
@@ -104,17 +105,17 @@ export default async function PostPage({ params }: PostPageProps) {
 
       {/* Prev / Next navigation */}
       {(prevPost || nextPost) && (
-        <nav className="mt-16 border-t border-white/5 pt-10">
-          <div className="grid grid-cols-2 gap-4">
+        <nav className="mt-xxl border-t border-outline-variant pt-xl">
+          <div className="grid grid-cols-2 gap-gutter">
             {prevPost ? (
               <Link
                 href={`/blog/${prevPost.slug}`}
-                className="group rounded-lg border border-white/5 bg-white/[0.02] p-4 transition-all hover:border-white/10 hover:bg-white/[0.04]"
+                className="group hairline-a bg-surface-container-low p-lg transition-all hover:bg-surface-container"
               >
-                <div className="mb-1 font-mono text-[10px] uppercase tracking-wider text-zinc-600">
+                <div className="text-label-sm mb-xs uppercase text-on-surface-variant">
                   ← Older
                 </div>
-                <div className="text-sm text-zinc-400 group-hover:text-zinc-200 line-clamp-2 transition-colors">
+                <div className="text-body-md text-primary transition-colors group-hover:text-secondary line-clamp-2">
                   {prevPost.frontmatter.title}
                 </div>
               </Link>
@@ -124,12 +125,12 @@ export default async function PostPage({ params }: PostPageProps) {
             {nextPost ? (
               <Link
                 href={`/blog/${nextPost.slug}`}
-                className="group rounded-lg border border-white/5 bg-white/[0.02] p-4 text-right transition-all hover:border-white/10 hover:bg-white/[0.04]"
+                className="group hairline-a bg-surface-container-low p-lg text-right transition-all hover:bg-surface-container"
               >
-                <div className="mb-1 font-mono text-[10px] uppercase tracking-wider text-zinc-600">
+                <div className="text-label-sm mb-xs uppercase text-on-surface-variant">
                   Newer →
                 </div>
-                <div className="text-sm text-zinc-400 group-hover:text-zinc-200 line-clamp-2 transition-colors">
+                <div className="text-body-md text-primary transition-colors group-hover:text-secondary line-clamp-2">
                   {nextPost.frontmatter.title}
                 </div>
               </Link>

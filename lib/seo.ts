@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import type { PostFrontmatter } from '@/types/post';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://yourblog.dev';
-const SITE_NAME = 'Dev & AI Blog';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://akshatcodes.com';
+const SITE_NAME = 'AKSHATCODES';
 const SITE_DESCRIPTION =
-  'Behind-the-scenes build logs, practical AI/automation tutorials, and creative experiments from a developer running a web dev + AI agency.';
+  'Personal log of experiments, technical deep-dives, and aesthetic explorations. Focused on high-performance web experiences and minimalist systems.';
 
 export function getBaseMetadata(): Metadata {
   return {

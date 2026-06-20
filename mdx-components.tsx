@@ -5,29 +5,29 @@ import { Callout } from '@/components/mdx/Callout';
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     ...components,
-    // Override default HTML elements
+    // Override default HTML elements for editorial theme
     h1: ({ children }) => (
-      <h1 className="mb-4 mt-10 text-3xl font-bold tracking-tight text-zinc-100 first:mt-0">
+      <h1 className="text-headline-xl mb-md mt-xl tracking-tight text-primary first:mt-0">
         {children}
       </h1>
     ),
     h2: ({ children }) => (
-      <h2 className="mb-3 mt-8 text-xl font-semibold text-zinc-100">
+      <h2 className="text-headline-lg mb-sm mt-xl text-primary">
         {children}
       </h2>
     ),
     h3: ({ children }) => (
-      <h3 className="mb-2 mt-6 text-lg font-semibold text-zinc-200">
+      <h3 className="mb-sm mt-lg text-[20px] font-bold text-primary">
         {children}
       </h3>
     ),
     p: ({ children }) => (
-      <p className="mb-4 leading-7 text-zinc-400">{children}</p>
+      <p className="text-body-lg mb-md text-on-surface-variant">{children}</p>
     ),
     a: ({ href, children }) => (
       <a
         href={href}
-        className="text-violet-400 underline decoration-violet-400/30 underline-offset-2 transition-colors hover:text-violet-300 hover:decoration-violet-300/50"
+        className="text-secondary underline decoration-secondary/30 underline-offset-2 transition-colors hover:text-primary hover:decoration-primary/50"
         target={href?.startsWith('http') ? '_blank' : undefined}
         rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
       >
@@ -35,18 +35,18 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       </a>
     ),
     ul: ({ children }) => (
-      <ul className="mb-4 ml-4 list-disc space-y-1 text-zinc-400 marker:text-zinc-600">
+      <ul className="text-body-md mb-md ml-md list-disc space-y-xs text-on-surface-variant marker:text-outline">
         {children}
       </ul>
     ),
     ol: ({ children }) => (
-      <ol className="mb-4 ml-4 list-decimal space-y-1 text-zinc-400">
+      <ol className="text-body-md mb-md ml-md list-decimal space-y-xs text-on-surface-variant">
         {children}
       </ol>
     ),
     li: ({ children }) => <li className="leading-7">{children}</li>,
     blockquote: ({ children }) => (
-      <blockquote className="my-4 border-l-2 border-violet-500/40 pl-4 text-zinc-500 italic">
+      <blockquote className="my-md border-l-2 border-primary pl-md italic text-on-surface-variant">
         {children}
       </blockquote>
     ),
@@ -55,15 +55,15 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         return <CodeBlock className={className}>{children}</CodeBlock>;
       }
       return (
-        <code className="rounded bg-white/5 px-1.5 py-0.5 font-mono text-[0.85em] text-violet-300">
+        <code className="rounded bg-surface-container px-1.5 py-0.5 font-mono text-[0.85em] text-primary">
           {children}
         </code>
       );
     },
     pre: ({ children }) => <>{children}</>,
-    hr: () => <hr className="my-8 border-white/5" />,
+    hr: () => <hr className="my-xl border-outline-variant" />,
     strong: ({ children }) => (
-      <strong className="font-semibold text-zinc-200">{children}</strong>
+      <strong className="font-bold text-primary">{children}</strong>
     ),
     // Custom MDX components available in posts
     Callout,
