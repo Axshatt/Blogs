@@ -83,7 +83,6 @@ export async function deletePostAction(slug: string) {
   if (success) {
     revalidatePath('/blog');
     revalidatePath('/');
-    redirect('/admin');
   }
   return success;
 }
