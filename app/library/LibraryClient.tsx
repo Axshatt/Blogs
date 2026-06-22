@@ -240,7 +240,7 @@ export function LibraryClient({ posts }: { posts: PostData[] }) {
       {/* Create New List Modal */}
       {isCreating && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 backdrop-blur-[2px]">
-          <div className="bg-white border border-outline-variant/30 rounded-lg p-xl w-full max-w-[400px] shadow-2xl animate-fade-in text-primary">
+          <div className="bg-surface border border-outline-variant/30 rounded-lg p-xl w-full max-w-[400px] shadow-2xl animate-fade-in text-primary">
             <h3 className="text-title-lg font-extrabold mb-md">Create new list</h3>
             <form onSubmit={handleCreateList} className="space-y-md">
               <input
@@ -432,7 +432,7 @@ export function LibraryClient({ posts }: { posts: PostData[] }) {
                       type="text"
                       value={editListName}
                       onChange={(e) => setEditListName(e.target.value)}
-                      className="text-body-md border border-outline-variant/50 rounded px-sm py-xs bg-white text-primary focus:outline-none"
+                      className="text-body-md border border-outline-variant/50 rounded px-sm py-xs bg-surface text-primary focus:outline-none"
                     />
                     <button
                       type="submit"
@@ -477,7 +477,7 @@ export function LibraryClient({ posts }: { posts: PostData[] }) {
                 </button>
 
                 {showMoreMenu && (
-                  <div className="absolute right-0 top-full mt-xs z-50 w-[180px] bg-white border border-outline-variant/35 rounded-lg shadow-xl py-sm animate-fade-in text-primary text-body-md">
+                  <div className="absolute right-0 top-full mt-xs z-50 w-[180px] bg-surface border border-outline-variant/35 rounded-lg shadow-xl py-sm animate-fade-in text-primary text-body-md">
                     <button
                       onClick={() => copyListLink(selectedListName)}
                       className="w-full text-left px-md py-sm hover:bg-surface-container-low transition-colors cursor-pointer flex items-center gap-sm"

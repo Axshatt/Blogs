@@ -56,10 +56,10 @@ export function BookmarkPopover({ slug, onClose, onStateChange }: BookmarkPopove
   return (
     <div
       ref={popoverRef}
-      className="absolute bottom-full right-0 mb-sm z-50 w-[280px] bg-white border border-outline-variant/30 rounded-lg shadow-xl py-md text-primary font-sans animate-fade-in"
+      className="absolute bottom-full right-0 mb-sm z-50 w-[280px] bg-surface border border-outline-variant/30 rounded-lg shadow-xl py-md text-primary font-sans animate-fade-in"
     >
       {/* Small triangle arrow */}
-      <div className="absolute top-full right-3 -mt-[1px] w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-white" />
+      <div className="absolute top-full right-3 -mt-[1px] w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-surface" />
       <div className="absolute top-full right-3 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-outline-variant/30 -z-10" />
 
       {/* List items */}
@@ -78,7 +78,7 @@ export function BookmarkPopover({ slug, onClose, onStateChange }: BookmarkPopove
                   onChange={() => handleToggle(list.name)}
                   className="w-4.5 h-4.5 accent-[#1a8917] rounded cursor-pointer border-outline-variant"
                 />
-                <span className="text-body-md font-medium text-[#292929]">{list.name}</span>
+                <span className="text-body-md font-medium text-on-surface">{list.name}</span>
               </div>
               {list.isPrivate && (
                 <span className="material-symbols-outlined !text-[16px] text-on-surface-variant/70">

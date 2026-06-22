@@ -13,7 +13,7 @@ export function FeaturedBuildCard({ post }: FeaturedBuildCardProps) {
   }).toUpperCase();
 
   return (
-    <div className="hairline-a group relative overflow-hidden bg-white p-lg md:col-span-8">
+    <div className="hairline-a group relative overflow-hidden bg-surface p-lg md:col-span-8">
       <div className="relative z-10">
         {/* Top row: badge + date */}
         <div className="mb-xxl flex items-start justify-between">

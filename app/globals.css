@@ -180,3 +180,65 @@ body {
 nav {
   transition: transform 0.3s ease-out;
 }
+
+/* ── Dark Mode Custom Property Overrides ── */
+.dark {
+  --color-primary: #ffffff;
+  --color-on-primary: #000000;
+  --color-primary-container: #2b2b28;
+  --color-on-primary-container: #e5e2de;
+  --color-primary-fixed: #1c1c1a;
+  --color-primary-fixed-dim: #32312e;
+  --color-on-primary-fixed: #e5e2de;
+  --color-on-primary-fixed-variant: #858481;
+  --color-inverse-primary: #000000;
+
+  --color-secondary: #d2f03c;
+  --color-on-secondary: #181e00;
+  --color-secondary-container: #404c00;
+  --color-on-secondary-container: #d2f03c;
+  --color-secondary-fixed: #181e00;
+  --color-secondary-fixed-dim: #2b3500;
+  --color-on-secondary-fixed: #d2f03c;
+  --color-on-secondary-fixed-variant: #b6d319;
+
+  --color-tertiary: #ffffff;
+  --color-on-tertiary: #000000;
+  --color-tertiary-container: #2e06e3;
+  --color-on-tertiary-container: #c3c0ff;
+  --color-tertiary-fixed: #0f0069;
+  --color-tertiary-fixed-dim: #1d00b3;
+  --color-on-tertiary-fixed: #e2dfff;
+  --color-on-tertiary-fixed-variant: #7671ff;
+
+  --color-error: #ffb4ab;
+  --color-on-error: #690005;
+  --color-error-container: #93000a;
+  --color-on-error-container: #ffdad6;
+
+  --color-background: #0d0d0c;
+  --color-on-background: #e5e2de;
+  --color-surface: #141413;
+  --color-on-surface: #e5e2de;
+  --color-surface-dim: #0c0c0b;
+  --color-surface-bright: #20201e;
+  --color-surface-tint: #c9c6c3;
+  --color-surface-variant: #252523;
+  --color-on-surface-variant: #c8c7bf;
+  --color-surface-container: #181816;
+  --color-surface-container-low: #151513;
+  --color-surface-container-high: #1f1f1d;
+  --color-surface-container-highest: #2b2a27;
+  --color-surface-container-lowest: #0b0b0a;
+  --color-inverse-surface: #e5e2de;
+  --color-inverse-on-surface: #1c1b1b;
+
+  --color-outline: #8f8e87;
+  --color-outline-variant: #3e3e3c;
+}
+
+.dark .hairline-b { border-bottom: 1px solid rgba(229, 226, 222, 0.1); }
+.dark .hairline-r { border-right: 1px solid rgba(229, 226, 222, 0.1); }
+.dark .hairline-l { border-left: 1px solid rgba(229, 226, 222, 0.1); }
+.dark .hairline-a { border: 1px solid rgba(229, 226, 222, 0.1); }
+

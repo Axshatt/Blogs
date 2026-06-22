@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 
 const SOCIAL_LINKS = [
   { href: 'https://github.com', label: 'Github' },
@@ -14,6 +15,37 @@ const SOCIAL_LINKS = [
 export function Footer() {
   const pathname = usePathname();
   const year = new Date().getFullYear();
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+
+    setStatus('loading');
+    setMessage('');
+
+    try {
+      const res = await fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed.');
+      }
+
+      setStatus('success');
+      setMessage(data.message || 'Confirmation sent!');
+      setEmail('');
+    } catch (err: any) {
+      setStatus('error');
+      setMessage(err.message || 'Error occurred.');
+    }
+  };
 
   return (
     <footer className="border-t border-outline-variant px-margin-mobile py-xl md:px-margin-desktop">
@@ -28,25 +60,42 @@ export function Footer() {
               Sent every Saturday morning.
             </p>
           </div>
-          <form
-            className="flex items-center w-full md:w-[320px] bg-white rounded-full p-[3px] pl-md border border-outline-variant/30"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <input
-              type="email"
-              placeholder="email@company.com"
-              className="w-full bg-transparent border-none outline-none text-primary placeholder:text-outline-variant/70 text-[14px] focus:ring-0 py-[2px]"
-            />
-            <button
-              type="submit"
-              className="w-[32px] h-[32px] rounded-full bg-secondary-container flex items-center justify-center shrink-0 hover:bg-secondary-fixed transition-colors duration-200"
-              aria-label="Subscribe"
+          <div className="flex flex-col gap-xs w-full md:w-[320px]">
+            <form
+              className="flex items-center w-full bg-surface rounded-full p-[3px] pl-md border border-outline-variant/30"
+              onSubmit={handleSubmit}
             >
-              <span className="material-symbols-outlined text-primary font-bold !text-[18px]">
-                chevron_right
-              </span>
-            </button>
-          </form>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="email@company.com"
+                disabled={status === 'loading'}
+                required
+                className="w-full bg-transparent border-none outline-none text-primary placeholder:text-outline-variant/70 text-[14px] focus:ring-0 py-[2px] disabled:opacity-50"
+              />
+              <button
+                type="submit"
+                disabled={status === 'loading'}
+                className="w-[32px] h-[32px] rounded-full bg-secondary-container flex items-center justify-center shrink-0 hover:bg-secondary-fixed transition-colors duration-200 cursor-pointer disabled:bg-surface-container disabled:cursor-not-allowed"
+                aria-label="Subscribe"
+              >
+                {status === 'loading' ? (
+                  <span className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin"></span>
+                ) : (
+                  <span className="material-symbols-outlined text-primary font-bold !text-[18px]">
+                    chevron_right
+                  </span>
+                )}
+              </button>
+            </form>
+            {status === 'success' && (
+              <p className="text-[11px] text-[#566500] font-semibold pl-xs animate-fade-in">{message}</p>
+            )}
+            {status === 'error' && (
+              <p className="text-[11px] text-error font-semibold pl-xs animate-fade-in">{message}</p>
+            )}
+          </div>
         </div>
       )}
 

@@ -148,7 +148,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
               {(search || tag || (category && category !== 'all')) && (
                 <Link
                   href="/blog"
-                  className="text-label-bold inline-flex items-center gap-xs border border-outline-variant px-lg py-sm uppercase mt-md bg-white hover:bg-surface-container-low"
+                  className="text-label-bold inline-flex items-center gap-xs border border-outline-variant px-lg py-sm uppercase mt-md bg-surface hover:bg-surface-container-low"
                 >
                   Reset Filters
                 </Link>

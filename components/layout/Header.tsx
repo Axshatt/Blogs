@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const NAV_LINKS = [
   { href: '/', label: 'Log' },
@@ -14,6 +14,26 @@ export function Header() {
   const pathname = usePathname();
   const navRef = useRef<HTMLElement>(null);
   const lastScrollRef = useRef(0);
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isDark = document.documentElement.classList.contains('dark');
+      setTheme(isDark ? 'dark' : 'light');
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(nextTheme);
+    if (nextTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,7 +83,7 @@ export function Header() {
               <li key={href}>
                 <Link
                   href={href}
-                  className={`text-body-md uppercase tracking-widest transition-colors duration-200 ease-in-out ${isActive
+                  className={`text-body-md font-medium tracking-wide transition-colors duration-200 ease-in-out ${isActive
                     ? 'border-b-2 border-primary pb-1 text-primary'
                     : 'text-on-surface-variant hover:text-primary'
                     }`}
@@ -75,13 +95,14 @@ export function Header() {
           })}
         </ul>
 
-        {/* Theme Toggle (placeholder) */}
+        {/* Theme Toggle */}
         <button
-          className="flex items-center justify-center rounded-full p-sm transition-colors duration-200 ease-in-out hover:bg-surface-container"
+          onClick={toggleTheme}
+          className="flex items-center justify-center rounded-full p-sm transition-colors duration-200 ease-in-out hover:bg-surface-container active:bg-surface-container-high cursor-pointer"
           aria-label="Toggle theme"
         >
           <span className="material-symbols-outlined text-primary">
-            dark_mode
+            {theme === 'dark' ? 'light_mode' : 'dark_mode'}
           </span>
         </button>
       </div>

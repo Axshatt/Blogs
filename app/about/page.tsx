@@ -40,7 +40,7 @@ export default function AboutPage() {
             href="https://github.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-12 h-12 rounded-full border border-outline-variant bg-white text-primary hover:bg-surface-container-low hover:text-secondary transition-all duration-300 flex items-center justify-center cursor-pointer"
+            className="w-12 h-12 rounded-full border border-outline-variant bg-surface text-primary hover:bg-surface-container-low hover:text-secondary transition-all duration-300 flex items-center justify-center cursor-pointer"
             title="GitHub"
           >
             <span className="material-symbols-outlined !text-[24px]">code</span>
@@ -49,7 +49,7 @@ export default function AboutPage() {
             href="https://x.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-12 h-12 rounded-full border border-outline-variant bg-white text-primary hover:bg-surface-container-low hover:text-secondary transition-all duration-300 flex items-center justify-center cursor-pointer"
+            className="w-12 h-12 rounded-full border border-outline-variant bg-surface text-primary hover:bg-surface-container-low hover:text-secondary transition-all duration-300 flex items-center justify-center cursor-pointer"
             title="X / Twitter"
           >
             <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
@@ -60,7 +60,7 @@ export default function AboutPage() {
             href="https://www.instagram.com/code.akshat.in/"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-12 h-12 rounded-full border border-outline-variant bg-white text-primary hover:bg-surface-container-low hover:text-secondary transition-all duration-300 flex items-center justify-center cursor-pointer"
+            className="w-12 h-12 rounded-full border border-outline-variant bg-surface text-primary hover:bg-surface-container-low hover:text-secondary transition-all duration-300 flex items-center justify-center cursor-pointer"
             title="Instagram"
           >
             <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
@@ -71,7 +71,7 @@ export default function AboutPage() {
             href="https://linkedin.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-12 h-12 rounded-full border border-outline-variant bg-white text-primary hover:bg-surface-container-low hover:text-secondary transition-all duration-300 flex items-center justify-center cursor-pointer"
+            className="w-12 h-12 rounded-full border border-outline-variant bg-surface text-primary hover:bg-surface-container-low hover:text-secondary transition-all duration-300 flex items-center justify-center cursor-pointer"
             title="LinkedIn"
           >
             <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
@@ -80,7 +80,7 @@ export default function AboutPage() {
           </a>
           <a
             href="mailto:hello@akshatcodes.dev"
-            className="w-12 h-12 rounded-full border border-outline-variant bg-white text-primary hover:bg-surface-container-low hover:text-secondary transition-all duration-300 flex items-center justify-center cursor-pointer"
+            className="w-12 h-12 rounded-full border border-outline-variant bg-surface text-primary hover:bg-surface-container-low hover:text-secondary transition-all duration-300 flex items-center justify-center cursor-pointer"
             title="Email"
           >
             <span className="material-symbols-outlined !text-[24px]">mail</span>
