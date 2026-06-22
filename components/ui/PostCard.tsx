@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Post } from '@/types/post';
+import { BookmarkPopover } from '@/components/ui/BookmarkPopover';
 
 interface PostCardProps {
   post: Post;
@@ -14,46 +15,44 @@ export function PostCard({ post }: PostCardProps) {
   
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isDisliked, setIsDisliked] = useState(false);
+  const [showPopover, setShowPopover] = useState(false);
 
-  // Load bookmark status on mount
-  useEffect(() => {
-    const saved = localStorage.getItem('bookmarked_posts');
+  // Load bookmark status on mount / updates
+  const updateBookmarkStatus = () => {
+    const saved = localStorage.getItem('library_lists');
     if (saved) {
       try {
-        const list = JSON.parse(saved) as string[];
-        setIsBookmarked(list.includes(slug));
+        const lists = JSON.parse(saved) as any[];
+        const isSaved = lists.some((l) => l.slugs.includes(slug));
+        setIsBookmarked(isSaved);
       } catch (e) {
         console.error(e);
       }
+    } else {
+      // Fallback to legacy single list key
+      const legacySaved = localStorage.getItem('bookmarked_posts');
+      if (legacySaved) {
+        try {
+          const list = JSON.parse(legacySaved) as string[];
+          setIsBookmarked(list.includes(slug));
+        } catch {
+          setIsBookmarked(false);
+        }
+      }
     }
+  };
+
+  useEffect(() => {
+    updateBookmarkStatus();
+    window.addEventListener('bookmarks-updated', updateBookmarkStatus);
+    return () => {
+      window.removeEventListener('bookmarks-updated', updateBookmarkStatus);
+    };
   }, [slug]);
 
   const handleBookmark = (e: React.MouseEvent) => {
     e.preventDefault();
-    const nextBookmarked = !isBookmarked;
-    setIsBookmarked(nextBookmarked);
-
-    const saved = localStorage.getItem('bookmarked_posts');
-    let list: string[] = [];
-    if (saved) {
-      try {
-        list = JSON.parse(saved) as string[];
-      } catch (e) {
-        console.error(e);
-      }
-    }
-
-    if (nextBookmarked) {
-      if (!list.includes(slug)) {
-        list.push(slug);
-      }
-    } else {
-      list = list.filter((s) => s !== slug);
-    }
-
-    localStorage.setItem('bookmarked_posts', JSON.stringify(list));
-    // Emit global event to update the sidebar
-    window.dispatchEvent(new Event('bookmarks-updated'));
+    setShowPopover((prev) => !prev);
   };
 
   const handleDislike = (e: React.MouseEvent) => {
@@ -146,15 +145,24 @@ export function PostCard({ post }: PostCardProps) {
         </button>
 
         {/* Right: Bookmark button */}
-        <button
-          onClick={handleBookmark}
-          className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-surface-container-low hover:text-primary transition-colors cursor-pointer"
-          title="Save to reading list"
-        >
-          <span className={`material-symbols-outlined !text-[18px] ${isBookmarked ? 'fill-current text-primary' : ''}`}>
-            {isBookmarked ? 'bookmark' : 'bookmark_add'}
-          </span>
-        </button>
+        <div className="relative">
+          <button
+            onClick={handleBookmark}
+            className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-surface-container-low hover:text-primary transition-colors cursor-pointer"
+            title="Save to reading list"
+          >
+            <span className={`material-symbols-outlined !text-[18px] ${isBookmarked ? 'fill-current text-primary' : ''}`}>
+              {isBookmarked ? 'bookmark' : 'bookmark_add'}
+            </span>
+          </button>
+          {showPopover && (
+            <BookmarkPopover
+              slug={slug}
+              onClose={() => setShowPopover(false)}
+              onStateChange={updateBookmarkStatus}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

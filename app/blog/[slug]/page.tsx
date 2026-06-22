@@ -7,6 +7,7 @@ import { CategoryBadge } from '@/components/ui/CategoryBadge';
 import { useMDXComponents } from '@/mdx-components';
 import Link from 'next/link';
 import { AuthorBox } from '@/components/ui/AuthorBox';
+import { ReadingHistoryTracker } from '@/components/ui/ReadingHistoryTracker';
 
 interface PostPageProps {
   params: Promise<{ slug: string }>;
@@ -45,6 +46,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
   return (
     <article className="mx-auto max-w-3xl px-margin-mobile py-xxl md:px-margin-desktop">
+      <ReadingHistoryTracker slug={slug} />
       {/* Breadcrumb */}
       <div className="text-label-sm mb-lg flex items-center gap-sm text-on-surface-variant">
         <Link href="/blog" className="transition-colors hover:text-primary">

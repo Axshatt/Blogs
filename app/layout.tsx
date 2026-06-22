@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
-import { SideDrawer } from '@/components/layout/SideDrawer';
+import { LayoutShell } from '@/components/layout/LayoutShell';
 import { getBaseMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = getBaseMetadata();
@@ -26,13 +24,8 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen font-sans antialiased">
-        <div className="relative flex min-h-screen flex-col">
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <SideDrawer />
-        </div>
+      <body className="min-h-screen font-sans antialiased overflow-x-hidden">
+        <LayoutShell>{children}</LayoutShell>
       </body>
     </html>
   );

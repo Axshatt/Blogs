@@ -99,20 +99,18 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   }
 
   return (
-    <div className="min-h-screen px-margin-mobile py-xxl md:px-margin-desktop font-sans text-primary">
-      {/* Page Title */}
-      <div className="mb-xl border-b border-outline-variant pb-md">
-        <h1 className="text-display-lg-mobile md:text-display-lg uppercase tracking-tight">
-          All Builds<span className="text-secondary">.</span>
-        </h1>
-        <p className="text-body-lg mt-xs text-on-surface-variant uppercase font-inter tracking-tight">
-          Explore cases, tutorials, and direct logs of what I am creating.
-        </p>
-      </div>
-
+    <div className="min-h-screen px-margin-mobile py-lg md:px-margin-desktop font-sans text-primary">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-xl lg:gap-x-0">
         {/* LEFT COLUMN: Posts Listing */}
         <div className="lg:col-span-8 flex flex-col space-y-md lg:pr-xl lg:border-r lg:border-outline-variant/20">
+          {/* Page Title */}
+          <div className="border-b border-outline-variant/20 mb-lg px-xl md:px-[56px]">
+            <h2 className="pb-md text-body-md font-bold text-primary relative inline-block">
+              For you
+              <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary rounded-full" />
+            </h2>
+          </div>
+
           {/* Active Filter Indicators */}
           {(search || tag) && (
             <div className="flex flex-wrap gap-sm items-center text-label-sm uppercase text-on-surface-variant mb-sm">
@@ -157,7 +155,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
               )}
             </div>
           ) : (
-            <div className="flex flex-col bg-transparent">
+            <div className="flex flex-col bg-transparent px-xl md:px-[56px] py-xs">
               {paginatedPosts.map((post) => (
                 <PostCard key={post.slug} post={post} />
               ))}
@@ -216,34 +214,6 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
 
         {/* RIGHT COLUMN: Sidebar Filters */}
         <div className="lg:col-span-4 space-y-lg lg:pl-xl">
-          {/* Search Input Panel */}
-          <div className="bg-transparent py-md">
-            <h3 className="text-label-bold uppercase text-primary border-b border-outline-variant/20 pb-xs mb-md">
-              Search articles
-            </h3>
-            <form action="/blog" method="GET" className="relative">
-              {category && category !== 'all' && (
-                <input type="hidden" name="category" value={category} />
-              )}
-              {tag && (
-                <input type="hidden" name="tag" value={tag} />
-              )}
-              <input
-                type="text"
-                name="search"
-                defaultValue={search || ''}
-                placeholder="Search..."
-                className="w-full border border-outline-variant bg-surface px-md py-sm text-body-md font-sans focus:border-primary focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="absolute right-md top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary cursor-pointer"
-              >
-                <span className="material-symbols-outlined !text-[20px]">search</span>
-              </button>
-            </form>
-          </div>
-
           <BlogSidebar posts={allPosts} />
         </div>
       </div>

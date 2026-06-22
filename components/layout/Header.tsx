@@ -34,13 +34,13 @@ export function Header() {
   return (
     <nav
       ref={navRef}
-      className="sticky top-0 z-50 flex w-full items-center justify-between border-b border-outline-variant bg-background px-margin-mobile py-md md:px-margin-desktop"
+      className="sticky top-0 z-50 flex w-full items-center justify-between border-b border-outline-variant bg-background px-md py-md"
     >
       {/* Left: Hamburger + Brand Logo */}
       <div className="flex items-center gap-md">
         <button
           onClick={() => window.dispatchEvent(new Event('toggle-sidebar'))}
-          className="flex items-center justify-center rounded-full p-sm transition-colors duration-200 ease-in-out hover:bg-surface-container cursor-pointer"
+          className="flex items-center justify-center rounded-full transition-colors duration-200 ease-in-out hover:bg-surface-container cursor-pointer"
           aria-label="Toggle sidebar"
         >
           <span className="material-symbols-outlined text-primary !text-[24px]">menu</span>
@@ -63,11 +63,10 @@ export function Header() {
               <li key={href}>
                 <Link
                   href={href}
-                  className={`text-body-md uppercase tracking-widest transition-colors duration-200 ease-in-out ${
-                    isActive
-                      ? 'border-b-2 border-primary pb-1 text-primary'
-                      : 'text-on-surface-variant hover:text-primary'
-                  }`}
+                  className={`text-body-md uppercase tracking-widest transition-colors duration-200 ease-in-out ${isActive
+                    ? 'border-b-2 border-primary pb-1 text-primary'
+                    : 'text-on-surface-variant hover:text-primary'
+                    }`}
                 >
                   {label}
                 </Link>

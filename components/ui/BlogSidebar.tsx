@@ -82,10 +82,10 @@ export function BlogSidebar({ posts }: BlogSidebarProps) {
     <div className="space-y-xl font-sans text-primary">
       {/* Recommended Topics Panel */}
       <div className="bg-transparent py-md">
-        <h3 className="text-label-bold uppercase text-primary border-b border-outline-variant/20 pb-xs mb-md">
+        <h3 className="text-label-bold uppercase text-primary pb-xs mb-md">
           Recommended topics
         </h3>
-        <div className="flex flex-wrap gap-xs">
+        <div className="flex flex-wrap gap-sm">
           {RECOMMENDED_TOPICS.map((topic) => {
             const isActive = activeTag === topic.tag;
             const linkHref = isActive ? '/blog' : `/blog?tag=${topic.tag}`;
@@ -93,10 +93,10 @@ export function BlogSidebar({ posts }: BlogSidebarProps) {
               <Link
                 key={topic.tag}
                 href={linkHref}
-                className={`text-label-sm border px-sm py-1.5 rounded-full transition-all duration-200 inline-flex items-center gap-1 font-bold ${
+                className={`text-body-sm px-md py-sm rounded-full transition-all duration-200 inline-flex items-center gap-1 font-bold ${
                   isActive
-                    ? 'border-primary bg-primary text-on-primary'
-                    : 'border-outline-variant/50 bg-surface-container-low text-on-surface-variant hover:border-primary hover:text-primary'
+                    ? 'bg-primary text-on-primary'
+                    : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high hover:text-primary'
                 }`}
               >
                 <span>{isActive ? '✓' : '+'}</span>
@@ -130,7 +130,7 @@ export function BlogSidebar({ posts }: BlogSidebarProps) {
           </div>
         ) : (
           <div className="space-y-md">
-            {bookmarkedPosts.map((p) => {
+            {bookmarkedPosts.slice(0, 2).map((p) => {
               const dateStr = new Date(p.frontmatter.published).toLocaleDateString('en-US', {
                 month: 'short',
                 day: 'numeric',
@@ -163,18 +163,19 @@ export function BlogSidebar({ posts }: BlogSidebarProps) {
                 </div>
               );
             })}
+            
+            {bookmarkedPosts.length > 2 && (
+              <div className="mt-md pt-sm border-t border-outline-variant/10">
+                <Link
+                  href="/library"
+                  className="text-label-sm text-secondary hover:text-primary font-extrabold hover:underline"
+                >
+                  See more ({bookmarkedPosts.length - 2} more)
+                </Link>
+              </div>
+            )}
           </div>
         )}
-
-        {/* Medium-style Footer Links */}
-        <div className="flex flex-wrap gap-x-2 gap-y-1 mt-lg pt-md border-t border-outline-variant/10 text-[11px] text-on-surface-variant/50 uppercase font-semibold leading-relaxed">
-          {FOOTER_LINKS.map((link, idx) => (
-            <span key={link} className="hover:text-primary transition-colors cursor-pointer">
-              {link}
-              {idx < FOOTER_LINKS.length - 1 && <span className="ml-2 text-on-surface-variant/20 select-none">·</span>}
-            </span>
-          ))}
-        </div>
       </div>
     </div>
   );

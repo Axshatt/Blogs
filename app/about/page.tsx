@@ -1,40 +1,32 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'About',
-  description:
-    'Developer, AI content creator, and agency owner building in public.',
+  title: 'About - AkshatCodes',
+  description: "Building in Public. Learning Out Loud. Hey, I'm Akshat — a full-stack dev, AI tinkerer, and relentless builder.",
 };
 
 export default function AboutPage() {
   return (
-    <div className="mx-auto max-w-3xl px-margin-mobile py-xxl md:px-margin-desktop">
-      <div className="text-label-sm mb-sm uppercase text-on-surface-variant">
+    <div className="mx-auto max-w-3xl px-margin-mobile py-xxl md:px-margin-desktop font-sans">
+      <div className="text-label-sm mb-sm uppercase text-on-surface-variant font-inter">
         /about
       </div>
-      <h1 className="text-headline-xl mb-lg tracking-tight text-primary md:text-display-lg-mobile">
-        Hey, I&apos;m a developer building in public.
+      <h1 className="text-headline-xl mb-lg tracking-tight text-primary md:text-[44px] md:leading-[1.1] font-black">
+        Building in Public. Learning Out Loud.
       </h1>
 
-      <div className="text-body-lg space-y-md leading-relaxed text-on-surface-variant">
+      <div className="text-body-lg space-y-md leading-relaxed text-on-surface-variant font-inter font-normal">
         <p>
-          I run a web dev + AI automation agency by day, build an indie game by
-          night, and write about all of it here. This blog is my public working
-          document — a mix of honest retrospectives, step-by-step tutorials, and
-          weird experiments at the edge of AI and creativity.
+          Hey, I&apos;m Akshat — a full-stack dev, AI tinkerer, and relentless builder who documents every step of the journey.
         </p>
         <p>
-          The three content pillars are{' '}
-          <span className="text-label-bold uppercase text-primary">build-log</span>{' '}
-          (progress updates on the agency and the game),{' '}
-          <span className="text-label-bold uppercase text-secondary">tutorial</span>{' '}
-          (practical how-tos for n8n, OpenAI, Next.js, and more), and{' '}
-          <span className="text-label-bold uppercase text-on-tertiary-container">experiment</span>{' '}
-          (creative coding and AI side projects).
+          With 35K+ followers across platforms, I share what I learn in real-time — from hackathons and side projects to design breakdowns and the latest in tech. No gatekeeping, just raw progress.
         </p>
         <p>
-          Posts here are the canonical source — I cross-post to Dev.to and
-          Hashnode afterwards, but the original always lives here.
+          This blog is for the curious ones just getting started — covering dev tutorials, design insights, and what&apos;s actually happening in the AI + tech world right now.
+        </p>
+        <p>
+          If you&apos;re building, learning, or just exploring — you&apos;re in the right place.
         </p>
       </div>
 
@@ -46,12 +38,12 @@ export default function AboutPage() {
         ].map(({ label, value }) => (
           <div
             key={label}
-            className="hairline-a bg-surface-container-low p-lg"
+            className="hairline-a bg-surface-container-low p-lg rounded"
           >
-            <div className="text-label-sm mb-xs uppercase text-on-surface-variant">
+            <div className="text-label-sm mb-xs uppercase text-on-surface-variant font-bold">
               {label}
             </div>
-            <div className="text-body-md text-primary">{value}</div>
+            <div className="text-body-md text-primary font-medium">{value}</div>
           </div>
         ))}
       </div>

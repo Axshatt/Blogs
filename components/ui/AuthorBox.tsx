@@ -1,42 +1,8 @@
 'use client';
 
-import { useState } from 'react';
 import Image from 'next/image';
 
 export function AuthorBox() {
-  const [isFollowing, setIsFollowing] = useState(false);
-  const [followersCount, setFollowersCount] = useState(1240);
-  const [showSubscribeForm, setShowSubscribeForm] = useState(false);
-  const [email, setEmail] = useState('');
-  const [isSubscribed, setIsSubscribed] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleFollowToggle = () => {
-    if (isFollowing) {
-      setIsFollowing(false);
-      setFollowersCount((prev) => prev - 1);
-    } else {
-      setIsFollowing(true);
-      setFollowersCount((prev) => prev + 1);
-    }
-  };
-
-  const handleSubscribeSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-    setIsSubmitting(true);
-    // Simulate API request
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubscribed(true);
-      setEmail('');
-    }, 1000);
-  };
-
-  const formattedFollowers = followersCount >= 1000 
-    ? `${(followersCount / 1000).toFixed(1)}K` 
-    : followersCount;
-
   return (
     <div className="bg-transparent border-t border-b border-outline-variant/25 py-xl my-xl font-sans text-primary relative overflow-hidden transition-all duration-300">
       <div className="flex flex-col sm:flex-row gap-lg items-start relative z-10">
@@ -59,91 +25,56 @@ export function AuthorBox() {
                 <h3 className="text-[20px] font-extrabold tracking-tight text-primary">
                   Written by Akshat Singh
                 </h3>
-                {/* Verified scalloped badge */}
+                {/* Verified badge */}
                 <svg viewBox="0 0 24 24" className="w-5 h-5 text-secondary fill-current shrink-0" aria-label="Verified Author">
                   <path d="M23 12l-2.44-2.79.34-3.69-3.61-.82-1.89-3.2L12 2.96 8.6 1.5 6.71 4.7l-3.6.81.34 3.7L1 12l2.44 2.79-.34 3.69 3.61.82 1.89 3.2 3.4-1.46 3.4 1.46 1.89-3.2 3.61-.82-.34-3.69L23 12zm-13 5l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z" />
                 </svg>
               </div>
               <div className="text-label-sm text-on-surface-variant/80 mt-1 uppercase font-semibold">
-                {formattedFollowers} followers · 182 following
+                35K+ followers
               </div>
             </div>
 
-            {/* Action Buttons */}
+            {/* Social Links Buttons */}
             <div className="flex items-center gap-sm mt-xs md:mt-0">
-              <button
-                onClick={handleFollowToggle}
-                className={`px-lg py-2 rounded-full text-label-bold uppercase tracking-wider transition-all duration-300 border text-[13px] cursor-pointer ${
-                  isFollowing
-                    ? 'border-outline-variant bg-transparent text-on-surface-variant hover:bg-surface-container-low'
-                    : 'border-primary bg-primary text-on-primary hover:bg-on-surface-variant'
-                }`}
+              <a
+                href="https://github.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full border border-outline-variant bg-white text-primary hover:bg-surface-container-low transition-all duration-300 flex items-center justify-center cursor-pointer"
+                title="GitHub"
               >
-                {isFollowing ? 'Following' : 'Follow'}
-              </button>
-              <button
-                onClick={() => setShowSubscribeForm(!showSubscribeForm)}
-                className={`w-[40px] h-[40px] rounded-full border flex items-center justify-center transition-all duration-300 cursor-pointer ${
-                  showSubscribeForm
-                    ? 'border-primary bg-primary text-on-primary'
-                    : 'border-outline-variant bg-white text-primary hover:bg-surface-container-low'
-                }`}
-                aria-label="Subscribe to mailing list"
+                <span className="material-symbols-outlined !text-[20px]">code</span>
+              </a>
+              <a
+                href="https://x.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full border border-outline-variant bg-white text-primary hover:bg-surface-container-low transition-all duration-300 flex items-center justify-center cursor-pointer"
+                title="X / Twitter"
               >
-                <span className="material-symbols-outlined !text-[20px]">
-                  {showSubscribeForm ? 'close' : 'mail'}
-                </span>
-              </button>
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+              </a>
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full border border-outline-variant bg-white text-primary hover:bg-surface-container-low transition-all duration-300 flex items-center justify-center cursor-pointer"
+                title="LinkedIn"
+              >
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                </svg>
+              </a>
             </div>
           </div>
 
           {/* Bio Text */}
           <p className="text-body-md text-on-surface-variant leading-relaxed mt-sm max-w-2xl">
-            Developer, AI content creator, and agency owner building in public. Founder @{' '}
-            <a href="https://akshatcodes.dev" className="text-secondary hover:underline font-semibold" target="_blank" rel="noopener noreferrer">
-              AkshatCodes
-            </a>
-            . Writing about AI automation, web dev, and indie gaming.
+            Hey, I&apos;m Akshat — a full-stack dev, AI tinkerer, and relentless builder who documents every step of the journey. I share what I learn in real-time — dev tutorials, design insights, and AI + tech news.
           </p>
-
-          {/* Interactive Subscribe Section */}
-          <div 
-            className={`transition-all duration-300 ease-in-out overflow-hidden ${
-              showSubscribeForm ? 'max-h-[200px] opacity-100 mt-lg pt-lg border-t border-outline-variant/30' : 'max-h-0 opacity-0'
-            }`}
-          >
-            {isSubscribed ? (
-              <div className="flex items-center gap-sm text-secondary font-bold text-body-md">
-                <span className="material-symbols-outlined !text-[24px]">check_circle</span>
-                <span>Subscribed! Thank you for following Akshat&apos;s journey.</span>
-              </div>
-            ) : (
-              <form onSubmit={handleSubscribeSubmit} className="flex flex-col gap-sm max-w-md w-full font-inter">
-                <label htmlFor="sub-email" className="text-label-sm leading-normal text-on-surface-variant font-bold uppercase">
-                  Get an email whenever Akshat publishes
-                </label>
-                <div className="flex items-center bg-surface-container-low border border-outline-variant rounded-full p-[3px] pl-md focus-within:border-primary transition-all duration-200 w-full">
-                  <input
-                    id="sub-email"
-                    type="email"
-                    required
-                    placeholder="email@company.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    disabled={isSubmitting}
-                    className="flex-1 min-w-0 bg-transparent border-none outline-none text-primary placeholder:text-outline-variant/80 text-[14px] focus:ring-0 py-[2px] disabled:opacity-50"
-                  />
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="px-md py-sm bg-primary hover:bg-on-surface-variant text-on-primary rounded-full transition-colors text-label-bold uppercase text-[12px] tracking-wide shrink-0 disabled:opacity-50 cursor-pointer"
-                  >
-                    {isSubmitting ? 'Subscribing...' : 'Subscribe'}
-                  </button>
-                </div>
-              </form>
-            )}
-          </div>
         </div>
       </div>
     </div>
