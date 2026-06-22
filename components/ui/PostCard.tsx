@@ -14,7 +14,6 @@ export function PostCard({ post }: PostCardProps) {
   const { slug, frontmatter } = post;
   
   const [isBookmarked, setIsBookmarked] = useState(false);
-  const [isDisliked, setIsDisliked] = useState(false);
   const [showPopover, setShowPopover] = useState(false);
 
   // Load bookmark status on mount / updates
@@ -55,29 +54,10 @@ export function PostCard({ post }: PostCardProps) {
     setShowPopover((prev) => !prev);
   };
 
-  const handleDislike = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setIsDisliked(true);
-  };
-
   const date = new Date(frontmatter.published).toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
   });
-
-  if (isDisliked) {
-    return (
-      <div className="py-md border-b border-outline-variant/30 text-on-surface-variant/60 text-label-sm uppercase flex items-center justify-between">
-        <span>Post hidden from list</span>
-        <button 
-          onClick={() => setIsDisliked(false)} 
-          className="text-secondary hover:text-primary font-bold cursor-pointer underline"
-        >
-          Undo
-        </button>
-      </div>
-    );
-  }
 
   return (
     <div className="group flex flex-col gap-md py-lg border-b border-outline-variant/20 bg-transparent last:border-b-0 transition-all duration-300">
@@ -131,19 +111,8 @@ export function PostCard({ post }: PostCardProps) {
         )}
       </div>
 
-      {/* Bottom Action Row (dislike & bookmark ONLY) */}
-      <div className="flex items-center justify-between text-label-sm text-on-surface-variant/80 font-medium mt-xs select-none">
-        {/* Left: Dislike button */}
-        <button
-          onClick={handleDislike}
-          className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-surface-container-low hover:text-primary transition-colors cursor-pointer"
-          title="Show less like this"
-        >
-          <span className="material-symbols-outlined !text-[18px]">
-            thumb_down
-          </span>
-        </button>
-
+      {/* Bottom Action Row */}
+      <div className="flex items-center justify-end text-label-sm text-on-surface-variant/80 font-medium mt-xs select-none">
         {/* Right: Bookmark button */}
         <div className="relative">
           <button
@@ -151,7 +120,10 @@ export function PostCard({ post }: PostCardProps) {
             className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-surface-container-low hover:text-primary transition-colors cursor-pointer"
             title="Save to reading list"
           >
-            <span className={`material-symbols-outlined !text-[18px] ${isBookmarked ? 'fill-current text-primary' : ''}`}>
+            <span
+              className="material-symbols-outlined !text-[18px] text-primary"
+              style={isBookmarked ? { fontVariationSettings: "'FILL' 1" } : undefined}
+            >
               {isBookmarked ? 'bookmark' : 'bookmark_add'}
             </span>
           </button>

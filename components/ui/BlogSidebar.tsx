@@ -18,6 +18,11 @@ const RECOMMENDED_TOPICS = [
   { name: 'Agency', tag: 'agency' },
   { name: 'Procedural Gen', tag: 'procedural-generation' },
   { name: 'Creative Coding', tag: 'creative-coding' },
+  { name: 'Next.js', tag: 'nextjs' },
+  { name: 'React', tag: 'react' },
+  { name: 'SaaS', tag: 'saas' },
+  { name: 'Design Insights', tag: 'design' },
+  { name: 'Tech Industry', tag: 'tech' },
 ];
 
 const FOOTER_LINKS = [
@@ -39,6 +44,7 @@ export function BlogSidebar({ posts }: BlogSidebarProps) {
   const activeTag = searchParams.get('tag');
   
   const [bookmarkedSlugs, setBookmarkedSlugs] = useState<string[]>([]);
+  const [showAllTopics, setShowAllTopics] = useState(false);
 
   // Function to load bookmarks from localStorage
   const loadBookmarks = () => {
@@ -86,7 +92,7 @@ export function BlogSidebar({ posts }: BlogSidebarProps) {
           Recommended topics
         </h3>
         <div className="flex flex-wrap gap-sm">
-          {RECOMMENDED_TOPICS.map((topic) => {
+          {(showAllTopics ? RECOMMENDED_TOPICS : RECOMMENDED_TOPICS.slice(0, 5)).map((topic) => {
             const isActive = activeTag === topic.tag;
             const linkHref = isActive ? '/blog' : `/blog?tag=${topic.tag}`;
             return (
@@ -106,9 +112,12 @@ export function BlogSidebar({ posts }: BlogSidebarProps) {
           })}
         </div>
         <div className="mt-md">
-          <Link href="/blog" className="text-label-sm text-secondary hover:text-primary font-extrabold hover:underline">
-            See more topics
-          </Link>
+          <button
+            onClick={() => setShowAllTopics(!showAllTopics)}
+            className="text-label-sm text-secondary hover:text-primary font-extrabold hover:underline cursor-pointer bg-transparent border-none p-0"
+          >
+            {showAllTopics ? 'See fewer topics' : 'See more topics'}
+          </button>
         </div>
       </div>
 
@@ -144,14 +153,6 @@ export function BlogSidebar({ posts }: BlogSidebarProps) {
                       <span>·</span>
                       <span>{dateStr}</span>
                     </div>
-                    {/* Remove button */}
-                    <button
-                      onClick={(e) => handleRemoveBookmark(p.slug, e)}
-                      className="text-on-surface-variant/50 hover:text-error transition-colors cursor-pointer"
-                      title="Remove from reading list"
-                    >
-                      <span className="material-symbols-outlined !text-[14px]">close</span>
-                    </button>
                   </div>
                   {/* Post Link */}
                   <Link

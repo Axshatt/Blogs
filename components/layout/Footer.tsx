@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 const SOCIAL_LINKS = [
   { href: 'https://github.com', label: 'Github' },
   { href: 'https://x.com', label: 'X / Twitter' },
+  { href: 'https://www.instagram.com/code.akshat.in/', label: 'Instagram' },
   { href: 'https://linkedin.com', label: 'LinkedIn' },
   { href: 'mailto:hello@akshatcodes.dev', label: 'Email' },
 ];

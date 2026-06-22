@@ -40,7 +40,7 @@ export function Header() {
       <div className="flex items-center gap-md">
         <button
           onClick={() => window.dispatchEvent(new Event('toggle-sidebar'))}
-          className="flex items-center justify-center rounded-full transition-colors duration-200 ease-in-out hover:bg-surface-container cursor-pointer"
+          className="flex h-11 w-11 items-center justify-center rounded-full transition-colors duration-200 ease-in-out hover:bg-surface-container active:bg-surface-container-high cursor-pointer"
           aria-label="Toggle sidebar"
         >
           <span className="material-symbols-outlined text-primary !text-[24px]">menu</span>
@@ -49,7 +49,7 @@ export function Header() {
           href="/"
           className="text-headline-lg font-black tracking-tighter text-primary"
         >
-          AKSHATCODES
+          AkshatCodes
         </Link>
       </div>
 

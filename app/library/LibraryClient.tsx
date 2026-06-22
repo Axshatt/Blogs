@@ -221,7 +221,7 @@ export function LibraryClient({ posts }: { posts: PostData[] }) {
   ];
 
   return (
-    <div className="px-margin-mobile md:px-margin-desktop py-2xl max-w-[800px] mx-auto font-sans">
+    <div className="px-margin-mobile md:px-margin-desktop pt-[110px] pb-xl max-w-[800px] mx-auto font-sans px-lg md:px-xl">
       {/* Page Header */}
       <div className="flex items-center justify-between mb-xl">
         <h1 className="text-headline-lg md:text-[42px] font-black tracking-tight text-primary">

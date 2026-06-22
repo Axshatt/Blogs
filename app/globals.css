@@ -2,7 +2,7 @@
 
 @theme {
   /* ── Font Family ── */
-  --font-sans: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
   --font-inter: 'Inter', system-ui, sans-serif;
 
   /* ── Material Design 3 Color Palette ── */
@@ -39,19 +39,19 @@
   --color-error-container: #ffdad6;
   --color-on-error-container: #93000a;
 
-  --color-background: #fdf8f7;
+  --color-background: #ffffff;
   --color-on-background: #1c1b1b;
-  --color-surface: #fdf8f7;
+  --color-surface: #ffffff;
   --color-on-surface: #1c1b1b;
-  --color-surface-dim: #ddd9d8;
-  --color-surface-bright: #fdf8f7;
+  --color-surface-dim: #f4f0ef;
+  --color-surface-bright: #ffffff;
   --color-surface-tint: #5f5e5c;
-  --color-surface-variant: #e5e2e1;
+  --color-surface-variant: #eeeeee;
   --color-on-surface-variant: #474741;
-  --color-surface-container: #f1edec;
-  --color-surface-container-low: #f7f3f2;
-  --color-surface-container-high: #ebe7e6;
-  --color-surface-container-highest: #e5e2e1;
+  --color-surface-container: #f9f9f9;
+  --color-surface-container-low: #fafafa;
+  --color-surface-container-high: #f5f5f5;
+  --color-surface-container-highest: #eeeeee;
   --color-surface-container-lowest: #ffffff;
   --color-inverse-surface: #313030;
   --color-inverse-on-surface: #f4f0ef;

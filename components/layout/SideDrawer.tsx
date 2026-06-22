@@ -33,11 +33,12 @@ export function SideDrawer({ isOpen, onClose }: SideDrawerProps) {
     return () => window.removeEventListener('bookmarks-updated', loadBookmarkCount);
   }, []);
 
-  // Close drawer on route change
-  useEffect(() => {
-    onClose();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname]);
+
+  const handleItemClick = () => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      onClose();
+    }
+  };
 
   const NAV_ITEMS = [
     {
@@ -47,8 +48,22 @@ export function SideDrawer({ isOpen, onClose }: SideDrawerProps) {
       isActive: pathname === '/',
     },
     {
+      href: '/blog',
+      label: 'Builds',
+      icon: 'construction',
+      isActive: pathname.startsWith('/blog'),
+      mobileOnly: true,
+    },
+    {
+      href: '/about',
+      label: 'About',
+      icon: 'person',
+      isActive: pathname.startsWith('/about'),
+      mobileOnly: true,
+    },
+    {
       href: '/library',
-      label: 'Reading List',
+      label: 'Library',
       icon: 'bookmark',
       isActive: pathname === '/library',
       badge: bookmarkCount > 0 ? bookmarkCount : undefined,
@@ -57,27 +72,25 @@ export function SideDrawer({ isOpen, onClose }: SideDrawerProps) {
 
   return (
     <aside
-      className={`fixed top-[57px] left-0 z-30 h-[calc(100vh-57px)] w-[260px] bg-surface border-r border-outline-variant/20 transition-transform duration-300 ease-in-out flex flex-col ${
-        isOpen ? 'translate-x-0' : '-translate-x-full'
-      }`}
+      className={`fixed top-[57px] left-0 z-[45] md:z-30 h-[calc(100vh-57px)] w-[260px] bg-surface border-r border-outline-variant/20 transition-transform duration-300 ease-in-out flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
     >
       {/* Navigation Items */}
       <nav className="flex-1 px-md py-xl">
         <ul className="space-y-xs">
           {NAV_ITEMS.map((item) => (
-            <li key={item.href}>
+            <li key={item.href} className={item.mobileOnly ? 'md:hidden' : ''}>
               <Link
                 href={item.href}
-                className={`flex items-center gap-md px-md py-sm rounded-lg transition-all duration-200 group ${
-                  item.isActive
+                onClick={handleItemClick}
+                className={`flex items-center gap-md px-md py-sm rounded-lg transition-all duration-200 group ${item.isActive
                     ? 'bg-surface-container-high text-primary font-bold'
                     : 'text-on-surface-variant hover:bg-surface-container-low hover:text-primary'
-                }`}
+                  }`}
               >
                 <span
-                  className={`material-symbols-outlined !text-[22px] transition-colors ${
-                    item.isActive ? 'text-primary' : 'text-on-surface-variant group-hover:text-primary'
-                  }`}
+                  className={`material-symbols-outlined !text-[22px] transition-colors ${item.isActive ? 'text-primary' : 'text-on-surface-variant group-hover:text-primary'
+                    }`}
                   style={item.isActive ? { fontVariationSettings: "'FILL' 1" } : undefined}
                 >
                   {item.icon}

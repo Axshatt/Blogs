@@ -71,18 +71,6 @@ export default async function PostPage({ params }: PostPageProps) {
 
         <p className="text-body-lg text-on-surface-variant">{frontmatter.excerpt}</p>
 
-        {frontmatter.tags.length > 0 && (
-          <div className="mt-md flex flex-wrap gap-sm">
-            {frontmatter.tags.map((tag) => (
-              <span
-                key={tag}
-                className="text-label-sm rounded-full border border-outline-variant px-sm py-0.5 uppercase"
-              >
-                #{tag}
-              </span>
-            ))}
-          </div>
-        )}
 
         {frontmatter.canonical_url && (
           <p className="text-label-sm mt-md text-on-surface-variant">
@@ -116,12 +104,12 @@ export default async function PostPage({ params }: PostPageProps) {
             {prevPost ? (
               <Link
                 href={`/blog/${prevPost.slug}`}
-                className="group hairline-a bg-surface-container-low p-lg transition-all hover:bg-surface-container"
+                className="group py-md transition-all hover:opacity-85 block"
               >
                 <div className="text-label-sm mb-xs uppercase text-on-surface-variant">
                   ← Older
                 </div>
-                <div className="text-body-md text-primary transition-colors group-hover:text-secondary line-clamp-2">
+                <div className="text-body-md text-primary font-bold transition-colors group-hover:text-secondary line-clamp-2">
                   {prevPost.frontmatter.title}
                 </div>
               </Link>
@@ -131,12 +119,12 @@ export default async function PostPage({ params }: PostPageProps) {
             {nextPost ? (
               <Link
                 href={`/blog/${nextPost.slug}`}
-                className="group hairline-a bg-surface-container-low p-lg text-right transition-all hover:bg-surface-container"
+                className="group py-md text-right transition-all hover:opacity-85 block"
               >
                 <div className="text-label-sm mb-xs uppercase text-on-surface-variant">
                   Newer →
                 </div>
-                <div className="text-body-md text-primary transition-colors group-hover:text-secondary line-clamp-2">
+                <div className="text-body-md text-primary font-bold transition-colors group-hover:text-secondary line-clamp-2">
                   {nextPost.frontmatter.title}
                 </div>
               </Link>
