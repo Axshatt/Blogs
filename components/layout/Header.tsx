@@ -36,13 +36,22 @@ export function Header() {
       ref={navRef}
       className="sticky top-0 z-50 flex w-full items-center justify-between border-b border-outline-variant bg-background px-margin-mobile py-md md:px-margin-desktop"
     >
-      {/* Brand Logo */}
-      <Link
-        href="/"
-        className="text-headline-lg font-black tracking-tighter text-primary"
-      >
-        AKSHATCODES
-      </Link>
+      {/* Left: Hamburger + Brand Logo */}
+      <div className="flex items-center gap-md">
+        <button
+          onClick={() => window.dispatchEvent(new Event('toggle-sidebar'))}
+          className="flex items-center justify-center rounded-full p-sm transition-colors duration-200 ease-in-out hover:bg-surface-container cursor-pointer"
+          aria-label="Toggle sidebar"
+        >
+          <span className="material-symbols-outlined text-primary !text-[24px]">menu</span>
+        </button>
+        <Link
+          href="/"
+          className="text-headline-lg font-black tracking-tighter text-primary"
+        >
+          AKSHATCODES
+        </Link>
+      </div>
 
       {/* Desktop Navigation */}
       <div className="hidden items-center space-x-xl md:flex">
@@ -77,11 +86,6 @@ export function Header() {
           </span>
         </button>
       </div>
-
-      {/* Mobile Menu Toggle */}
-      <button className="p-sm text-primary md:hidden" aria-label="Open menu">
-        <span className="material-symbols-outlined">menu</span>
-      </button>
     </nav>
   );
 }

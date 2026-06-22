@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { SideDrawer } from '@/components/layout/SideDrawer';
 import { getBaseMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = getBaseMetadata();
@@ -30,6 +31,7 @@ export default function RootLayout({
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />
+          <SideDrawer />
         </div>
       </body>
     </html>

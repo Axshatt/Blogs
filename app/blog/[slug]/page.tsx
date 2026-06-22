@@ -6,6 +6,7 @@ import { generatePostMetadata } from '@/lib/seo';
 import { CategoryBadge } from '@/components/ui/CategoryBadge';
 import { useMDXComponents } from '@/mdx-components';
 import Link from 'next/link';
+import { AuthorBox } from '@/components/ui/AuthorBox';
 
 interface PostPageProps {
   params: Promise<{ slug: string }>;
@@ -102,6 +103,9 @@ export default async function PostPage({ params }: PostPageProps) {
       <div className="prose-content">
         <MDXRemote source={content} components={components} />
       </div>
+
+      {/* Author Info */}
+      <AuthorBox />
 
       {/* Prev / Next navigation */}
       {(prevPost || nextPost) && (

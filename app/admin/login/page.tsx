@@ -8,7 +8,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-[70vh] items-center justify-center bg-surface px-margin-mobile font-inter">
-      <div className="w-full max-w-md border border-outline-variant/40 bg-surface-container-lowest p-xl shadow-sm">
+      <div className="w-full max-w-md hairline-a bg-surface-container-lowest p-xl">
         <div className="mb-lg">
           <h1 className="text-[28px] font-black uppercase tracking-tighter text-primary">
             Admin Portal
@@ -32,7 +32,7 @@ export default function LoginPage() {
               type="password"
               required
               placeholder="••••••••"
-              className="w-full border border-outline-variant bg-surface px-md py-sm text-[16px] placeholder:text-outline/70 focus:border-primary focus:outline-none"
+              className="w-full border border-outline-variant/50 bg-surface-container-lowest px-md py-sm text-[16px] placeholder:text-outline/70 focus:border-primary focus:outline-none"
             />
           </div>
 

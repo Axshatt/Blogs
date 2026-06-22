@@ -16,8 +16,8 @@ export function Footer() {
 
   return (
     <footer className="border-t border-outline-variant px-margin-mobile py-xl md:px-margin-desktop">
-      {/* Conditionally render mini newsletter if NOT on base route (/) */}
-      {pathname !== '/' && (
+      {/* Conditionally render mini newsletter if NOT on base route (/) and NOT on admin routes */}
+      {pathname !== '/' && !pathname.startsWith('/admin') && (
         <div className="mb-lg pb-lg border-b border-outline-variant/30 flex flex-col md:flex-row md:items-center md:justify-between gap-md">
           <div className="flex flex-col font-inter">
             <h4 className="text-[18px] md:text-[20px] font-bold uppercase tracking-tight text-primary">

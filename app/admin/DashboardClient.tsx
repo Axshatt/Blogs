@@ -92,21 +92,21 @@ export function DashboardClient({ initialPosts }: DashboardClientProps) {
 
       {/* Stats row */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-lg mb-xl">
-        <div className="border border-outline-variant/40 bg-surface-container-lowest p-lg shadow-sm">
+        <div className="hairline-a bg-surface-container-lowest p-lg">
           <div className="flex items-center justify-between text-on-surface-variant">
             <span className="text-label-bold uppercase">Total Posts</span>
             <span className="material-symbols-outlined text-[20px]">article</span>
           </div>
           <div className="text-[36px] font-black tracking-tight mt-xs">{totalCount}</div>
         </div>
-        <div className="border border-outline-variant/40 bg-surface-container-lowest p-lg shadow-sm">
+        <div className="hairline-a bg-surface-container-lowest p-lg">
           <div className="flex items-center justify-between text-on-surface-variant">
             <span className="text-label-bold uppercase">Published</span>
             <span className="material-symbols-outlined text-[20px] text-secondary">check_circle</span>
           </div>
           <div className="text-[36px] font-black tracking-tight mt-xs">{publishedCount}</div>
         </div>
-        <div className="border border-outline-variant/40 bg-surface-container-lowest p-lg shadow-sm">
+        <div className="hairline-a bg-surface-container-lowest p-lg">
           <div className="flex items-center justify-between text-on-surface-variant">
             <span className="text-label-bold uppercase">Drafts</span>
             <span className="material-symbols-outlined text-[20px] text-outline">description</span>
@@ -162,7 +162,7 @@ export function DashboardClient({ initialPosts }: DashboardClientProps) {
       </div>
 
       {/* List Container */}
-      <div className="border border-outline-variant/40 bg-surface-container-lowest shadow-sm">
+      <div className="hairline-a bg-surface-container-lowest">
         {filteredPosts.length === 0 ? (
           <div className="p-xxl text-center text-on-surface-variant">
             <span className="material-symbols-outlined !text-[48px] text-outline/50 mb-sm">
@@ -223,7 +223,7 @@ export function DashboardClient({ initialPosts }: DashboardClientProps) {
       {/* Delete Confirmation Modal */}
       {deletingPost && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs px-margin-mobile">
-          <div className="w-full max-w-md border border-outline-variant bg-surface p-xl shadow-lg font-inter">
+          <div className="w-full max-w-md hairline-a bg-surface p-xl font-inter">
             <div className="mb-lg">
               <h2 className="text-[24px] font-black uppercase tracking-tight text-error flex items-center gap-sm">
                 <span className="material-symbols-outlined !text-[28px]">warning</span>

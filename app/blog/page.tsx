@@ -3,6 +3,7 @@ import { PostCard } from '@/components/ui/PostCard';
 import type { Category } from '@/types/post';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { BlogSidebar } from '@/components/ui/BlogSidebar';
 
 export const metadata: Metadata = {
   title: 'Blog - AkshatCodes',
@@ -109,9 +110,9 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-xl">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-xl lg:gap-x-0">
         {/* LEFT COLUMN: Posts Listing */}
-        <div className="lg:col-span-8 flex flex-col space-y-md">
+        <div className="lg:col-span-8 flex flex-col space-y-md lg:pr-xl lg:border-r lg:border-outline-variant/20">
           {/* Active Filter Indicators */}
           {(search || tag) && (
             <div className="flex flex-wrap gap-sm items-center text-label-sm uppercase text-on-surface-variant mb-sm">
@@ -156,7 +157,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
               )}
             </div>
           ) : (
-            <div className="grid gap-gutter">
+            <div className="flex flex-col bg-transparent">
               {paginatedPosts.map((post) => (
                 <PostCard key={post.slug} post={post} />
               ))}
@@ -214,9 +215,9 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         </div>
 
         {/* RIGHT COLUMN: Sidebar Filters */}
-        <div className="lg:col-span-4 space-y-lg">
+        <div className="lg:col-span-4 space-y-lg lg:pl-xl">
           {/* Search Input Panel */}
-          <div className="border border-outline-variant/40 bg-white p-lg shadow-sm">
+          <div className="bg-transparent py-md">
             <h3 className="text-label-bold uppercase text-primary border-b border-outline-variant/20 pb-xs mb-md">
               Search articles
             </h3>
@@ -243,68 +244,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
             </form>
           </div>
 
-          {/* Category Panel */}
-          <div className="border border-outline-variant/40 bg-white p-lg shadow-sm">
-            <h3 className="text-label-bold uppercase text-primary border-b border-outline-variant/20 pb-xs mb-md">
-              Content Pillars
-            </h3>
-            <div className="space-y-sm">
-              {CATEGORIES.map((cat) => {
-                const isActive = activeCategory === cat.value;
-                const count =
-                  cat.value === 'all'
-                    ? allPosts.length
-                    : allPosts.filter((p) => p.frontmatter.category === cat.value).length;
-                return (
-                  <Link
-                    key={cat.value}
-                    href={getPageUrlWithFilter({ category: cat.value, page: 1 })}
-                    className={`flex items-center justify-between text-body-md py-xs px-sm uppercase font-bold transition-all duration-200 ${
-                      isActive
-                        ? 'bg-primary text-on-primary'
-                        : 'text-on-surface-variant hover:bg-surface-container-low hover:text-primary'
-                    }`}
-                  >
-                    <span>{cat.label}</span>
-                    <span
-                      className={`text-label-sm px-xs py-0.5 rounded ${
-                        isActive ? 'bg-white/20 text-white' : 'bg-surface-container text-on-surface-variant'
-                      }`}
-                    >
-                      {count}
-                    </span>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Popular Tags Panel */}
-          {popularTags.length > 0 && (
-            <div className="border border-outline-variant/40 bg-white p-lg shadow-sm">
-              <h3 className="text-label-bold uppercase text-primary border-b border-outline-variant/20 pb-xs mb-md">
-                Popular Tags
-              </h3>
-              <div className="flex flex-wrap gap-xs">
-                {popularTags.map((t) => {
-                  const isActive = tag === t;
-                  return (
-                    <Link
-                      key={t}
-                      href={getPageUrlWithFilter({ tag: isActive ? '' : t, page: 1 })}
-                      className={`text-label-sm border px-sm py-0.5 uppercase transition-all duration-200 ${
-                        isActive
-                          ? 'border-primary bg-primary text-on-primary'
-                          : 'border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary'
-                      }`}
-                    >
-                      #{t}
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-          )}
+          <BlogSidebar posts={allPosts} />
         </div>
       </div>
     </div>

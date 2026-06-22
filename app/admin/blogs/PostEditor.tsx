@@ -184,7 +184,7 @@ export function PostEditor({ initialPost }: PostEditorProps) {
 
         {/* RIGHT COLUMN: Settings Panel (Col span 4) */}
         <div className="lg:col-span-4 space-y-lg">
-          <div className="border border-outline-variant/40 bg-surface-container-lowest p-lg shadow-sm space-y-md">
+          <div className="hairline-a bg-surface-container-lowest p-lg space-y-md">
             <h2 className="text-label-bold uppercase border-b border-outline-variant/20 pb-xs mb-md text-primary">
               Post Configurations
             </h2>
@@ -202,7 +202,7 @@ export function PostEditor({ initialPost }: PostEditorProps) {
                 value={slug}
                 onChange={(e) => setSlug(e.target.value.toLowerCase().replace(/\s+/g, '-'))}
                 placeholder="slug-path-format"
-                className="w-full border border-outline-variant bg-surface px-md py-xs text-[14px] font-mono focus:border-primary focus:outline-none"
+                className="w-full border border-outline-variant/50 bg-surface-container-lowest px-md py-xs text-[14px] font-mono focus:border-primary focus:outline-none"
               />
             </div>
 
@@ -218,7 +218,7 @@ export function PostEditor({ initialPost }: PostEditorProps) {
                 value={excerpt}
                 onChange={(e) => setExcerpt(e.target.value)}
                 placeholder="Brief summary for list cards and search engines..."
-                className="w-full border border-outline-variant bg-surface px-md py-xs text-[14px] focus:border-primary focus:outline-none resize-none"
+                className="w-full border border-outline-variant/50 bg-surface-container-lowest px-md py-xs text-[14px] focus:border-primary focus:outline-none resize-none"
               />
             </div>
 
@@ -232,7 +232,7 @@ export function PostEditor({ initialPost }: PostEditorProps) {
                 name="category"
                 value={category}
                 onChange={(e) => setCategory(e.target.value as Category)}
-                className="w-full border border-outline-variant bg-surface px-md py-xs text-[14px] uppercase text-label-bold outline-none focus:border-primary"
+                className="w-full border border-outline-variant/50 bg-surface-container-lowest px-md py-xs text-[14px] uppercase text-label-bold outline-none focus:border-primary"
               >
                 <option value="build-log">Build Log</option>
                 <option value="tutorial">Tutorial</option>
@@ -252,7 +252,7 @@ export function PostEditor({ initialPost }: PostEditorProps) {
                 value={tags}
                 onChange={(e) => setTags(e.target.value)}
                 placeholder="ai, dev, tutorials"
-                className="w-full border border-outline-variant bg-surface px-md py-xs text-[14px] focus:border-primary focus:outline-none"
+                className="w-full border border-outline-variant/50 bg-surface-container-lowest px-md py-xs text-[14px] focus:border-primary focus:outline-none"
               />
             </div>
 
@@ -267,7 +267,7 @@ export function PostEditor({ initialPost }: PostEditorProps) {
                 type="date"
                 value={publishedDate}
                 onChange={(e) => setPublishedDate(e.target.value)}
-                className="w-full border border-outline-variant bg-surface px-md py-xs text-[14px] focus:border-primary focus:outline-none"
+                className="w-full border border-outline-variant/50 bg-surface-container-lowest px-md py-xs text-[14px] focus:border-primary focus:outline-none"
               />
             </div>
 
@@ -282,7 +282,7 @@ export function PostEditor({ initialPost }: PostEditorProps) {
                 type="text"
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
-                className="w-full border border-outline-variant bg-surface px-md py-xs text-[14px] focus:border-primary focus:outline-none"
+                className="w-full border border-outline-variant/50 bg-surface-container-lowest px-md py-xs text-[14px] focus:border-primary focus:outline-none"
               />
             </div>
 
@@ -298,7 +298,7 @@ export function PostEditor({ initialPost }: PostEditorProps) {
                 readOnly
                 placeholder="/blog-images/example.jpg"
                 value={coverImage}
-                className="w-full border border-outline-variant bg-surface-container px-md py-xs text-[12px] text-on-surface-variant outline-none font-mono mb-sm"
+                className="w-full border border-outline-variant/50 bg-surface-container-lowest px-md py-xs text-[12px] text-on-surface-variant outline-none font-mono mb-sm"
               />
 
               <div className="flex gap-sm">
@@ -311,7 +311,7 @@ export function PostEditor({ initialPost }: PostEditorProps) {
                 />
                 <label
                   htmlFor="imageFile"
-                  className="text-label-bold border border-outline-variant px-md py-xs uppercase bg-surface hover:bg-surface-container cursor-pointer text-[12px] inline-flex items-center gap-xs"
+                  className="text-label-bold border border-outline-variant/50 px-md py-xs uppercase bg-surface-container-lowest hover:bg-surface-container cursor-pointer text-[12px] inline-flex items-center gap-xs"
                 >
                   <span className="material-symbols-outlined !text-[16px]">upload_file</span>
                   {uploading ? 'Uploading...' : 'Upload Image'}
