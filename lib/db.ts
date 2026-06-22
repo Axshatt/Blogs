@@ -61,7 +61,9 @@ function getPool(): Pool | null {
   return pool;
 }
 
-const JSON_DB_DIR = path.join(process.cwd(), '.data');
+const JSON_DB_DIR = process.env.VERCEL
+  ? path.join('/tmp', '.data')
+  : path.join(process.cwd(), '.data');
 const JSON_DB_PATH = path.join(JSON_DB_DIR, 'newsletter_db.json');
 
 // Get JSON DB contents
@@ -149,10 +151,21 @@ async function runQuery<T>(
       const isConnectionError = 
         error.code === 'ECONNREFUSED' || 
         error.code === 'ENOTFOUND' || 
+        error.code === 'EHOSTUNREACH' || 
+        error.code === 'ETIMEDOUT' || 
         error.code === '28P01' || // password authentication failed
-        error.message?.includes('connect') ||
-        error.message?.includes('authentication') ||
-        error.message?.includes('refused');
+        error.code === '28000' || // invalid authorization specification
+        error.code === '3D000' || // database does not exist
+        error.code === '57P01' || // admin shutdown
+        error.code === '57P03' || // database starting up
+        error.message?.toLowerCase().includes('connect') ||
+        error.message?.toLowerCase().includes('authentication') ||
+        error.message?.toLowerCase().includes('refused') ||
+        error.message?.toLowerCase().includes('ssl') ||
+        error.message?.toLowerCase().includes('certificate') ||
+        error.message?.toLowerCase().includes('handshake') ||
+        error.message?.toLowerCase().includes('self-signed') ||
+        error.message?.toLowerCase().includes('timeout');
 
       if (isConnectionError) {
         console.warn(
