@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const NAV_LINKS = [
   { href: '/', label: 'Log' },
@@ -12,8 +12,6 @@ const NAV_LINKS = [
 
 export function Header() {
   const pathname = usePathname();
-  const navRef = useRef<HTMLElement>(null);
-  const lastScrollRef = useRef(0);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   useEffect(() => {
@@ -35,25 +33,8 @@ export function Header() {
     }
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const nav = navRef.current;
-      if (!nav) return;
-      const currentScroll = window.pageYOffset;
-      if (currentScroll > lastScrollRef.current && currentScroll > 100) {
-        nav.style.transform = 'translateY(-100%)';
-      } else {
-        nav.style.transform = 'translateY(0)';
-      }
-      lastScrollRef.current = currentScroll;
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <nav
-      ref={navRef}
       className="sticky top-0 z-50 flex w-full items-center justify-between border-b border-outline-variant bg-background px-md py-md"
     >
       {/* Left: Hamburger + Brand Logo */}
@@ -73,9 +54,10 @@ export function Header() {
         </Link>
       </div>
 
-      {/* Desktop Navigation */}
-      <div className="hidden items-center space-x-xl md:flex">
-        <ul className="flex items-center space-x-lg">
+      {/* Right side navigation & controls */}
+      <div className="flex items-center gap-md">
+        {/* Desktop Navigation */}
+        <ul className="hidden items-center space-x-lg md:flex">
           {NAV_LINKS.map(({ href, label }) => {
             const isActive =
               href === '/' ? pathname === '/' : pathname.startsWith(href);

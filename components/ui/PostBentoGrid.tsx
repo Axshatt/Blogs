@@ -39,10 +39,15 @@ function CategoryPill({ category, inverted = false }: { category: string; invert
 }
 
 export function PostBentoGrid({ posts }: PostBentoGridProps) {
-  // Map real posts if they exist, fallback to mock if they don't
-  const p0 = posts.find(p => p.slug === 'ai-dungeon-layout-experiment') || posts[1];
-  const p1 = posts.find(p => p.slug === 'agency-month-1-retrospective') || posts[0];
-  const p2 = posts.find(p => p.slug === 'n8n-client-intake-chatbot') || posts[2];
+  // Map real posts chronologically by index
+  const p0 = posts[0];
+  const p1 = posts[1];
+  const p2 = posts[2];
+  const p3 = posts[3];
+  const p4 = posts[4];
+  const p5 = posts[5];
+  const p6 = posts[6];
+  const p7 = posts[7];
 
   return (
     <section className="mb-xxl">
@@ -59,14 +64,14 @@ export function PostBentoGrid({ posts }: PostBentoGridProps) {
             >
               <div className="w-[100px] h-[100px] md:w-[120px] md:h-[120px] shrink-0 relative overflow-hidden bg-surface-container">
                 <img
-                  src="/images/amanda_portrait.png"
-                  alt="Dungeon Layouts"
+                  src={p0.frontmatter.coverImage || "/images/amanda_portrait.png"}
+                  alt={p0.frontmatter.title}
                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
                 />
               </div>
               <div className="flex flex-col justify-center min-w-0">
                 <div className="flex flex-wrap gap-xs">
-                  <CategoryPill category="Team Spotlight" />
+                  <CategoryPill category={p0.frontmatter.category} />
                 </div>
                 <h3 className="mt-xs text-[20px] font-bold leading-tight tracking-tight text-primary transition-colors duration-200 group-hover:text-secondary line-clamp-2">
                   {p0.frontmatter.title}
@@ -90,15 +95,16 @@ export function PostBentoGrid({ posts }: PostBentoGridProps) {
             >
               <div className="w-full aspect-[16/10] overflow-hidden bg-surface-container mb-lg border border-outline-variant/20">
                 <img
-                  src="/images/train_motion.png"
-                  alt="AI Agency"
+                  src={p1.frontmatter.coverImage || "/images/train_motion.png"}
+                  alt={p1.frontmatter.title}
                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
                 />
               </div>
               <div className="flex flex-wrap gap-xs mb-sm">
-                <CategoryPill category="Product Updates" />
-                <CategoryPill category="Design" />
-                <CategoryPill category="User Experience" />
+                <CategoryPill category={p1.frontmatter.category} />
+                {p1.frontmatter.tags?.slice(0, 2).map((tag) => (
+                  <CategoryPill key={tag} category={tag} />
+                ))}
               </div>
               <h2 className="text-[32px] md:text-[38px] font-black leading-[1.05] tracking-tighter text-primary transition-colors duration-200 group-hover:text-secondary">
                 {p1.frontmatter.title}
@@ -116,58 +122,109 @@ export function PostBentoGrid({ posts }: PostBentoGridProps) {
         <div className="flex flex-col border-b md:border-b-0 md:border-x border-outline-variant/40">
           
           {/* Card 3: Stay the course (Teal graphic + Text) */}
-          <Link
-            href="#"
-            className="group flex flex-row items-start p-lg border-b border-outline-variant/40 min-h-[190px] gap-md"
-          >
-            <div className="w-[100px] h-[100px] md:w-[120px] md:h-[120px] shrink-0 bg-[#80cbc4] flex items-center justify-center border border-outline-variant/20">
-              <div className="w-[60px] h-[60px] md:w-[76px] md:h-[76px] rounded-full border-[6px] border-white flex items-center justify-center">
-                <div className="w-[26px] h-[26px] md:w-[32px] md:h-[32px] rounded-full bg-[#1c2e24]" />
-              </div>
-            </div>
-            <div className="flex flex-col justify-center min-w-0">
-              <div className="flex flex-wrap gap-xs">
-                <CategoryPill category="Product Updates" />
-              </div>
-              <h3 className="mt-xs text-[20px] font-bold leading-tight tracking-tight text-primary transition-colors duration-200 group-hover:text-secondary">
-                Stay the course
-              </h3>
-              <p className="mt-2xs text-[14px] text-on-surface-variant line-clamp-2 leading-relaxed">
-                This is some room for some nice text about this blog post
-              </p>
-            </div>
-          </Link>
-
-          {/* Card 4: New CFO (Text only) */}
-          <Link
-            href="#"
-            className="group flex flex-col p-lg border-b border-outline-variant/40"
-          >
-            <div className="flex flex-wrap gap-xs">
-              <CategoryPill category="Intros" />
-            </div>
-            <h3 className="mt-sm text-[22px] font-bold leading-tight tracking-tight text-primary transition-colors duration-200 group-hover:text-secondary">
-              New CFO
-            </h3>
-            <p className="mt-2xs text-[14px] text-on-surface-variant line-clamp-2 leading-relaxed">
-              We welcome Jim Smith to the team this week - here&apos;s more about him
-            </p>
-          </Link>
-
-          {/* Card 5: Product release / Chatbot (Text only) */}
           {p2 ? (
             <Link
               href={`/blog/${p2.slug}`}
+              className="group flex flex-row items-start p-lg border-b border-outline-variant/40 min-h-[190px] gap-md"
+            >
+              {p2.frontmatter.coverImage ? (
+                <div className="w-[100px] h-[100px] md:w-[120px] md:h-[120px] shrink-0 relative overflow-hidden bg-surface-container border border-outline-variant/20">
+                  <img
+                    src={p2.frontmatter.coverImage}
+                    alt={p2.frontmatter.title}
+                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+                  />
+                </div>
+              ) : (
+                <div className="w-[100px] h-[100px] md:w-[120px] md:h-[120px] shrink-0 bg-[#80cbc4] flex items-center justify-center border border-outline-variant/20">
+                  <div className="w-[60px] h-[60px] md:w-[76px] md:h-[76px] rounded-full border-[6px] border-white flex items-center justify-center">
+                    <div className="w-[26px] h-[26px] md:w-[32px] md:h-[32px] rounded-full bg-[#1c2e24]" />
+                  </div>
+                </div>
+              )}
+              <div className="flex flex-col justify-center min-w-0">
+                <div className="flex flex-wrap gap-xs">
+                  <CategoryPill category={p2.frontmatter.category} />
+                </div>
+                <h3 className="mt-xs text-[20px] font-bold leading-tight tracking-tight text-primary transition-colors duration-200 group-hover:text-secondary line-clamp-2">
+                  {p2.frontmatter.title}
+                </h3>
+                <p className="mt-2xs text-[14px] text-on-surface-variant line-clamp-2 leading-relaxed">
+                  {p2.frontmatter.excerpt}
+                </p>
+              </div>
+            </Link>
+          ) : (
+            <Link
+              href="#"
+              className="group flex flex-row items-start p-lg border-b border-outline-variant/40 min-h-[190px] gap-md"
+            >
+              <div className="w-[100px] h-[100px] md:w-[120px] md:h-[120px] shrink-0 bg-[#80cbc4] flex items-center justify-center border border-outline-variant/20">
+                <div className="w-[60px] h-[60px] md:w-[76px] md:h-[76px] rounded-full border-[6px] border-white flex items-center justify-center">
+                  <div className="w-[26px] h-[26px] md:w-[32px] md:h-[32px] rounded-full bg-[#1c2e24]" />
+                </div>
+              </div>
+              <div className="flex flex-col justify-center min-w-0">
+                <div className="flex flex-wrap gap-xs">
+                  <CategoryPill category="Product Updates" />
+                </div>
+                <h3 className="mt-xs text-[20px] font-bold leading-tight tracking-tight text-primary transition-colors duration-200 group-hover:text-secondary">
+                  Stay the course
+                </h3>
+                <p className="mt-2xs text-[14px] text-on-surface-variant line-clamp-2 leading-relaxed">
+                  This is some room for some nice text about this blog post
+                </p>
+              </div>
+            </Link>
+          )}
+
+          {/* Card 4: New CFO (Text only) */}
+          {p3 ? (
+            <Link
+              href={`/blog/${p3.slug}`}
               className="group flex flex-col p-lg border-b border-outline-variant/40"
             >
               <div className="flex flex-wrap gap-xs">
-                <CategoryPill category="Product" />
+                <CategoryPill category={p3.frontmatter.category} />
               </div>
               <h3 className="mt-sm text-[22px] font-bold leading-tight tracking-tight text-primary transition-colors duration-200 group-hover:text-secondary">
-                {p2.frontmatter.title}
+                {p3.frontmatter.title}
               </h3>
               <p className="mt-2xs text-[14px] text-on-surface-variant line-clamp-2 leading-relaxed">
-                {p2.frontmatter.excerpt}
+                {p3.frontmatter.excerpt}
+              </p>
+            </Link>
+          ) : (
+            <Link
+              href="#"
+              className="group flex flex-col p-lg border-b border-outline-variant/40"
+            >
+              <div className="flex flex-wrap gap-xs">
+                <CategoryPill category="Intros" />
+              </div>
+              <h3 className="mt-sm text-[22px] font-bold leading-tight tracking-tight text-primary transition-colors duration-200 group-hover:text-secondary">
+                New CFO
+              </h3>
+              <p className="mt-2xs text-[14px] text-on-surface-variant line-clamp-2 leading-relaxed">
+                We welcome Jim Smith to the team this week - here&apos;s more about him
+              </p>
+            </Link>
+          )}
+
+          {/* Card 5: Product release / Chatbot (Text only) */}
+          {p4 ? (
+            <Link
+              href={`/blog/${p4.slug}`}
+              className="group flex flex-col p-lg border-b border-outline-variant/40"
+            >
+              <div className="flex flex-wrap gap-xs">
+                <CategoryPill category={p4.frontmatter.category} />
+              </div>
+              <h3 className="mt-sm text-[22px] font-bold leading-tight tracking-tight text-primary transition-colors duration-200 group-hover:text-secondary">
+                {p4.frontmatter.title}
+              </h3>
+              <p className="mt-2xs text-[14px] text-on-surface-variant line-clamp-2 leading-relaxed">
+                {p4.frontmatter.excerpt}
               </p>
             </Link>
           ) : (
@@ -188,20 +245,37 @@ export function PostBentoGrid({ posts }: PostBentoGridProps) {
           )}
 
           {/* Card 6: Focus is key (Text only) */}
-          <Link
-            href="#"
-            className="group flex flex-col p-lg"
-          >
-            <div className="flex flex-wrap gap-xs">
-              <CategoryPill category="Leadership" />
-            </div>
-            <h3 className="mt-sm text-[22px] font-bold leading-tight tracking-tight text-primary transition-colors duration-200 group-hover:text-secondary">
-              Focus is key
-            </h3>
-            <p className="mt-2xs text-[14px] text-on-surface-variant line-clamp-2 leading-relaxed">
-              We sit down with our CEO Kyle to learn how we stays focused daily
-            </p>
-          </Link>
+          {p5 ? (
+            <Link
+              href={`/blog/${p5.slug}`}
+              className="group flex flex-col p-lg"
+            >
+              <div className="flex flex-wrap gap-xs">
+                <CategoryPill category={p5.frontmatter.category} />
+              </div>
+              <h3 className="mt-sm text-[22px] font-bold leading-tight tracking-tight text-primary transition-colors duration-200 group-hover:text-secondary">
+                {p5.frontmatter.title}
+              </h3>
+              <p className="mt-2xs text-[14px] text-on-surface-variant line-clamp-2 leading-relaxed">
+                {p5.frontmatter.excerpt}
+              </p>
+            </Link>
+          ) : (
+            <Link
+              href="#"
+              className="group flex flex-col p-lg"
+            >
+              <div className="flex flex-wrap gap-xs">
+                <CategoryPill category="Leadership" />
+              </div>
+              <h3 className="mt-sm text-[22px] font-bold leading-tight tracking-tight text-primary transition-colors duration-200 group-hover:text-secondary">
+                Focus is key
+              </h3>
+              <p className="mt-2xs text-[14px] text-on-surface-variant line-clamp-2 leading-relaxed">
+                We sit down with our CEO Kyle to learn how we stays focused daily
+              </p>
+            </Link>
+          )}
 
         </div>
 
@@ -209,29 +283,55 @@ export function PostBentoGrid({ posts }: PostBentoGridProps) {
         <div className="flex flex-col">
           
           {/* Card 7: Moving fast (Image + Text) */}
-          <Link
-            href="#"
-            className="group flex flex-row items-start p-lg border-b border-outline-variant/40 min-h-[190px] gap-md"
-          >
-            <div className="w-[100px] h-[100px] md:w-[120px] md:h-[120px] shrink-0 relative overflow-hidden bg-surface-container border border-outline-variant/20">
-              <img
-                src="/images/neon_abstract.png"
-                alt="Moving fast"
-                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
-              />
-            </div>
-            <div className="flex flex-col justify-center min-w-0">
-              <div className="flex flex-wrap gap-xs">
-                <CategoryPill category="Leadership" />
+          {p6 ? (
+            <Link
+              href={`/blog/${p6.slug}`}
+              className="group flex flex-row items-start p-lg border-b border-outline-variant/40 min-h-[190px] gap-md"
+            >
+              <div className="w-[100px] h-[100px] md:w-[120px] md:h-[120px] shrink-0 relative overflow-hidden bg-surface-container border border-outline-variant/20">
+                <img
+                  src={p6.frontmatter.coverImage || "/images/neon_abstract.png"}
+                  alt={p6.frontmatter.title}
+                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+                />
               </div>
-              <h3 className="mt-xs text-[20px] font-bold leading-tight tracking-tight text-primary transition-colors duration-200 group-hover:text-secondary">
-                Moving fast
-              </h3>
-              <p className="mt-2xs text-[14px] text-on-surface-variant line-clamp-2 leading-relaxed">
-                We break down the top 5 things we focus on to move super fast
-              </p>
-            </div>
-          </Link>
+              <div className="flex flex-col justify-center min-w-0">
+                <div className="flex flex-wrap gap-xs">
+                  <CategoryPill category={p6.frontmatter.category} />
+                </div>
+                <h3 className="mt-xs text-[20px] font-bold leading-tight tracking-tight text-primary transition-colors duration-200 group-hover:text-secondary line-clamp-2">
+                  {p6.frontmatter.title}
+                </h3>
+                <p className="mt-2xs text-[14px] text-on-surface-variant line-clamp-2 leading-relaxed">
+                  {p6.frontmatter.excerpt}
+                </p>
+              </div>
+            </Link>
+          ) : (
+            <Link
+              href="#"
+              className="group flex flex-row items-start p-lg border-b border-outline-variant/40 min-h-[190px] gap-md"
+            >
+              <div className="w-[100px] h-[100px] md:w-[120px] md:h-[120px] shrink-0 relative overflow-hidden bg-surface-container border border-outline-variant/20">
+                <img
+                  src="/images/neon_abstract.png"
+                  alt="Moving fast"
+                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+                />
+              </div>
+              <div className="flex flex-col justify-center min-w-0">
+                <div className="flex flex-wrap gap-xs">
+                  <CategoryPill category="Leadership" />
+                </div>
+                <h3 className="mt-xs text-[20px] font-bold leading-tight tracking-tight text-primary transition-colors duration-200 group-hover:text-secondary">
+                  Moving fast
+                </h3>
+                <p className="mt-2xs text-[14px] text-on-surface-variant line-clamp-2 leading-relaxed">
+                  We break down the top 5 things we focus on to move super fast
+                </p>
+              </div>
+            </Link>
+          )}
 
           {/* Card 8: Podcast cover image */}
           <div className="p-lg border-b border-outline-variant/40 flex items-center justify-center bg-surface-container-lowest">
@@ -245,21 +345,38 @@ export function PostBentoGrid({ posts }: PostBentoGridProps) {
           </div>
 
           {/* Card 9: $12M Raised (Text only) */}
-          <Link
-            href="#"
-            className="group flex flex-col p-lg"
-          >
-            <div className="flex flex-wrap gap-xs">
-              <CategoryPill category="Fundraising Announcement" />
-              <CategoryPill category="Company" />
-            </div>
-            <h3 className="mt-sm text-[28px] md:text-[34px] font-black leading-tight tracking-tight text-primary transition-colors duration-200 group-hover:text-secondary">
-              $12M Raised
-            </h3>
-            <p className="mt-2xs text-[14px] text-on-surface-variant line-clamp-2 leading-relaxed">
-              We just wrapped up our Series B
-            </p>
-          </Link>
+          {p7 ? (
+            <Link
+              href={`/blog/${p7.slug}`}
+              className="group flex flex-col p-lg"
+            >
+              <div className="flex flex-wrap gap-xs">
+                <CategoryPill category={p7.frontmatter.category} />
+              </div>
+              <h3 className="mt-sm text-[28px] md:text-[34px] font-black leading-tight tracking-tight text-primary transition-colors duration-200 group-hover:text-secondary">
+                {p7.frontmatter.title}
+              </h3>
+              <p className="mt-2xs text-[14px] text-on-surface-variant line-clamp-2 leading-relaxed">
+                {p7.frontmatter.excerpt}
+              </p>
+            </Link>
+          ) : (
+            <Link
+              href="#"
+              className="group flex flex-col p-lg"
+            >
+              <div className="flex flex-wrap gap-xs">
+                <CategoryPill category="Fundraising Announcement" />
+                <CategoryPill category="Company" />
+              </div>
+              <h3 className="mt-sm text-[28px] md:text-[34px] font-black leading-tight tracking-tight text-primary transition-colors duration-200 group-hover:text-secondary">
+                $12M Raised
+              </h3>
+              <p className="mt-2xs text-[14px] text-on-surface-variant line-clamp-2 leading-relaxed">
+                We just wrapped up our Series B
+              </p>
+            </Link>
+          )}
 
         </div>
 

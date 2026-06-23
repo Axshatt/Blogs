@@ -176,11 +176,6 @@ body {
   margin-top: 0;
 }
 
-/* ── Nav hide/show transition ── */
-nav {
-  transition: transform 0.3s ease-out;
-}
-
 /* ── Dark Mode Custom Property Overrides ── */
 .dark {
   --color-primary: #ffffff;
