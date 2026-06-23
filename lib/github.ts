@@ -14,6 +14,18 @@ const OWNER = process.env.GITHUB_OWNER || '';
 const REPO = process.env.GITHUB_REPO || '';
 const BRANCH = process.env.GITHUB_BRANCH || 'main';
 
+function extractFirstImageUrl(content: string): string | null {
+  const mdMatch = content.match(/!\[.*?\]\((.*?)\)/);
+  if (mdMatch && mdMatch[1]) {
+    return mdMatch[1];
+  }
+  const htmlMatch = content.match(/<img\s+[^>]*src=["']([^"']+)["']/i);
+  if (htmlMatch && htmlMatch[1]) {
+    return htmlMatch[1];
+  }
+  return null;
+}
+
 export async function getLatestPostsFromGitHub(): Promise<Post[]> {
   const octokit = getOctokit();
   try {
@@ -46,6 +58,7 @@ export async function getLatestPostsFromGitHub(): Promise<Post[]> {
             frontmatter: {
               ...frontmatter,
               draft: frontmatter.draft ?? false,
+              coverImage: frontmatter.coverImage || extractFirstImageUrl(content) || undefined,
             },
             content,
             readingTime: `${Math.ceil(content.split(/\s+/).length / 200)} min read`,
@@ -85,6 +98,7 @@ export async function getPostFromGitHub(slug: string): Promise<Post | null> {
       frontmatter: {
         ...frontmatter,
         draft: frontmatter.draft ?? false,
+        coverImage: frontmatter.coverImage || extractFirstImageUrl(content) || undefined,
       },
       content,
       readingTime: `${Math.ceil(content.split(/\s+/).length / 200)} min read`,
