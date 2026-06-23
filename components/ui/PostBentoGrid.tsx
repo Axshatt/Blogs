@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Image from 'next/image';
+import { SafeImage as Image } from './SafeImage';
 import type { Post } from '@/types/post';
 
 interface PostBentoGridProps {

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import { SafeImage as Image } from '@/components/ui/SafeImage';
 import { getLibraryLists, saveLibraryLists, type LibraryList } from '@/lib/library';
 
 interface PostData {

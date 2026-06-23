@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { SafeImage } from './SafeImage';
 import type { Post } from '@/types/post';
 import { BookmarkPopover } from '@/components/ui/BookmarkPopover';
 
@@ -101,7 +102,7 @@ export function PostCard({ post }: PostCardProps) {
         {frontmatter.coverImage && (
           <Link href={`/blog/${slug}`} className="shrink-0 block relative">
             <div className="w-[110px] h-[75px] sm:w-[150px] sm:h-[100px] relative overflow-hidden bg-surface-container border border-outline-variant/30 rounded transition-all duration-300 group-hover:shadow-sm">
-              <Image
+              <SafeImage
                 src={frontmatter.coverImage}
                 alt={frontmatter.title}
                 fill
