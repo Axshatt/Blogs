@@ -223,7 +223,7 @@ export function DashboardClient({ initialPosts }: DashboardClientProps) {
       {/* Delete Confirmation Modal */}
       {deletingPost && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs px-margin-mobile">
-          <div className="w-full max-w-md hairline-a bg-surface p-xl font-inter">
+          <div className="w-full max-w-2xl hairline-a bg-surface p-xl font-inter">
             <div className="mb-lg">
               <h2 className="text-[24px] font-black uppercase tracking-tight text-error flex items-center gap-sm">
                 <span className="material-symbols-outlined !text-[28px]">warning</span>

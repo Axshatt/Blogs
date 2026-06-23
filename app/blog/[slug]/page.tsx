@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
   const { slug } = await params;
   const post = getPostBySlug(slug);
   if (!post) return {};
-  return generatePostMetadata(post.frontmatter, slug);
+  return generatePostMetadata(post.frontmatter, slug, post.content);
 }
 
 export default async function PostPage({ params }: PostPageProps) {

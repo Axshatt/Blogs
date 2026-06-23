@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import type { Post } from '@/types/post';
 
 interface PostBentoGridProps {
@@ -63,10 +64,13 @@ export function PostBentoGrid({ posts }: PostBentoGridProps) {
               className="group flex flex-row items-start p-lg border-b border-outline-variant/40 min-h-[190px] gap-md"
             >
               <div className="w-[100px] h-[100px] md:w-[120px] md:h-[120px] shrink-0 relative overflow-hidden bg-surface-container">
-                <img
+                <Image
                   src={p0.frontmatter.coverImage || "/images/amanda_portrait.png"}
                   alt={p0.frontmatter.title}
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 100px, 120px"
+                  className="object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
                 />
               </div>
               <div className="flex flex-col justify-center min-w-0">
@@ -93,11 +97,14 @@ export function PostBentoGrid({ posts }: PostBentoGridProps) {
               href={`/blog/${p1.slug}`}
               className="group flex flex-col p-lg mt-md"
             >
-              <div className="w-full aspect-[16/10] overflow-hidden bg-surface-container mb-lg border border-outline-variant/20">
-                <img
+              <div className="w-full aspect-[16/10] relative overflow-hidden bg-surface-container mb-lg border border-outline-variant/20">
+                <Image
                   src={p1.frontmatter.coverImage || "/images/train_motion.png"}
                   alt={p1.frontmatter.title}
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
+                  className="object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
                 />
               </div>
               <div className="flex flex-wrap gap-xs mb-sm">
@@ -129,10 +136,12 @@ export function PostBentoGrid({ posts }: PostBentoGridProps) {
             >
               {p2.frontmatter.coverImage ? (
                 <div className="w-[100px] h-[100px] md:w-[120px] md:h-[120px] shrink-0 relative overflow-hidden bg-surface-container border border-outline-variant/20">
-                  <img
+                  <Image
                     src={p2.frontmatter.coverImage}
                     alt={p2.frontmatter.title}
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+                    fill
+                    sizes="(max-width: 768px) 100px, 120px"
+                    className="object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
                   />
                 </div>
               ) : (
@@ -289,10 +298,12 @@ export function PostBentoGrid({ posts }: PostBentoGridProps) {
               className="group flex flex-row items-start p-lg border-b border-outline-variant/40 min-h-[190px] gap-md"
             >
               <div className="w-[100px] h-[100px] md:w-[120px] md:h-[120px] shrink-0 relative overflow-hidden bg-surface-container border border-outline-variant/20">
-                <img
+                <Image
                   src={p6.frontmatter.coverImage || "/images/neon_abstract.png"}
                   alt={p6.frontmatter.title}
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+                  fill
+                  sizes="(max-width: 768px) 100px, 120px"
+                  className="object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
                 />
               </div>
               <div className="flex flex-col justify-center min-w-0">
@@ -313,10 +324,12 @@ export function PostBentoGrid({ posts }: PostBentoGridProps) {
               className="group flex flex-row items-start p-lg border-b border-outline-variant/40 min-h-[190px] gap-md"
             >
               <div className="w-[100px] h-[100px] md:w-[120px] md:h-[120px] shrink-0 relative overflow-hidden bg-surface-container border border-outline-variant/20">
-                <img
+                <Image
                   src="/images/neon_abstract.png"
                   alt="Moving fast"
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+                  fill
+                  sizes="(max-width: 768px) 100px, 120px"
+                  className="object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
                 />
               </div>
               <div className="flex flex-col justify-center min-w-0">
@@ -336,10 +349,12 @@ export function PostBentoGrid({ posts }: PostBentoGridProps) {
           {/* Card 8: Podcast cover image */}
           <div className="p-lg border-b border-outline-variant/40 flex items-center justify-center bg-surface-container-lowest">
             <div className="w-full aspect-square relative overflow-hidden bg-[#1e2722] border border-outline-variant/20">
-              <img
+              <Image
                 src="/images/ep_107_cover.png"
                 alt="Ep. 107"
-                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+                fill
+                sizes="(max-width: 768px) 100vw, 300px"
+                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
               />
             </div>
           </div>

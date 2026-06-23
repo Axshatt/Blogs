@@ -6,6 +6,9 @@ import type { Category } from '@/types/post';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { serialize } from 'next-mdx-remote/serialize';
+import { after } from 'next/server';
+import { getNewsletterBySlug, createNewsletter, updateNewsletter, getSubscribers } from '@/lib/db';
+import { sendCampaignEmail } from '@/lib/resend';
 
 export async function loginAction(prevState: { error?: string } | null, formData: FormData) {
   const password = formData.get('password') as string;
@@ -70,6 +73,52 @@ export async function savePostAction(
   const success = await writePostToGitHub(slug, frontmatter, content, commitMessage);
 
   if (success) {
+    if (publishedStatus) {
+      after(async () => {
+        try {
+          const trackingSlug = `auto-blog-${slug}`;
+          const existing = await getNewsletterBySlug(trackingSlug);
+          if (!existing) {
+            const subscribers = await getSubscribers();
+            const recipients = subscribers.filter((s) => s.verified && !s.unsubscribed);
+            if (recipients.length > 0) {
+              const newsletter = await createNewsletter(
+                trackingSlug,
+                title,
+                content,
+                'draft'
+              );
+              for (const subscriber of recipients) {
+                try {
+                  await sendCampaignEmail({
+                    to: subscriber.email,
+                    email: subscriber.email,
+                    title: title,
+                    markdown: content,
+                    nid: newsletter.id,
+                    sid: subscriber.id,
+                  });
+                } catch (err) {
+                  console.error(`Failed to send auto-blog email to ${subscriber.email}:`, err);
+                }
+              }
+              await updateNewsletter(
+                newsletter.id,
+                trackingSlug,
+                title,
+                content,
+                'sent',
+                null,
+                new Date()
+              );
+            }
+          }
+        } catch (e) {
+          console.error('Error running real-time auto-blog email sync:', e);
+        }
+      });
+    }
+
     revalidatePath('/blog');
     revalidatePath(`/blog/${slug}`);
     revalidatePath('/');

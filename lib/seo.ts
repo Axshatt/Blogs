@@ -70,22 +70,44 @@ export function getBaseMetadata(): Metadata {
       card: 'summary_large_image',
       title: SITE_NAME,
       description: SITE_DESCRIPTION,
-      creator: '@akshatcodes',
-      site: '@akshatcodes',
+      creator: '@axshattt',
+      site: '@axshattt',
       images: [`${SITE_URL}/og-image.png`],
     },
   };
 }
 
+function extractFirstImageUrl(content: string): string | null {
+  const mdMatch = content.match(/!\[.*?\]\((.*?)\)/);
+  if (mdMatch && mdMatch[1]) {
+    return mdMatch[1];
+  }
+  const htmlMatch = content.match(/<img\s+[^>]*src=["']([^"']+)["']/i);
+  if (htmlMatch && htmlMatch[1]) {
+    return htmlMatch[1];
+  }
+  return null;
+}
+
 export function generatePostMetadata(
   frontmatter: PostFrontmatter,
-  slug: string
+  slug: string,
+  content?: string
 ): Metadata {
   const postUrl = `${SITE_URL}/blog/${slug}`;
   const canonicalUrl = frontmatter.canonical_url ?? postUrl;
-  const ogImageUrl = frontmatter.coverImage
-    ? `${SITE_URL}${frontmatter.coverImage}`
-    : `${SITE_URL}/og-image.png`;
+
+  const rawImage = frontmatter.coverImage || (content ? extractFirstImageUrl(content) : null);
+  let ogImageUrl = `${SITE_URL}/og-image.png`;
+
+  if (rawImage) {
+    if (rawImage.startsWith('http://') || rawImage.startsWith('https://')) {
+      ogImageUrl = rawImage;
+    } else {
+      const cleanPath = rawImage.startsWith('/') ? rawImage : `/${rawImage}`;
+      ogImageUrl = `${SITE_URL}${cleanPath}`;
+    }
+  }
 
   return {
     title: frontmatter.title,
@@ -114,8 +136,8 @@ export function generatePostMetadata(
       card: 'summary_large_image',
       title: frontmatter.title,
       description: frontmatter.excerpt,
-      creator: '@akshatcodes',
-      site: '@akshatcodes',
+      creator: '@axshattt',
+      site: '@axshattt',
       images: [ogImageUrl],
     },
   };
@@ -138,9 +160,9 @@ export function getOrganizationSchema() {
     },
     'sameAs': [
       'https://github.com/Axshatt',
-      'https://x.com',
+      'https://x.com/axshattt',
       'https://www.instagram.com/code.akshat.in/',
-      'https://linkedin.com'
+      'https://www.linkedin.com/in/axshattt/'
     ],
   };
 }
@@ -160,9 +182,9 @@ export function getPersonSchema() {
     },
     'sameAs': [
       'https://github.com/Axshatt',
-      'https://x.com',
+      'https://x.com/axshattt',
       'https://www.instagram.com/code.akshat.in/',
-      'https://linkedin.com'
+      'https://www.linkedin.com/in/axshattt/'
     ],
     'jobTitle': 'Full-stack Developer & AI Engineer',
     'worksFor': {

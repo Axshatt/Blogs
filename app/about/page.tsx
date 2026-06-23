@@ -37,7 +37,7 @@ export default function AboutPage() {
         </h3>
         <div className="flex items-center gap-md">
           <a
-            href="https://github.com"
+            href="https://github.com/Axshatt"
             target="_blank"
             rel="noopener noreferrer"
             className="w-12 h-12 rounded-full border border-outline-variant bg-surface text-primary hover:bg-surface-container-low hover:text-secondary transition-all duration-300 flex items-center justify-center cursor-pointer"
@@ -46,7 +46,7 @@ export default function AboutPage() {
             <span className="material-symbols-outlined !text-[24px]">code</span>
           </a>
           <a
-            href="https://x.com"
+            href="https://x.com/axshattt"
             target="_blank"
             rel="noopener noreferrer"
             className="w-12 h-12 rounded-full border border-outline-variant bg-surface text-primary hover:bg-surface-container-low hover:text-secondary transition-all duration-300 flex items-center justify-center cursor-pointer"
@@ -68,7 +68,7 @@ export default function AboutPage() {
             </svg>
           </a>
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/axshattt/"
             target="_blank"
             rel="noopener noreferrer"
             className="w-12 h-12 rounded-full border border-outline-variant bg-surface text-primary hover:bg-surface-container-low hover:text-secondary transition-all duration-300 flex items-center justify-center cursor-pointer"
@@ -79,7 +79,7 @@ export default function AboutPage() {
             </svg>
           </a>
           <a
-            href="mailto:hello@akshatcodes.dev"
+            href="mailto:codepreneur.in@gmail.com"
             className="w-12 h-12 rounded-full border border-outline-variant bg-surface text-primary hover:bg-surface-container-low hover:text-secondary transition-all duration-300 flex items-center justify-center cursor-pointer"
             title="Email"
           >

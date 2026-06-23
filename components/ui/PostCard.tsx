@@ -101,10 +101,12 @@ export function PostCard({ post }: PostCardProps) {
         {frontmatter.coverImage && (
           <Link href={`/blog/${slug}`} className="shrink-0 block relative">
             <div className="w-[110px] h-[75px] sm:w-[150px] sm:h-[100px] relative overflow-hidden bg-surface-container border border-outline-variant/30 rounded transition-all duration-300 group-hover:shadow-sm">
-              <img
+              <Image
                 src={frontmatter.coverImage}
                 alt={frontmatter.title}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                fill
+                sizes="(max-width: 640px) 110px, 150px"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
             </div>
           </Link>

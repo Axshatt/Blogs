@@ -3,11 +3,11 @@
 import Link from 'next/link';
 
 const SOCIAL_LINKS = [
-  { href: 'https://github.com', label: 'Github' },
-  { href: 'https://x.com', label: 'X / Twitter' },
+  { href: 'https://github.com/Axshatt', label: 'Github' },
+  { href: 'https://x.com/axshattt', label: 'X / Twitter' },
   { href: 'https://www.instagram.com/code.akshat.in/', label: 'Instagram' },
-  { href: 'https://linkedin.com', label: 'LinkedIn' },
-  { href: 'mailto:hello@akshatcodes.dev', label: 'Email' },
+  { href: 'https://www.linkedin.com/in/axshattt/', label: 'LinkedIn' },
+  { href: 'mailto:codepreneur.in@gmail.com', label: 'Email' },
 ];
 
 export function Footer() {

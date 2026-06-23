@@ -363,10 +363,12 @@ export function LibraryClient({ posts }: { posts: PostData[] }) {
                           className="flex-1 relative bg-surface-container h-full border-r border-outline-variant/25 last:border-r-0"
                         >
                           {post.coverImage ? (
-                            <img
+                            <Image
                               src={post.coverImage}
                               alt={post.title}
-                              className="w-full h-full object-cover"
+                              fill
+                              sizes="(max-width: 640px) 33vw, 150px"
+                              className="object-cover"
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center bg-surface-container-high">
@@ -579,10 +581,12 @@ export function LibraryClient({ posts }: { posts: PostData[] }) {
                           {post.coverImage && (
                             <Link href={`/blog/${post.slug}`} className="shrink-0">
                               <div className="w-[110px] h-[75px] sm:w-[130px] sm:h-[85px] relative overflow-hidden bg-surface-container rounded">
-                                <img
+                                <Image
                                   src={post.coverImage}
                                   alt={post.title}
-                                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                  fill
+                                  sizes="(max-width: 640px) 110px, 130px"
+                                  className="object-cover transition-transform duration-500 group-hover:scale-105"
                                 />
                               </div>
                             </Link>
@@ -665,10 +669,12 @@ export function LibraryClient({ posts }: { posts: PostData[] }) {
                       {post.coverImage && (
                         <Link href={`/blog/${post.slug}`} className="shrink-0">
                           <div className="w-[110px] h-[75px] sm:w-[130px] sm:h-[85px] relative overflow-hidden bg-surface-container rounded">
-                            <img
+                            <Image
                               src={post.coverImage}
                               alt={post.title}
-                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                              fill
+                              sizes="(max-width: 640px) 110px, 130px"
+                              className="object-cover transition-transform duration-500 group-hover:scale-105"
                             />
                           </div>
                         </Link>

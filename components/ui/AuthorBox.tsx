@@ -38,7 +38,7 @@ export function AuthorBox() {
             {/* Social Links Buttons */}
             <div className="flex items-center gap-sm mt-xs md:mt-0">
               <a
-                href="https://github.com"
+                href="https://github.com/Axshatt"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full border border-outline-variant bg-surface text-primary hover:bg-surface-container-low transition-all duration-300 flex items-center justify-center cursor-pointer"
@@ -47,7 +47,7 @@ export function AuthorBox() {
                 <span className="material-symbols-outlined !text-[20px]">code</span>
               </a>
               <a
-                href="https://x.com"
+                href="https://x.com/axshattt"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full border border-outline-variant bg-surface text-primary hover:bg-surface-container-low transition-all duration-300 flex items-center justify-center cursor-pointer"
@@ -69,7 +69,7 @@ export function AuthorBox() {
                 </svg>
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/axshattt/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full border border-outline-variant bg-surface text-primary hover:bg-surface-container-low transition-all duration-300 flex items-center justify-center cursor-pointer"
