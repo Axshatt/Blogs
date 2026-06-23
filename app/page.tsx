@@ -2,6 +2,7 @@ import { getAllPosts } from '@/lib/posts';
 import { HeroSection } from '@/components/ui/HeroSection';
 import { PostBentoGrid } from '@/components/ui/PostBentoGrid';
 import { NewsletterSection } from '@/components/ui/NewsletterSection';
+import { getPersonSchema, getOrganizationSchema } from '@/lib/seo';
 
 const HERO_CATEGORIES = [
   { value: 'build-log', label: 'Build Log', href: '/blog?category=build-log' },
@@ -14,9 +15,25 @@ const HERO_CATEGORIES = [
 
 export default function HomePage() {
   const allPosts = getAllPosts();
+  const personSchema = getPersonSchema();
+  const orgSchema = getOrganizationSchema();
 
   return (
     <div className="min-h-screen px-margin-mobile py-xxl md:px-margin-desktop">
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(personSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(orgSchema),
+        }}
+      />
+
       {/* Hero Section: Title + Category Tags */}
       <HeroSection
         title={

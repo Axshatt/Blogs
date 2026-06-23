@@ -1,9 +1,11 @@
 'use client';
 
-import { useState, useActionState } from 'react';
+import { useState, useActionState, useEffect } from 'react';
 import Link from 'next/link';
 import type { Post, Category } from '@/types/post';
-import { savePostAction, uploadImageAction } from '../actions';
+import { savePostAction, uploadImageAction, compileMdxAction } from '../actions';
+import { MDXRemote } from 'next-mdx-remote';
+import { useMDXComponents } from '@/mdx-components';
 
 interface PostEditorProps {
   initialPost?: Post;
@@ -37,7 +39,33 @@ export function PostEditor({ initialPost }: PostEditorProps) {
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
 
+  // MDX Compiler State
+  const [compiledContent, setCompiledContent] = useState<any>(null);
+  const [compiling, setCompiling] = useState(false);
+  const [compileError, setCompileError] = useState('');
 
+  const components = useMDXComponents({});
+
+  useEffect(() => {
+    if (activeTab === 'preview' && content) {
+      setCompiling(true);
+      setCompileError('');
+      compileMdxAction(content)
+        .then((res) => {
+          if (res.serialized) {
+            setCompiledContent(res.serialized);
+          } else if (res.error) {
+            setCompileError(res.error);
+          }
+        })
+        .catch(() => {
+          setCompileError('Error compiling MDX content.');
+        })
+        .finally(() => {
+          setCompiling(false);
+        });
+    }
+  }, [activeTab, content]);
 
   // Image Upload handler
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -164,15 +192,18 @@ export function PostEditor({ initialPost }: PostEditorProps) {
                   className="flex-1 w-full min-h-[400px] bg-transparent border-none outline-none font-mono text-[14px] leading-relaxed resize-y focus:ring-0"
                 />
               ) : (
-                <div className="prose prose-sm max-w-none min-h-[400px] overflow-y-auto font-sans leading-relaxed">
-                  {content ? (
-                    <div className="space-y-md">
-                      {content.split('\n\n').map((para, i) => (
-                        <p key={i} className="text-body-md text-on-surface-variant">
-                          {para}
-                        </p>
-                      ))}
+                <div className="prose-content max-w-none min-h-[400px] overflow-y-auto font-sans leading-relaxed">
+                  {compiling ? (
+                    <div className="flex items-center gap-sm text-label-sm text-outline">
+                      <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+                      Compiling preview...
                     </div>
+                  ) : compileError ? (
+                    <p className="text-label-sm text-error bg-error-container/20 border border-error/20 p-sm uppercase">
+                      {compileError}
+                    </p>
+                  ) : compiledContent ? (
+                    <MDXRemote {...compiledContent} components={components} />
                   ) : (
                     <p className="text-label-sm text-outline italic">Nothing to preview yet.</p>
                   )}

@@ -5,6 +5,7 @@ import { writePostToGitHub, deletePostFromGitHub, uploadImageToGitHub } from '@/
 import type { Category } from '@/types/post';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { serialize } from 'next-mdx-remote/serialize';
 
 export async function loginAction(prevState: { error?: string } | null, formData: FormData) {
   const password = formData.get('password') as string;
@@ -114,3 +115,13 @@ export async function uploadImageAction(
     return { error: 'Error reading file.' };
   }
 }
+
+export async function compileMdxAction(content: string) {
+  try {
+    const serialized = await serialize(content);
+    return { serialized };
+  } catch (error: any) {
+    return { error: error?.message || 'Failed to compile MDX' };
+  }
+}
+

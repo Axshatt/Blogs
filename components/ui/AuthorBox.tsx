@@ -9,7 +9,7 @@ export function AuthorBox() {
         {/* Avatar */}
         <div className="shrink-0 relative w-20 h-20 md:w-24 md:h-24">
           <Image
-            src="/images/akshat_profile.png"
+            src="/images/akshat_profile.jpg"
             alt="Akshat Singh"
             fill
             className="rounded-full object-cover border border-outline-variant/30 transition-transform duration-300 hover:scale-105"

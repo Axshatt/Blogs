@@ -44,10 +44,10 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
 
         {/* Main + Footer wrapper — shifts right only on desktop */}
         <div
-          className="flex flex-1 flex-col transition-[margin-left] duration-300 ease-in-out"
+          className="flex flex-1 flex-col transition-[margin-left] duration-300 ease-in-out min-w-0"
           style={{ marginLeft: sidebarOpen && !isMobile ? 260 : 0 }}
         >
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 min-w-0">{children}</main>
           <Footer />
         </div>
       </div>

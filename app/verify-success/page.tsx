@@ -33,7 +33,7 @@ function VerifySuccessContent() {
   }
 
   return (
-    <div className="w-full max-w-md bg-surface border border-outline-variant/35 rounded-lg p-lg md:p-xl shadow-sm text-center">
+    <div className="w-full max-w-2xl bg-surface border border-outline-variant/35 rounded-lg p-lg md:p-xl shadow-sm text-center">
       <div className={`w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-lg ${
         isSuccess 
           ? 'bg-secondary-container text-on-secondary-container' 
@@ -64,7 +64,7 @@ function VerifySuccessContent() {
 
 export default function VerifySuccessPage() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[70vh] px-md py-xxl bg-background">
+    <div className="w-full flex flex-col items-center justify-center min-h-[70vh] px-md py-xxl bg-background">
       <Suspense fallback={
         <div className="flex justify-center items-center h-[200px]">
           <div className="w-8 h-8 border-3 border-primary border-t-transparent rounded-full animate-spin"></div>

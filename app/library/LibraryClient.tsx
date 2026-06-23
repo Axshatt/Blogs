@@ -479,27 +479,11 @@ export function LibraryClient({ posts }: { posts: PostData[] }) {
                 {showMoreMenu && (
                   <div className="absolute right-0 top-full mt-xs z-50 w-[180px] bg-surface border border-outline-variant/35 rounded-lg shadow-xl py-sm animate-fade-in text-primary text-body-md">
                     <button
-                      onClick={() => copyListLink(selectedListName)}
-                      className="w-full text-left px-md py-sm hover:bg-surface-container-low transition-colors cursor-pointer flex items-center gap-sm"
-                    >
-                      <span className="material-symbols-outlined !text-[18px]">link</span>
-                      Copy link
-                    </button>
-                    <button
                       onClick={startEditingList}
                       className="w-full text-left px-md py-sm hover:bg-surface-container-low transition-colors cursor-pointer flex items-center gap-sm"
                     >
                       <span className="material-symbols-outlined !text-[18px]">edit</span>
                       Edit list info
-                    </button>
-                    <button
-                      onClick={() => toggleListPrivacy(selectedListName)}
-                      className="w-full text-left px-md py-sm hover:bg-surface-container-low transition-colors cursor-pointer flex items-center gap-sm"
-                    >
-                      <span className="material-symbols-outlined !text-[18px]">
-                        {currentList.isPrivate ? 'public' : 'lock'}
-                      </span>
-                      {currentList.isPrivate ? 'Make list public' : 'Make list private'}
                     </button>
                     <button
                       onClick={() => {

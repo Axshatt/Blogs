@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { getAllPosts, getPostBySlug, getAllSlugs } from '@/lib/posts';
-import { generatePostMetadata } from '@/lib/seo';
+import { generatePostMetadata, getBlogPostSchema } from '@/lib/seo';
 import { CategoryBadge } from '@/components/ui/CategoryBadge';
 import { useMDXComponents } from '@/mdx-components';
 import Link from 'next/link';
@@ -44,8 +44,25 @@ export default async function PostPage({ params }: PostPageProps) {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const components = useMDXComponents({});
 
+  const postSchema = getBlogPostSchema(
+    frontmatter.title,
+    frontmatter.excerpt,
+    frontmatter.published,
+    slug,
+    frontmatter.coverImage,
+    frontmatter.author
+  );
+
   return (
     <article className="mx-auto max-w-3xl px-margin-mobile py-xxl md:px-margin-desktop">
+      {/* Blog Posting Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(postSchema),
+        }}
+      />
+
       <ReadingHistoryTracker slug={slug} />
       {/* Breadcrumb */}
       <div className="text-label-sm mb-lg flex items-center gap-sm text-on-surface-variant">

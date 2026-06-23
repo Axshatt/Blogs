@@ -5,7 +5,6 @@ import { PostEditor } from '@/app/admin/blogs/PostEditor';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Edit Blog Post - Admin',
   robots: {
     index: false,
     follow: false,

@@ -1,9 +1,11 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { LayoutShell } from '@/components/layout/LayoutShell';
-import { getBaseMetadata } from '@/lib/seo';
+import { ThemeInitializer } from '@/components/layout/ThemeInitializer';
+import { getBaseMetadata, viewport as seoViewport } from '@/lib/seo';
 
 export const metadata: Metadata = getBaseMetadata();
+export const viewport: Viewport = seoViewport;
 
 export default function RootLayout({
   children,
@@ -23,19 +25,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
           rel="stylesheet"
         />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                  document.documentElement.classList.add('dark');
-                } else {
-                  document.documentElement.classList.remove('dark');
-                }
-              } catch (_) {}
-            `,
-          }}
-        />
+        <ThemeInitializer />
       </head>
       <body className="min-h-screen font-sans antialiased overflow-x-hidden">
         <LayoutShell>{children}</LayoutShell>

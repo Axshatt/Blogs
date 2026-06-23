@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import readingTime from 'reading-time';
+import { SITE_URL } from '@/lib/seo';
 
 type Params = Promise<{ slug: string }>;
 
@@ -25,13 +26,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     .trim();
 
   return {
-    title: `${issue.title} - AkshatCodes Newsletter`,
     description: cleanExcerpt,
+    alternates: {
+      canonical: `${SITE_URL}/newsletter/${issue.slug}`,
+    },
     openGraph: {
       title: issue.title,
       description: cleanExcerpt,
       type: 'article',
-      url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/newsletter/${issue.slug}`,
+      url: `${SITE_URL}/newsletter/${issue.slug}`,
     },
   };
 }
