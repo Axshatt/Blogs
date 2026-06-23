@@ -1,9 +1,11 @@
 'use client';
 
 import { useEffect } from 'react';
+import { trackEvent } from '@/lib/analytics';
 
 export function ReadingHistoryTracker({ slug }: { slug: string }) {
   useEffect(() => {
+    trackEvent('blog_read', { slug });
     const saved = localStorage.getItem('reading_history');
     let history: string[] = [];
     if (saved) {

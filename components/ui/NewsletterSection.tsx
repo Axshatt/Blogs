@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { trackEvent } from '@/lib/analytics';
 
 export function NewsletterSection() {
   const [email, setEmail] = useState('');
@@ -29,6 +30,7 @@ export function NewsletterSection() {
       setStatus('success');
       setMessage(data.message || 'Verification email sent!');
       setEmail('');
+      trackEvent('newsletter_signup', { success: true });
     } catch (err: any) {
       setStatus('error');
       setMessage(err.message || 'Something went wrong.');

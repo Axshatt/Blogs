@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import type { Post } from '@/types/post';
+import { trackEvent } from '@/lib/analytics';
 
 interface BlogSidebarProps {
   posts: Post[];
@@ -70,6 +71,13 @@ export function BlogSidebar({ posts }: BlogSidebarProps) {
       window.removeEventListener('bookmarks-updated', loadBookmarks);
     };
   }, []);
+
+  // Track search/filter usage
+  useEffect(() => {
+    if (activeTag) {
+      trackEvent('search_used', { tag: activeTag });
+    }
+  }, [activeTag]);
 
   // Remove a post from bookmarks directly from the sidebar
   const handleRemoveBookmark = (slug: string, e: React.MouseEvent) => {

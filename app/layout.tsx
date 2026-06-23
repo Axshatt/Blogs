@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { LayoutShell } from '@/components/layout/LayoutShell';
 import { ThemeInitializer } from '@/components/layout/ThemeInitializer';
+import { UmamiProvider } from '@/components/analytics/UmamiProvider';
 import { getBaseMetadata, viewport as seoViewport } from '@/lib/seo';
 
 const inter = Inter({
@@ -31,6 +32,7 @@ export default function RootLayout({
         <ThemeInitializer />
       </head>
       <body className="min-h-screen font-sans antialiased overflow-x-hidden">
+        <UmamiProvider />
         <LayoutShell>{children}</LayoutShell>
       </body>
     </html>
