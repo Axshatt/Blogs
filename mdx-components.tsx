@@ -1,11 +1,26 @@
 import type { MDXComponents } from 'mdx/types';
 import { CodeBlock } from '@/components/mdx/CodeBlock';
 import { Callout } from '@/components/mdx/Callout';
+import { SafeImage } from '@/components/ui/SafeImage';
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     ...components,
     // Override default HTML elements for editorial theme
+    img: ({ src, alt }) => {
+      if (!src) return null;
+      return (
+        <span className="block my-lg relative w-full aspect-[16/10] overflow-hidden rounded border border-outline-variant/20 bg-surface-container">
+          <SafeImage
+            src={src}
+            alt={alt || ''}
+            fill
+            sizes="(max-width: 768px) 100vw, 820px"
+            className="object-cover"
+          />
+        </span>
+      );
+    },
     h1: ({ children }) => (
       <h1 className="text-headline-xl mb-md mt-xl tracking-tight text-primary first:mt-0">
         {children}

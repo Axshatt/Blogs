@@ -88,7 +88,7 @@ export function PostCard({ post }: PostCardProps) {
       <div className="flex flex-row gap-lg justify-between items-start">
         {/* Left Side: Title & Subtitle */}
         <div className="flex-1 min-w-0">
-          <Link href={`/blog/${slug}`} className="block group/link">
+          <Link href={`/blog/${slug}`} prefetch={false} className="block group/link">
             <h2 className="text-[20px] md:text-[22px] font-extrabold leading-snug tracking-tight text-primary transition-colors duration-200 group-hover/link:text-secondary group-hover:text-secondary">
               {frontmatter.title}
             </h2>
@@ -100,7 +100,7 @@ export function PostCard({ post }: PostCardProps) {
 
         {/* Right Side: Featured Cover Image */}
         {frontmatter.coverImage && (
-          <Link href={`/blog/${slug}`} className="shrink-0 block relative">
+          <Link href={`/blog/${slug}`} prefetch={false} className="shrink-0 block relative">
             <div className="w-[110px] h-[75px] sm:w-[150px] sm:h-[100px] relative overflow-hidden bg-surface-container border border-outline-variant/30 rounded transition-all duration-300 group-hover:shadow-sm">
               <SafeImage
                 src={frontmatter.coverImage}

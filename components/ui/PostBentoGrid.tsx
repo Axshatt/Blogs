@@ -61,6 +61,7 @@ export function PostBentoGrid({ posts }: PostBentoGridProps) {
           {p0 ? (
             <Link
               href={`/blog/${p0.slug}`}
+              prefetch={false}
               className="group flex flex-row items-start p-lg border-b border-outline-variant/40 min-h-[190px] gap-md"
             >
               <div className="w-[100px] h-[100px] md:w-[120px] md:h-[120px] shrink-0 relative overflow-hidden bg-surface-container">
@@ -95,6 +96,7 @@ export function PostBentoGrid({ posts }: PostBentoGridProps) {
           {p1 ? (
             <Link
               href={`/blog/${p1.slug}`}
+              prefetch={false}
               className="group flex flex-col p-lg mt-md"
             >
               <div className="w-full aspect-[16/10] relative overflow-hidden bg-surface-container mb-lg border border-outline-variant/20">
@@ -132,6 +134,7 @@ export function PostBentoGrid({ posts }: PostBentoGridProps) {
           {p2 ? (
             <Link
               href={`/blog/${p2.slug}`}
+              prefetch={false}
               className="group flex flex-row items-start p-lg border-b border-outline-variant/40 min-h-[190px] gap-md"
             >
               {p2.frontmatter.coverImage ? (
@@ -191,6 +194,7 @@ export function PostBentoGrid({ posts }: PostBentoGridProps) {
           {p3 ? (
             <Link
               href={`/blog/${p3.slug}`}
+              prefetch={false}
               className="group flex flex-col p-lg border-b border-outline-variant/40"
             >
               <div className="flex flex-wrap gap-xs">
@@ -224,6 +228,7 @@ export function PostBentoGrid({ posts }: PostBentoGridProps) {
           {p4 ? (
             <Link
               href={`/blog/${p4.slug}`}
+              prefetch={false}
               className="group flex flex-col p-lg border-b border-outline-variant/40"
             >
               <div className="flex flex-wrap gap-xs">
@@ -257,6 +262,7 @@ export function PostBentoGrid({ posts }: PostBentoGridProps) {
           {p5 ? (
             <Link
               href={`/blog/${p5.slug}`}
+              prefetch={false}
               className="group flex flex-col p-lg"
             >
               <div className="flex flex-wrap gap-xs">
@@ -295,6 +301,7 @@ export function PostBentoGrid({ posts }: PostBentoGridProps) {
           {p6 ? (
             <Link
               href={`/blog/${p6.slug}`}
+              prefetch={false}
               className="group flex flex-row items-start p-lg border-b border-outline-variant/40 min-h-[190px] gap-md"
             >
               <div className="w-[100px] h-[100px] md:w-[120px] md:h-[120px] shrink-0 relative overflow-hidden bg-surface-container border border-outline-variant/20">
@@ -363,6 +370,7 @@ export function PostBentoGrid({ posts }: PostBentoGridProps) {
           {p7 ? (
             <Link
               href={`/blog/${p7.slug}`}
+              prefetch={false}
               className="group flex flex-col p-lg"
             >
               <div className="flex flex-wrap gap-xs">
