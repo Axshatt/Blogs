@@ -1,0 +1,116 @@
+/*! Custom Giscus dark theme for AkshatCodes blog — matches the brutalist Material 3 dark mode */
+
+main {
+  --color-canvas-default: #141413;
+  --color-canvas-subtle: #181816;
+  --color-canvas-inset: #1f1f1d;
+  --color-border-default: #3e3e3c;
+  --color-border-muted: rgba(229, 226, 222, 0.1);
+  --color-neutral-muted: rgba(229, 226, 222, 0.06);
+  --color-accent-fg: #ffffff;
+  --color-accent-emphasis: #d2f03c;
+  --color-attention-subtle: rgba(210, 240, 60, 0.1);
+  --color-danger-fg: #ffb4ab;
+  --color-fg-default: #e5e2de;
+  --color-fg-muted: #c8c7bf;
+  --color-fg-subtle: #8f8e87;
+  --color-btn-primary-bg: #d2f03c;
+  --color-btn-primary-text: #181e00;
+  --color-btn-primary-hover-bg: #b6d319;
+  --color-btn-primary-border: #d2f03c;
+  --color-btn-bg: #1f1f1d;
+  --color-btn-border: #3e3e3c;
+  --color-btn-hover-bg: #2b2a27;
+  --color-btn-hover-border: #8f8e87;
+  --color-social-reaction-bg-hover: rgba(210, 240, 60, 0.12);
+  --color-social-reaction-bg-reacted-hover: rgba(210, 240, 60, 0.2);
+}
+
+main .gsc-comment-box {
+  border-color: #3e3e3c;
+  background-color: #141413;
+}
+
+main .gsc-comment-box textarea {
+  background-color: #181816;
+  color: #e5e2de;
+  border-color: #3e3e3c;
+}
+
+main .gsc-comment-box textarea:focus {
+  border-color: #d2f03c;
+  box-shadow: 0 0 0 1px #d2f03c;
+}
+
+main .gsc-header .gsc-left-header {
+  color: #c8c7bf;
+}
+
+main .gsc-comment .gsc-comment-header {
+  background-color: #1f1f1d;
+  border-color: #3e3e3c;
+}
+
+main .gsc-comment .gsc-comment-content {
+  background-color: #141413;
+}
+
+main .gsc-reactions-button {
+  border-color: #3e3e3c;
+  color: #c8c7bf;
+}
+
+main .gsc-reactions-button:hover {
+  background-color: rgba(210, 240, 60, 0.1);
+  border-color: #8f8e87;
+  color: #e5e2de;
+}
+
+main .gsc-reactions-button.has-reacted {
+  border-color: #d2f03c;
+  color: #d2f03c;
+  background-color: rgba(210, 240, 60, 0.15);
+}
+
+main .gsc-reply-box {
+  border-color: #3e3e3c;
+  background-color: #1f1f1d;
+}
+
+main .gsc-timeline {
+  border-color: #3e3e3c;
+}
+
+main .gsc-comment-box-tabs {
+  border-color: #3e3e3c;
+  background-color: #1f1f1d;
+}
+
+main .gsc-comment-box-bottom {
+  border-color: #3e3e3c;
+}
+
+main .gsc-comment-box-md-toolbar {
+  border-color: #3e3e3c;
+}
+
+/* Button styling to match brutalist look */
+main .btn-primary {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border-radius: 0px;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+main .gsc-comment {
+  border-color: #3e3e3c;
+}
+
+main a {
+  color: #d2f03c;
+}
+
+main a:hover {
+  color: #ffffff;
+}

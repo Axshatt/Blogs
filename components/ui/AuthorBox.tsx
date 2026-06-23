@@ -12,6 +12,7 @@ export function AuthorBox() {
             src="/images/akshat_profile.jpg"
             alt="Akshat Singh"
             fill
+            sizes="(max-width: 768px) 80px, 96px"
             className="rounded-full object-cover border border-outline-variant/30 transition-transform duration-300 hover:scale-105"
           />
         </div>

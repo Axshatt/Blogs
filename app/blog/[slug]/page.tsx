@@ -8,6 +8,8 @@ import { useMDXComponents } from '@/mdx-components';
 import Link from 'next/link';
 import { AuthorBox } from '@/components/ui/AuthorBox';
 import { ReadingHistoryTracker } from '@/components/ui/ReadingHistoryTracker';
+import { Comments } from '@/components/blog/Comments';
+import { ShareButtons } from '@/components/ui/ShareButtons';
 
 interface PostPageProps {
   params: Promise<{ slug: string }>;
@@ -54,7 +56,7 @@ export default async function PostPage({ params }: PostPageProps) {
   );
 
   return (
-    <article className="mx-auto max-w-3xl px-margin-mobile py-xxl md:px-margin-desktop">
+    <article className="mx-auto max-w-4xl px-margin-mobile py-xxl md:px-margin-desktop">
       {/* Blog Posting Schema */}
       <script
         type="application/ld+json"
@@ -75,11 +77,17 @@ export default async function PostPage({ params }: PostPageProps) {
 
       {/* Post header */}
       <header className="mb-xl">
-        <div className="mb-md flex flex-wrap items-center gap-lg">
-          <CategoryBadge category={frontmatter.category} size="md" />
-          <span className="text-label-sm text-on-surface-variant">{date}</span>
-          <span className="text-label-sm text-outline">·</span>
-          <span className="text-label-sm text-on-surface-variant">{readingTime}</span>
+        <div className="mb-md flex flex-wrap items-center justify-between gap-md">
+          <div className="flex flex-wrap items-center gap-lg">
+            <CategoryBadge category={frontmatter.category} size="md" />
+            <span className="text-label-sm text-on-surface-variant">{date}</span>
+            <span className="text-label-sm text-outline">·</span>
+            <span className="text-label-sm text-on-surface-variant">{readingTime}</span>
+          </div>
+          <ShareButtons
+            title={frontmatter.title}
+            url={`${process.env.NEXT_PUBLIC_SITE_URL || ''}/blog/${slug}`}
+          />
         </div>
 
         <h1 className="text-headline-xl mb-md tracking-tight text-primary md:text-display-lg-mobile">
@@ -151,6 +159,9 @@ export default async function PostPage({ params }: PostPageProps) {
           </div>
         </nav>
       )}
+
+      {/* Comments */}
+      <Comments />
     </article>
   );
 }

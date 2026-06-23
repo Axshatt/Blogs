@@ -67,7 +67,7 @@ export function NewsletterSection() {
               placeholder="email@company.com"
               disabled={status === 'loading'}
               required
-              className="w-full bg-transparent border-none outline-none text-primary placeholder:text-outline/70 text-[16px] focus:ring-0 py-xs disabled:opacity-50"
+              className="w-full h-[44px] bg-transparent border-none outline-none text-primary placeholder:text-outline/70 text-[16px] focus:ring-0 py-0 disabled:opacity-50"
             />
             <button
               type="submit"
@@ -78,9 +78,17 @@ export function NewsletterSection() {
               {status === 'loading' ? (
                 <span className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin"></span>
               ) : (
-                <span className="material-symbols-outlined font-bold !text-[24px]">
-                  chevron_right
-                </span>
+                <svg
+                  className="w-[20px] h-[20px]"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
               )}
             </button>
           </form>

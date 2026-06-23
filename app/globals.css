@@ -237,3 +237,21 @@ body {
 .dark .hairline-l { border-left: 1px solid rgba(229, 226, 222, 0.1); }
 .dark .hairline-a { border: 1px solid rgba(229, 226, 222, 0.1); }
 
+/* ── Animations ── */
+@keyframes fade-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(100%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.15s ease-out both;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.25s ease-out both;
+}
