@@ -97,7 +97,7 @@ export function generatePostMetadata(
   const postUrl = `${SITE_URL}/blog/${slug}`;
   const canonicalUrl = frontmatter.canonical_url ?? postUrl;
 
-  const rawImage = frontmatter.coverImage || (content ? extractFirstImageUrl(content) : null);
+  const rawImage = frontmatter.coverImage || '/images/akshat_profile.jpg';
   let ogImageUrl = `${SITE_URL}/og-image.png`;
 
   if (rawImage) {
