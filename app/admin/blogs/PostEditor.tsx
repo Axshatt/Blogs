@@ -25,6 +25,7 @@ export function PostEditor({ initialPost }: PostEditorProps) {
     initialPost?.frontmatter.published || new Date().toISOString().split('T')[0]
   );
   const [author, setAuthor] = useState(initialPost?.frontmatter.author || 'Akshat Singh');
+  const [canonicalUrl, setCanonicalUrl] = useState(initialPost?.frontmatter.canonical_url || '');
   const [coverImage, setCoverImage] = useState(initialPost?.frontmatter.coverImage || '');
   const [featured, setFeatured] = useState(initialPost?.frontmatter.featured || false);
   const [publishedStatus, setPublishedStatus] = useState(
@@ -313,6 +314,22 @@ export function PostEditor({ initialPost }: PostEditorProps) {
                 type="text"
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
+                className="w-full border border-outline-variant/50 bg-surface-container-lowest px-md py-xs text-[14px] focus:border-primary focus:outline-none"
+              />
+            </div>
+
+            {/* Canonical URL */}
+            <div>
+              <label htmlFor="canonicalUrl" className="text-label-bold block uppercase text-primary mb-xs">
+                Canonical URL
+              </label>
+              <input
+                id="canonicalUrl"
+                name="canonicalUrl"
+                type="url"
+                value={canonicalUrl}
+                onChange={(e) => setCanonicalUrl(e.target.value)}
+                placeholder="https://example.com/original-article"
                 className="w-full border border-outline-variant/50 bg-surface-container-lowest px-md py-xs text-[14px] focus:border-primary focus:outline-none"
               />
             </div>

@@ -41,6 +41,7 @@ export async function savePostAction(
   const featured = formData.get('featured') === 'true';
   const publishedStatus = formData.get('publishedStatus') === 'true';
   const content = formData.get('content') as string;
+  const canonicalUrl = formData.get('canonicalUrl') as string;
 
   if (!title || !slug || !content) {
     return { error: 'Title, slug, and content are required.' };
@@ -60,6 +61,7 @@ export async function savePostAction(
     author: author || 'Akshat Singh',
     coverImage: coverImage || undefined,
     featured,
+    canonical_url: canonicalUrl || undefined,
   };
 
   if (isEdit && originalSlug && originalSlug !== slug) {
