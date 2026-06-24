@@ -8,6 +8,7 @@ tags: []
 published: '2026-06-24'
 draft: false
 author: Akshat Singh
+coverImage: 'https://i.ibb.co/Gf4P6y7f/Image-24-06-26-at-11-07-PM.png'
 featured: true
 ---
 
@@ -40,8 +41,6 @@ With tools like **MediaPipe** and modern browser APIs, you can now run real-time
 
 In this post, I'll walk you through how HandConnect works, the tech stack behind it, the challenges I ran into, and where it's headed next.
 
-[PLACEHOLDER: Internal link → "How I Built My First Computer Vision Project"]
-
 ---
 
 ## What is HandConnect Web Interface?
@@ -60,8 +59,8 @@ It's a great example of what's possible with **JavaScript computer vision** on t
 ![HandConnect GitHub repository showing project structure and README](https://i.ibb.co/8gh2ZDrJ/Image-24-06-26-at-11-29-PM.png)
 *GitHub repository for HandConnect — open source and ready to explore.*
 
-[PLACEHOLDER: Add GitHub Repository Link]  
-[PLACEHOLDER: Add Live Demo URL]
+[GitHub Repository](https://github.com/Axshatt/HandConnect)  
+[Live Demo](https://hand-connect-orpin.vercel.app/)
 
 ---
 
@@ -101,8 +100,6 @@ async function detect() {
 ```
 
 > **Note:** The above is a simplified illustration of the detection loop. Refer to the actual repository for the complete implementation.
-
-[PLACEHOLDER: Internal link → "Understanding MediaPipe Hand Landmarks"]
 
 ---
 
@@ -165,8 +162,6 @@ const stream = await navigator.mediaDevices.getUserMedia({ video: true });
 videoElement.srcObject = stream;
 ```
 
-### [PLACEHOLDER: Additional Technologies]
-
 > If you used any additional libraries (e.g., TensorFlow.js, camera_utils, drawing_utils from MediaPipe), add them here with a short description.
 
 ---
@@ -180,8 +175,6 @@ videoElement.srcObject = stream;
 - **Lightweight** — built with vanilla JS and loaded via CDN; no heavy framework overhead
 - **Mobile compatible** — works on devices with front or rear cameras
 
-[PLACEHOLDER: Add screenshot of mobile experience]
-
 ---
 
 ## Technical Architecture
@@ -191,30 +184,8 @@ videoElement.srcObject = stream;
 
 At a high level, the architecture looks like this:
 
-```
-┌─────────────────────────────────────────┐
-│              Browser                    │
-│                                         │
-│  ┌──────────┐     ┌───────────────────┐ │
-│  │  Webcam  │────▶│   <video> element │ │
-│  └──────────┘     └────────┬──────────┘ │
-│                            │            │
-│                   ┌────────▼──────────┐ │
-│                   │  MediaPipe Hands  │ │
-│                   │  (WASM / TF.js)   │ │
-│                   └────────┬──────────┘ │
-│                            │            │
-│                   ┌────────▼──────────┐ │
-│                   │  Hand Landmarks   │ │
-│                   │  (21 pts/hand)    │ │
-│                   └────────┬──────────┘ │
-│                            │            │
-│                   ┌────────▼──────────┐ │
-│                   │  Canvas Renderer  │ │
-│                   │  (Rainbow String) │ │
-│                   └───────────────────┘ │
-└─────────────────────────────────────────┘
-```
+![HandConnect architecture diagram showing data flow from webcam through MediaPipe to canvas renderer](https://i.ibb.co/Y4t74jsW/Image-25-06-26-at-12-46-AM.png)
+*HandConnect architecture — webcam input → MediaPipe inference → canvas rendering pipeline.*
 
 The key design decision was to **overlay the canvas on top of the video element** using CSS `position: absolute`, so the rainbow effect appears to float on top of the live webcam feed.
 
@@ -250,8 +221,6 @@ video, canvas {
 MediaPipe's WASM model takes a moment to load on the first visit, which can feel like the app is broken.
 
 **Solution:** Show a loading indicator until the model is ready and the first frame is processed.
-
-[PLACEHOLDER: Add any other challenges you faced during development]
 
 ---
 
@@ -291,19 +260,17 @@ HandConnect is already fun to use, but there's a lot of room to grow:
 - **Recording / export** — let users download a short clip of their HandConnect session
 - **Mobile PWA** — wrap it as a Progressive Web App for easy mobile access
 
-
 ---
 
 ## Open Source Availability
 
 HandConnect is fully open source. You can explore the code, fork it, and build on top of it.
 
-https://github.com/Axshatt/HandConnect
+[GitHub Repository](https://github.com/Axshatt/HandConnect)
 
 If you find it useful or interesting, consider giving it a ⭐ on GitHub — it helps other developers discover the project.
 
 Contributions are welcome! Whether it's fixing a bug, improving performance, or adding a new visual effect — open a PR and let's build together.
-
 
 ---
 
@@ -314,10 +281,10 @@ HandConnect Web Interface is a small project with a big idea behind it: **comput
 It shows how far web technologies have come — from static HTML pages to real-time ML inference running client-side. If you're a student, developer, or just someone curious about computer vision, HandConnect is a great starting point to explore what's possible.
 
 **Try it yourself:**  
-[PLACEHOLDER: Add Live Demo URL]
+[Live Demo](https://hand-connect-orpin.vercel.app/)
 
 **Explore the source code:**  
-[PLACEHOLDER: Add GitHub Repository Link]
+[GitHub Repository](https://github.com/Axshatt/HandConnect)
 
 If you build something cool on top of this, tag me on Instagram [@code.akshat.in](https://www.instagram.com/code.akshat.in) — I'd love to see it.
 
@@ -326,11 +293,8 @@ If you build something cool on top of this, tag me on Instagram [@code.akshat.in
 <Callout type="info">
 **⭐ Enjoyed this project?**  
 Star the repo on GitHub to show support and help other developers find it.  
-https://github.com/Axshatt/HandConnect
+[GitHub Repository](https://github.com/Axshatt/HandConnect)
 </Callout>
-
-[PLACEHOLDER: Internal link → "More Projects I'm Building in Public"]  
-[PLACEHOLDER: Internal link → "Getting Started with MediaPipe in JavaScript"]
 
 ---
 
@@ -364,7 +328,7 @@ MediaPipe Hands is an open-source ML solution by Google that detects up to two h
 
 Absolutely. HandConnect is open source. You can fork the repository, explore the code, and build your own hand tracking experiences on top of it.
 
-[PLACEHOLDER: Add GitHub Repository Link]
+[GitHub Repository](https://github.com/Axshatt/HandConnect)
 
 ### What browser works best for HandConnect?
 
