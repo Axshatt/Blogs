@@ -105,7 +105,7 @@ export function PostBentoGrid({ posts }: PostBentoGridProps) {
                   alt={p1.frontmatter.title}
                   fill
                   priority
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
+                  sizes="(max-width: 768px) calc(100vw - 80px), (max-width: 1200px) 33vw, 380px"
                   className="object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
                 />
               </div>
@@ -360,7 +360,7 @@ export function PostBentoGrid({ posts }: PostBentoGridProps) {
                 src="/images/ep_107_cover.png"
                 alt="Ep. 107"
                 fill
-                sizes="(max-width: 768px) 100vw, 300px"
+                sizes="(max-width: 768px) calc(100vw - 80px), (max-width: 1200px) 33vw, 310px"
                 className="object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
               />
             </div>

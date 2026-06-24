@@ -15,7 +15,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
             src={src}
             alt={alt || ''}
             fill
-            sizes="(max-width: 768px) 100vw, 820px"
+            sizes="(max-width: 768px) calc(100vw - 32px), 768px"
             className="object-cover"
           />
         </span>
