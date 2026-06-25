@@ -26,6 +26,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     .trim();
 
   return {
+    title: issue.title,
     description: cleanExcerpt,
     alternates: {
       canonical: `${SITE_URL}/newsletter/${issue.slug}`,

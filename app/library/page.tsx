@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { LibraryClient } from './LibraryClient';
 
 export const metadata: Metadata = {
-  title: 'Your Library - AkshatCodes',
+  title: 'Library',
   description: 'Your saved reading list and bookmarked posts.',
 };
 

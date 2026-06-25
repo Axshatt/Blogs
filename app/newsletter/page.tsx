@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import readingTime from 'reading-time';
 
 export const metadata: Metadata = {
+  title: 'Newsletter',
   description: 'Public archive of previous weekly newsletter issues covering development, design, and AI engineering.',
   alternates: { canonical: '/newsletter' },
 };

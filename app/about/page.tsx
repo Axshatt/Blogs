@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
+  title: 'About',
   description: "Building in Public. Learning Out Loud. Hey, I'm Akshat — a full-stack dev, AI tinkerer, and relentless builder.",
   alternates: { canonical: '/about' },
 };

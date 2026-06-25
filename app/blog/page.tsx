@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { BlogSidebar } from '@/components/ui/BlogSidebar';
 
 export const metadata: Metadata = {
+  title: 'Blog',
   description: 'Build logs, tutorials, and creative experiments.',
   alternates: { canonical: '/blog' },
 };
