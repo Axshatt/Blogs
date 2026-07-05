@@ -1,0 +1,118 @@
+---
+title: 'How to Build a 3D Website: A Practical Workflow with React Three Fiber'
+excerpt: >-
+  A step-by-step workflow for adding real 3D to your website using React Three
+  Fiber, Three.js, and Blender — from stack choice to deployment.
+category: build-log
+tags:
+  - '"threejs"'
+  - '"react-three-fiber"'
+  - '"webgl"'
+  - '"3d"'
+  - '"frontend"'
+published: '2026-07-05'
+draft: false
+author: Akshat Singh
+featured: true
+---
+Most "3D websites" you see on Awwwards aren't magic. They're a handful of predictable pieces stacked together: a rendering engine, a lightweight model, some interaction hooks, and a lot of performance discipline. This is the workflow I use when I want to ship a real 3D experience without turning my Lighthouse score into a crime scene.
+
+## 1. Pick the right stack
+
+You don't need to touch raw WebGL. Here's how the options stack up:
+
+- **Three.js** — the standard. Full control, but you're managing the render loop, scene graph, and cleanup yourself.
+- **React Three Fiber (R3F)** — Three.js wrapped in React's component model. If you already think in JSX and hooks, this is the fastest path to something real.
+- **Spline** — no-code. Great for a quick hero section, but you lose fine-grained control.
+- **Babylon.js** — a Three.js alternative, stronger if you're leaning toward game-like interactivity.
+
+For most dev-facing sites, **R3F + drei** (a helper library of common utilities) is the sweet spot. It's production-ready, has a large ecosystem, and doesn't require you to relearn how to write React.
+
+## 2. Core setup
+
+```bash
+npx create-next-app@latest my-3d-site
+cd my-3d-site
+npm install three @react-three/fiber @react-three/drei
+```
+
+Your 3D scene lives inside a `<Canvas>` component, which slots into your normal component tree like any other element:
+
+```jsx
+import { Canvas } from '@react-three/fiber'
+import { OrbitControls } from '@react-three/drei'
+
+export default function Scene() {
+  return (
+    <Canvas camera={{ position: [0, 0, 5] }}>
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[5, 5, 5]} />
+      <mesh>
+        <boxGeometry args={[1, 1, 1]} />
+        <meshStandardMaterial color="orange" />
+      </mesh>
+      <OrbitControls />
+    </Canvas>
+  )
+}
+```
+
+That's a lit, rotatable cube in about 15 lines. Everything from here is layering complexity on top of this pattern.
+
+## 3. Bring in a real model
+
+Model in **Blender** (free), export as `.glb`, then load it with drei's `useGLTF`:
+
+```jsx
+import { useGLTF } from '@react-three/drei'
+
+function Model() {
+  const { scene } = useGLTF('/model.glb')
+  return <primitive object={scene} />
+}
+```
+
+Wrap it in `Suspense` since the model loads asynchronously:
+
+```jsx
+<Suspense fallback={null}>
+  <Model />
+</Suspense>
+```
+
+Tip: run your `.glb` through [gltf.report](https://gltf.report) or `gltf-transform` to compress it with Draco before shipping. A model that's 40MB uncompressed can often drop under 5MB with zero visible quality loss.
+
+## 4. Add interactivity
+
+Two hooks do most of the work:
+
+- **`useFrame`** — runs on every rendered frame, for animation loops (rotation, floating, pulsing)
+- **Pointer events** (`onClick`, `onPointerOver`) — for hover states and click interactions directly on meshes
+
+```jsx
+useFrame((state, delta) => {
+  meshRef.current.rotation.y += delta * 0.5
+})
+```
+
+## 5. Performance checklist
+
+This is the part that separates a portfolio demo from a site people can actually use on a mid-range phone:
+
+- Lazy-load the Canvas below the fold — don't block first paint with WebGL
+- Cap device pixel ratio: `<Canvas dpr={[1, 2]}>` to avoid retina rendering overkill
+- Dispose of geometries and materials on unmount to avoid memory leaks
+- Test on an actual low-end Android device — WebGL context loss is common and easy to miss on desktop
+- Keep textures at 2K or below unless it's the literal hero element
+
+## 6. Deploy
+
+Vercel or Netlify handle this with zero special config. The one thing worth watching is bundle size — Three.js itself is heavy, so run `@next/bundle-analyzer` before you ship and lazy-import the 3D component if it's not needed on every route.
+
+## Closing thought
+
+The gap between "cool WebGL demo" and "3D website people actually use" is almost entirely performance work, not creative work. Get the cube spinning first, then spend your remaining time making sure it doesn't melt someone's phone.
+
+---
+
+*Building this in public — if you try this workflow, tag me [@code.akshat.in](https://instagram.com/code.akshat.in).*
