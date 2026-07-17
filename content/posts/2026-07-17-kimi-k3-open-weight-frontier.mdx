@@ -1,0 +1,153 @@
+---
+title: Kimi K3 landed quietly — here's what a 2.8T open-weight model actually changes
+excerpt: >-
+  Moonshot dropped a 2.8-trillion-parameter model with 1M context and Sonnet-tier
+  pricing, then promised weights by July 27. Here's the honest read on whether it
+  belongs in your stack this week.
+category: build-log
+tags:
+  - '"AI"'
+  - '"LLMs"'
+  - '"Kimi K3"'
+  - '"Open Weights"'
+  - '"Moonshot"'
+published: '2026-07-17'
+draft: false
+author: Akshat Singh
+featured: true
+canonical_url: 'https://blog.akshatcodes.com/'
+---
+
+Moonshot shipped a 2.8-trillion-parameter model yesterday and didn't even write a launch post. No benchmark chart, no Hugging Face drop, no CEO thread. Just a banner on the API docs — "🎉 Kimi K3 has launched!" — and a live `kimi-k3` model ID on an OpenAI-compatible endpoint. That's the quietest way to ship the largest open-weight model in history.
+
+Every second post on your timeline this week is either "Kimi K3 killed Claude" or "Kimi K3 is a nothingburger because the weights aren't out yet." Both takes are lazy. K3 is genuinely interesting for three reasons that have nothing to do with the leaderboard screenshot going around, and it has one caveat that most of the hype threads are quietly skipping.
+
+I've spent the morning reading through the Artificial Analysis numbers, the OpenRouter telemetry, and the actual Kimi API docs so you don't have to. Here's what actually matters, what to ignore, and where K3 fits — or doesn't — in a real workflow this week.
+
+## What you'll need
+
+- A Moonshot API key (or an OpenRouter account — `moonshotai/kimi-k3` routes there today)
+- Comfort with an OpenAI-compatible SDK — the endpoint is a drop-in
+- Roughly $3 per million input tokens and $15 per million output ready in your budget
+- Patience for ~4-second time-to-first-token — this is a reasoning-max model, not a chat toy
+- A real task to try it on. "Write me a haiku" is not the workload this model was built for
+
+## 1. The architecture — Kimi Delta Attention + a sparser MoE
+
+**What it is:** K3 is a sparse Mixture-of-Experts model activating 16 of 896 experts on any given token, built on two new pieces — Kimi Delta Attention (KDA) and Attention Residuals (AttnRes). KDA is a hybrid linear-attention mechanism designed for very long context; AttnRes changes how information flows across depth.
+
+**The numbers Moonshot claims:** AttnRes gives roughly 25% higher training efficiency at under 2% extra cost. Combined with the sparser MoE and better router balancing (something they call Quantile Balancing), K3 reportedly hits about 2.5x the scaling efficiency of Kimi K2.
+
+**Reference:** [Moonshot AI Releases Kimi K3 — MarkTechPost](https://www.marktechpost.com/2026/07/16/moonshot-ai-releases-kimi-k3-a-2-8-trillion-parameter-open-moe-model-with-kimi-delta-attention-and-1m-context/) and Simon Willison's [Kimi K3 write-up](https://simonwillison.net/2026/Jul/16/kimi-k3/).
+
+**Why it matters for you:** The MoE sparsity is the load-bearing piece. Activating 16 of 896 experts means inference cost scales far better than the 2.8T sticker suggests. This is why Moonshot can charge Sonnet-tier prices without going bankrupt on a model this big.
+
+**When to care:** If you're doing long-context work (large codebases, whole-repo refactors, long research documents), the KDA architecture is the interesting bit. For short-form chat, you'll never notice.
+
+## 2. The pricing — $3 in, $15 out, and the K2 upgrade tax
+
+**What it costs:** $0.30 per million cached input tokens, $3 per million uncached input, $15 per million output. Flat pricing across the full 1M context — no tiering, no surprise multipliers for long prompts.
+
+**The comparison that matters:** Kimi K2.6 was $0.95 / $4. K3 is 3.2x more expensive on input and 3.75x on output. That's not a small change — it's Moonshot leaving their "cheap Chinese lab" positioning behind on purpose. K3 lines up almost exactly with Anthropic's standard Claude Sonnet 5 rate of $3/$15 (Sonnet 5's intro promo of $2/$10 runs through Aug 31).
+
+**Reference:** [Kimi K3 — API Pricing on OpenRouter](https://openrouter.ai/moonshotai/kimi-k3) and the [official Kimi API quickstart](https://platform.kimi.ai/docs/guide/kimi-k3-quickstart).
+
+**Make it yours:** If you were building on K2.7 Code for cheap agentic loops, don't blindly upgrade. Do the math — a swap that seems like a marginal quality upgrade can 4x your monthly bill. K3 earns its price on long-horizon depth-per-call, not calls-per-minute.
+
+**Learning curve:** Zero. OpenAI-compatible endpoint, same SDKs. The pain is in the invoice, not the code.
+
+## 3. The benchmarks — 4th out of 189, honestly not first
+
+**What Artificial Analysis reports:** K3 scores 57 on the Intelligence Index v4.1, ranking 4th among 189 tracked models. It sits behind Claude Fable 5 and two GPT-5.6 Sol reasoning settings, then beats Claude Opus 4.8, GPT-5.5 xhigh, Claude Sonnet 5, and GLM-5.2.
+
+**Agentic numbers:** 1668 Elo on GDPval-AA (up from 1190 for K2.6), 1547 on AA-Briefcase, 52.7 leading the AutomationBench-AA board. Estimated cost per task around $0.94 — close to GPT-5.6 Sol, about half of Claude Opus 4.8.
+
+**Reference:** [Kimi K3 on Artificial Analysis](https://artificialanalysis.ai/models/kimi-k3).
+
+**The honest read:** K3 is a strong frontier challenger, not a frontier winner. Moonshot themselves say it in the launch page — "Overall performance still trails Claude Fable 5 and GPT 5.6 Sol." If you're picking a model to close a hard reasoning task, Fable 5 or GPT-5.6 Sol are still the honest picks. K3 is the "I want frontier-adjacent quality at a predictable open-weight-ish price" pick.
+
+**Time to run your own eval:** ~15 minutes on a real task from your workload. Don't trust anyone else's benchmark, including this one.
+
+## 4. The speed — 62 t/s output, 4-second TTFT, and always-on max reasoning
+
+**What OpenRouter's telemetry shows:** About 28 tokens/sec early on (Moonshot's own API is closer to 62 t/s), ~4-second time to first token. For a reasoning model at this scale that's normal, but if you were running K2.7-code-highspeed at 180–260 t/s and $1.90 / $8, you're going to feel this.
+
+**The config you can't change:** At launch, `reasoning_effort` supports only `max`. `temperature=1.0`, `top_p=0.95`, `n=1`, `presence_penalty=0`, `frequency_penalty=0` are all fixed — omit them from requests. `max_completion_tokens` defaults to 131072 and can go up to 1048576.
+
+**When to use it:** Long-horizon coding tasks. Whole-codebase reviews. Research workflows where you're spending 30 seconds waiting for a good answer, not looking for a 200ms chat reply. K3 is built for depth-per-call, not calls-per-minute.
+
+**Reference:** [Kimi K3 quickstart docs](https://platform.kimi.ai/docs/guide/kimi-k3-quickstart) — read the "Fixed Parameters" section before your first call or you'll spend an afternoon debugging silent overrides.
+
+## 5. The open-weight promise — arriving July 27
+
+**The bit everyone's ignoring:** As of today, K3 is proprietary. The weights are not on Hugging Face. Artificial Analysis explicitly lists it as closed-source. The word "open" in every article you're reading — this one included — is doing a lot of forward-looking work.
+
+**Moonshot's commitment:** Full open weights by July 27, 2026, alongside a technical report covering architecture, training, and evaluations. A vLLM KDA prefill cache implementation is promised in the same drop.
+
+**Reference:** [China's Moonshot throws down the gauntlet — SiliconANGLE](https://siliconangle.com/2026/07/16/chinas-moonshot-throws-gauntlet-kimi-k3-worlds-largest-open-weights-model/).
+
+**Make it yours:** Don't plan a self-hosted deployment on K3 this week. Ten days from now, if the weights actually land with a permissive license, that changes. Until then it's a hosted-API-only story. If you've been burned by "we'll open-source it soon" announcements before (looking at you, half the companies from 2024), keep your integration abstracted — swap-in swap-out — so July 27 is a config change, not a rewrite.
+
+**Learning curve:** Deploying a 2.8T MoE model yourself is not casual. You'll need serious GPU capacity and vLLM plumbing. Most of us are going to keep hitting the API.
+
+## At a glance
+
+**Architecture** — 2.8T params, MoE activating 16 of 896 experts, Kimi Delta Attention for long context, native vision, 1M token window.
+
+---
+
+**Pricing** — $0.30 / $3 / $15 per million tokens (cached in / uncached in / out). Matches Claude Sonnet 5 standard rate; 3–4x more expensive than K2.6.
+
+---
+
+**Benchmark** — 4th of 189 on Artificial Analysis Intelligence Index (score 57). Behind Fable 5 and GPT-5.6 Sol; ahead of Opus 4.8, GPT-5.5 xhigh, Sonnet 5, GLM-5.2.
+
+---
+
+**Speed** — ~62 t/s output, ~2s TTFT on Moonshot's own API. `reasoning_effort: max` only at launch.
+
+---
+
+**Open weights** — Promised by July 27, 2026. Not open today. Plan accordingly.
+
+## FAQ
+
+### Is Kimi K3 actually open source right now?
+
+No. As of today (July 17), the weights are not downloadable. Moonshot has committed to publishing full weights and a technical report by July 27. Until that drop actually happens with a permissive license, treat K3 as a hosted-API model that has an open-weight commitment.
+
+### Should I switch from Claude Sonnet 5 to Kimi K3?
+
+Probably not this week. They're priced identically at Sonnet 5's standard rate, and Sonnet 5's intro pricing through Aug 31 makes it 50% cheaper. Unless you're specifically hitting a long-context ceiling with Sonnet, wait for the weights to land and re-evaluate on your own workload.
+
+### Should I upgrade from Kimi K2.6 or K2.7 Code?
+
+Do the math first. K3 is roughly 3.2x more expensive on input and 3.75x on output. If you're running high-volume, latency-sensitive agentic loops, K2.7-code-highspeed at $1.90 / $8 with 180–260 t/s throughput is still the speed play. K3 is for the tasks where you'd accept a 30-second wait for a better answer.
+
+### What's the deal with the 1 million token context?
+
+It's real, it's flat-priced (no tiering), and it's genuinely useful for whole-codebase or long-document work. But be honest — most tasks don't need 1M tokens, and you'll pay for every token you send. Prompt-hygiene still matters.
+
+### Can I use it for vision tasks?
+
+Yes, K3 has native visual understanding. Public image URLs aren't supported — you have to use base64 or Moonshot's `ms://<file-id>` scheme, and content has to be an array of objects. The docs show the exact format.
+
+### What's Kimi K3 Swarm vs K3 Max?
+
+Max is the chat and coding version. Swarm is positioned as an orchestrator model that spins up sub-agents for deep-research workflows. If you're doing agentic multi-step research, Swarm is the one to try; for everything else, Max is the default.
+
+### Where can I actually try it today?
+
+Three easy paths: Moonshot's own API at `platform.kimi.ai`, OpenRouter at `moonshotai/kimi-k3` (same OpenAI-compatible interface), or the Kimi web app at `kimi.com`. All three point at the same INT4 hosted endpoint right now.
+
+### Is the "world's first 3T-class open model" claim honest?
+
+It's marketing-adjacent. Once weights ship on July 27 with an appropriate license, yes — it would be the largest open-weight model available. Today it's the largest planned open-weight model. Different sentence.
+
+## What's next
+
+If you have a real task this week that involves reasoning over a large codebase, a long research document, or a multi-step agent loop — spin up K3 for one afternoon, run it against your existing default (Sonnet 5, Opus 4.8, whatever you're on), and let the actual output decide. Fifteen minutes of your own eval beats a hundred tweet-thread benchmarks.
+
+Next up on the blog: I'm going to run K3 against Sonnet 5 on the same three tasks — a whole-repo refactor, a long-doc summary, and an agentic web-research chain — and post the honest side-by-side, prompt files included. If July 27 lands with actual downloadable weights, I'll do a follow-up on self-hosting the smallest useful config on a single H100 node.
+
+If you build something interesting on K3 before then, or if you catch me getting a number wrong here, ping me — I'd rather correct it than pretend I'm always right.
