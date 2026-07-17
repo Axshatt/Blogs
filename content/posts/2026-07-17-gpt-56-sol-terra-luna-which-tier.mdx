@@ -1,0 +1,175 @@
+---
+title: "GPT-5.6 Sol vs Terra vs Luna: Which Tier Should Your App Actually Use?"
+excerpt: >-
+  OpenAI just launched three models under one name. Most devs will grab Sol by
+  reflex. That's probably the wrong move — and the pricing math proves it.
+category: comparison
+tags:
+  - '"OpenAI"'
+  - '"GPT-5.6"'
+  - '"LLM Pricing"'
+  - '"AI APIs"'
+  - '"Developer Tools"'
+published: '2026-07-17'
+draft: false
+author: Akshat Singh
+featured: true
+canonical_url: 'https://blog.akshatcodes.com/'
+---
+
+There's a pattern with every major OpenAI launch: developers reach for the flagship by default, bill the team $800 that month, then spend the next sprint figuring out how to claw the cost back. GPT-5.6 is going to accelerate this cycle harder than any previous release because it ships with three distinct tiers — Sol, Terra, and Luna — and the quality gap between them is wider than anything OpenAI has shipped before.
+
+Most tutorials will walk you through the tier list and stop there. This one goes further: the pricing math shows most production apps are sitting in the wrong tier, and Luna has a recall cliff that'll burn you badly if you don't know it exists.
+
+The short version: Sol is a legitimately impressive flagship, Luna has a trap inside it, and Terra is what the majority of you should actually be defaulting to. Here's the breakdown.
+
+## The Tier System, Without the Marketing
+
+GPT-5.6 doesn't follow the usual "mini vs. full" structure. OpenAI named the tiers after celestial bodies — Sol (sun), Terra (earth), Luna (moon) — and the metaphor maps cleanly to capability: Sol is the brightest and most expensive, Luna is lightest and cheapest, Terra is the livable middle ground where most workloads belong.
+
+All three models share the same base training run, a 1M-token context window, 128K maximum output tokens, and a February 2026 knowledge cutoff. What changes across tiers: reasoning depth, long-context recall quality, and — critically — price.
+
+**What you need before calling any of these:**
+- An OpenAI API key with GPT-5.6 access (GA as of July 9, 2026)
+- A sense of your actual token workload (input-heavy? output-heavy? cached prompts?)
+- 5 minutes to run the pricing math below against your real numbers
+
+## The Pricing Math
+
+| Tier | Input per 1M | Output per 1M |
+|------|-------------|--------------|
+| Sol | $5.00 | $30.00 |
+| Terra | $2.50 | $15.00 |
+| Luna | $1.00 | $6.00 |
+
+At 50M input + 10M output tokens per month — a moderate production app, not a toy project:
+
+- **Luna:** $110/month
+- **Terra:** $275/month
+- **Sol:** $550/month
+
+Sol is 5× the price of Luna. It's also worth noticing that $5/$30 is exactly what GPT-5.5 charged at launch in April. OpenAI held the flagship price flat while moving all the value one tier down — Terra now delivers roughly GPT-5.5-level quality at half what GPT-5.5 cost. That deflation is the real story here, and most coverage of this launch is burying it.
+
+**Prompt caching:** Cache reads get a 90% discount on input tokens. Cache writes cost 1.25× uncached, with a 30-minute minimum cache lifetime. If your system prompt is 20K+ tokens and you're running high daily request volume, the caching discount changes the monthly bill significantly. Run your actual numbers before assuming Sol is out of reach.
+
+## 1. Sol — When You Actually Need the Flagship
+
+**What it does:** Sol is OpenAI's strongest coding model on record. On the Artificial Analysis Coding Agent Index, it hits **80** — 2.8 points above Claude Fable 5 — while using less than half the output tokens and costing roughly one-third less than Fable 5's $10/$50 rate. On ARC-AGI-1 it scored **96.5%**, ARC-AGI-2 at **92.5%**, and it's the first model to show meaningful progress on ARC-AGI-3. On Agents' Last Exam (long-running professional workflows across 55 fields), Sol hit **53.6** — 13.1 points above Claude Fable 5 at medium reasoning, at roughly one-quarter the estimated cost.
+
+**Long-context recall:** 91.5%. Solid. You can trust it on large codebase reasoning, multi-document synthesis, and full-window retrieval tasks.
+
+**Benchmark:** BrowseComp at 92.2% (state of the art), OSWorld 2.0 at 62.6% with 85% fewer output tokens than Opus 4.8.
+
+**When to use it:**
+- Multi-file coding agents that need persistence across tests, failures, and follow-up fixes
+- Agentic workflows where reasoning depth determines whether the job completes or stalls out
+- BrowseComp-style research and retrieval tasks
+- Any task where failure is expensive and you genuinely need frontier-level reasoning
+
+**When not to use it:** Summarization, classification, RAG retrieval answer generation, customer support responses, anything short-context. You're burning $275/month above what Terra costs every time you send a routine task to Sol.
+
+**Make it yours:** If Sol is in your default path, add an intent classifier at your API entry point. Route multi-step agentic work to Sol, everything else to Terra. The classifier costs cents; the routing saves hundreds per month.
+
+---
+
+## 2. Terra — The Default for Most Production Apps
+
+**What it does:** Terra performs at roughly GPT-5.5 level. Three months ago, that was the best generally available model in the world. At $2.50/$15 per million tokens, it's half the price of Sol and half what GPT-5.5 cost at launch in April.
+
+**Long-context recall:** 89.6% — essentially tied with Sol. If you're not running tasks where Sol's frontier reasoning is genuinely load-bearing, Terra handles your 1M-context workloads just as reliably.
+
+**Stack:** Same API call structure as Sol. Swap the model ID, nothing else changes.
+
+**When to use it:**
+- Production apps where quality matters but Sol's frontier reasoning is overkill
+- Scoped implementation tasks and first-pass code reviews
+- RAG pipelines with long retrieved contexts — Terra's recall holds up under the 1M window
+- Any app that was calling GPT-5.5 and wants equivalent output at half the cost
+
+**Make it yours:** Terra should be your default. Escalate specific requests to Sol only when Terra demonstrably fails on the task — not as insurance. Most teams will find that Sol escalations are rarer than expected.
+
+---
+
+## 3. Luna — Fast, Cheap, and One Cliff to Avoid
+
+**What it does:** Luna is the speed-and-cost tier — $1/$6 per million tokens. OpenAI is deploying Sol on Cerebras at up to 750 tokens per second in July, with Luna presumably faster. For interactive use cases where latency is the primary constraint, Luna opens up workflows that were economically impractical before.
+
+**The cliff you need to know about:** Long-context recall drops to **41.3%**. Sol and Terra are at 91.5% and 89.6%. Luna is at 41.3%. This is not a gradual quality degradation — it's a cliff. The 1M context window technically exists on Luna, but the model cannot reliably retrieve information from it at distance. If your workload involves reading long documents, reasoning across a large codebase, or synthesizing multiple retrieved chunks, Luna will produce confident-sounding wrong answers that are hard to catch because they'll look plausible.
+
+**When to use it:**
+- Short-context completions: chat messages, brief Q&As, simple summaries where the input is small
+- High-volume classification or labeling pipelines where inputs are capped under a few thousand tokens
+- Real-time streaming where speed is the primary constraint and a human reviews outputs
+- Internal tooling where someone is spot-checking results anyway
+
+**When to avoid it:** Anything that touches the 1M context window in practice. Document analysis. Long codebase reasoning. Multi-chunk RAG. Anything where a confident wrong answer costs money or user trust.
+
+**Make it yours:** Luna works well as the fallback for your "simple query" intent bucket. Add an input-length check — if the prompt is under 4K tokens and the task is shallow, Luna is appropriate. Beyond that, step up to Terra.
+
+---
+
+## At a Glance
+
+---
+
+**Sol** — $5/$30 per 1M | Long-context recall: 91.5% | Coding index: 80 | Agents' Last Exam: 53.6 | Best for: multi-file coding agents, long-horizon agentic tasks, BrowseComp workloads, any task where failure is expensive.
+
+---
+
+**Terra** — $2.50/$15 per 1M | Long-context recall: 89.6% | Best for: most production apps, RAG pipelines, first-pass code review, anything that was previously GPT-5.5 territory. This is your default.
+
+---
+
+**Luna** — $1/$6 per 1M | Long-context recall: 41.3% | Best for: short-context, high-volume, low-stakes tasks with inputs under ~4K tokens. Do not use for long-document or large-codebase tasks.
+
+---
+
+## FAQ
+
+### Which tier should I start with on a new project?
+
+Terra. It's GPT-5.5 quality at half what GPT-5.5 cost three months ago. Start there, instrument where the model falls short, then escalate specific routes to Sol based on evidence. Don't start on Sol because it's the new hotness.
+
+### Is Sol actually better than Claude Fable 5?
+
+On coding benchmarks and long-horizon agentic tasks with high volume: yes, and cheaper — Sol at $5 input vs Fable 5 at $10. On architectural planning and the kind of judgment that feels like taste, Fable 5 still has an edge in practice. They're not the same product. Sol is the better choice for output-volume-heavy coding agents; Fable 5 remains strong for high-judgment planning tasks.
+
+### Why does Luna's long-context recall drop that hard?
+
+It's the cost of the compression decisions OpenAI made to hit $1/$6 pricing. Luna is likely a more aggressively compressed model with fewer effective attention layers. The window is there, but the retrieval fidelity at distance isn't. This same pattern showed up in earlier nano/mini-class models — you get the context window on paper, not the recall in practice.
+
+### What's the actual impact of prompt caching?
+
+If your system prompt is 20K tokens and you're running 10,000 requests per day on Sol, you're looking at roughly $4.50 per million cached input tokens vs $50 uncached. The 30-minute cache lifetime means most production traffic patterns qualify. The 1.25× cache-write overhead is recovered in under two cache-hit requests. It's worth setting up.
+
+### Is Kimi K3 worth comparing here?
+
+Yes, especially after July 27. Kimi K3 is Moonshot AI's 2.8T-parameter open-weight MoE model, released July 16, with full weights dropping July 27. It scored 91.2% on BrowseComp at launch — competitive with Sol at $0.30 cached input / $3 uncached / $15 output. If you want to self-host at scale, K3 is the most capable open option by parameter count. For pure API usage today, GPT-5.6 Terra still wins on cost-adjusted benchmark performance for most workloads — but once the K3 weights are fully available, the calculus for self-hosting changes.
+
+### Should I migrate my app from GPT-5.5 to GPT-5.6 Terra?
+
+Yes, and it's not close. Same model ID swap, half the price, same quality tier. If you haven't done it, do it this week.
+
+### Can I mix tiers in the same application?
+
+Not only can you, you probably should. A routing layer that classifies request complexity and directs frontier tasks to Sol, routine tasks to Terra, and short-context high-volume tasks to Luna is the right architecture for most non-trivial apps. The routing logic is cheap; the savings are real.
+
+### What about the Cerebras partnership?
+
+OpenAI is launching Sol on Cerebras at up to 750 tokens per second in July. If you have streaming use cases where output speed is the primary UX constraint — interactive coding assistants, real-time agents — this makes Sol's speed competitive in ways that Luna no longer has exclusive claim on. It also changes the cost math for latency-sensitive use cases where you'd previously defaulted to Luna for speed reasons.
+
+### Will pricing drop further?
+
+It usually does. OpenAI cut GPT-5.5 pricing after a few weeks. With Kimi K3 open weights landing July 27 and Gemini 3.5 Pro launching today, competitive pressure on the API market is real. I wouldn't plan around a price cut, but I also wouldn't lock in long-term commitments at current rates.
+
+### Is the 1M context window actually usable on all three tiers?
+
+On Sol and Terra: yes, with recall numbers to back it up. On Luna: treat it as a short-context model that technically has a large window. The 41.3% recall number is not a model limitation you can engineer around — it's a fundamental tradeoff the tier was built on.
+
+## What's Next
+
+July 27 is the next date to mark: that's when Kimi K3's full weights go public, and a 2.8T-parameter open model changes the self-hosting calculus for everyone building on LLMs at scale.
+
+For now, the practical move is clear. If you're calling GPT-5.5, switch to Terra this week — same quality, half the price, no code changes beyond the model ID. If you're starting fresh, default to Terra and add Sol routing for the tasks that genuinely need it. Don't put Luna in any path that touches long documents or extended context without testing its recall on your actual content first.
+
+If you build a routing layer and learn something surprising — what the intent classifier got wrong, which tasks unexpectedly needed Sol, how Luna behaved at the edges — I'd genuinely like to hear it. Drop a message.
