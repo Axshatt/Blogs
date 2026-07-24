@@ -1,0 +1,118 @@
+---
+title: 5 Weekend Projects That'll Teach You More Than a Month-Long Internship
+excerpt: >-
+  Skip the coffee-fetching internship. Build these 5 AI/ML + full-stack projects
+  instead — real stacks, real references, real skill signal.
+category: build-log
+tags: []
+published: '2026-07-24'
+draft: false
+author: Akshat Singh
+featured: true
+---
+5 Weekend Projects That'll Teach You More Than a Month-Long Internship
+
+Nobody tells you this about AI/ML placements in 2026: the branch on your degree matters a lot less than the projects on your GitHub. Recruiters aren't asking "CSE or AI/ML?" anymore — they're asking "what have you actually built?"
+
+So instead of waiting for an internship to hand you experience, here are 5 weekend-sized projects that force you to learn ML, backend, frontend, and — in one case — hardware, all at once. Pick one, block out a Saturday and Sunday, and ship it.
+
+---
+
+## 1. AI Resume/JD Matcher
+
+**What it does:** Upload a resume and a job description, get a match score plus concrete rewrite suggestions to close the gap.
+
+**Why it's worth building:** It's a real pain point (you'll use it on your own resume), and it forces you to combine NLP with a usable product — not just a notebook.
+
+**Stack:**
+- FastAPI for the backend
+- spaCy or NLTK for keyword extraction and similarity scoring
+- Next.js for the frontend
+- MongoDB to store past uploads/history
+
+**Reference:** Browse the [resume-parser topic on GitHub](https://github.com/topics/resume-parser) for structural ideas — don't clone, study how others structured parsing + scoring.
+
+---
+
+## 2. MCP Server for Group Ordering
+
+**What it does:** An LLM-powered agent that plans a group food order — splitting by budget, dietary preference, and even across verticals like food + groceries.
+
+**Why it's worth building:** MCP (Model Context Protocol) is brand new territory. Almost nobody your age has shipped a public MCP demo yet — this is the project that makes your GitHub stand out simply because so few people are building in this space right now.
+
+**Stack:**
+- MCP SDK (Node or Python)
+- Swiggy Builder API for the ordering logic
+- Next.js frontend to visualize the agent's plan in real time
+
+**Reference:** Study the [official Model Context Protocol servers repo](https://github.com/modelcontextprotocol/servers) to understand how a working MCP server is structured before building your own.
+
+---
+
+## 3. Fake News / Misinformation Classifier + Browser Extension
+
+**What it does:** An NLP model that classifies articles as real or fake, wrapped in a Chrome extension that flags suspicious content while you browse.
+
+**Why it's worth building:** It's the rare ML project with a visible, interactive frontend — a browser extension demo is far more memorable in a portfolio than a static Jupyter notebook.
+
+**Stack:**
+- scikit-learn or HuggingFace for the classifier
+- FastAPI to serve predictions
+- Chrome extension (Manifest v3) for the live-flagging UI
+
+**Reference:** The [fake-news-detection topic on GitHub](https://github.com/topics/fake-news-detection) has multiple dataset and baseline-model examples worth studying.
+
+---
+
+## 4. ESP32 Smart Room Dashboard
+
+**What it does:** Temperature, humidity, and light sensors feed into an ESP32, which pushes live data to a web dashboard — and shows local stats on an OLED display too.
+
+**Why it's worth building:** It's the one project on this list that isn't "just another web app." A physical device + live dashboard demo is an instant scroll-stopper in a reel or a portfolio video.
+
+**Stack:**
+- ESP32 board
+- Arduino C or MicroPython for firmware
+- WebSockets for real-time data push
+- Next.js for the dashboard
+
+**Reference:** Explore [ESP32 web dashboard projects on GitHub](https://github.com/topics/esp32-web-dashboard) for wiring and data-flow patterns.
+
+---
+
+## 5. RAG Chatbot Over Your Own Notes
+
+**What it does:** Feed your own blog posts, class notes, or documentation into a retrieval-augmented generation pipeline, and chat with your own knowledge base.
+
+**Why it's worth building:** RAG is one of the most in-demand skills for AI roles right now, and this project doubles as promotion for your blog or notes — a nice compounding effect.
+
+**Stack:**
+- FastAPI backend
+- Chroma or pgvector for the vector store
+- Next.js chat UI
+- Any LLM API for generation
+
+**Reference:** [Retrieval-augmented-generation topic on GitHub](https://github.com/topics/retrieval-augmented-generation) for architecture patterns and starter implementations.
+
+---
+
+## Bonus: Curated Lists for More Ideas
+
+If none of these five hit exactly what you're looking for:
+
+- [500+ AI/ML/DL/CV/NLP project ideas by domain](https://github.com/) — a large curated repo organized by category and difficulty
+- [Placement-worthy AI/ML/full-stack project ideas (gist)](https://gist.github.com/madhurimarawat/98294b842b05aaae00c82ac9335f1b9e)
+
+---
+
+## The Real Takeaway
+
+None of these projects need a month. They need a weekend and the willingness to actually finish something instead of watching one more tutorial.
+
+Pick one. Build it. Push it to GitHub. Write a short README. Post about it.
+
+That's the whole unlock — stop optimizing your resume, start optimizing your GitHub.
+
+---
+
+*Building one of these? Tag me — I'd love to see what you ship.*
