@@ -1,6 +1,7 @@
 import type { MDXComponents } from 'mdx/types';
 import { CodeBlock } from '@/components/mdx/CodeBlock';
 import { Callout } from '@/components/mdx/Callout';
+import { Steps, Step } from '@/components/mdx/Steps';
 import { SafeImage } from '@/components/ui/SafeImage';
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
@@ -83,5 +84,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     // Custom MDX components available in posts
     Callout,
     CodeBlock,
+    Steps,
+    Step,
   };
 }
