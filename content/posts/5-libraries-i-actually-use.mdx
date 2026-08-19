@@ -1,0 +1,110 @@
+---
+title: 5 Libraries I Actually Use (Not Just Bookmark)
+excerpt: >-
+  Free, open source, under a minute to install. Stop rebuilding buttons from
+  scratch.
+category: build-log
+tags:
+  - '"webdev"'
+  - '"react"'
+  - '"nextjs"'
+  - '"tools"'
+published: '2026-08-19'
+draft: false
+author: Akshat Singh
+featured: true
+canonical_url: 'https://blog.akshatcodes.com/'
+---
+Every semester some junior in Hexagons DMs me "bhai UI kaise banau, from scratch likhu ya kuch use karu?" — same answer every time. Don't write everything from scratch. Use libraries that people smarter than us have already open sourced, then customize.
+
+Here are the 5 I keep coming back to. All free, all open source, all under a minute to install. I've tested every command below — copy-paste and go.
+
+## 1. shadcn/ui — install this first
+
+Site: [ui.shadcn.com](https://ui.shadcn.com)
+Repo: [github.com/shadcn-ui/ui](https://github.com/shadcn-ui/ui)
+
+```bash
+npx shadcn@latest init
+npx shadcn@latest add button card dialog
+```
+
+This is the base layer. Buttons, forms, dialogs, tables — the code lands directly inside your project, so you own every line and can edit it however you want. It's not a black-box npm package.
+
+Everything else on this list sits on top of shadcn. Install this before anything else.
+
+⚠️ Real talk: don't let AI generate every component from scratch in your prompts. Use shadcn as the starting point, then customize with Claude/Cursor on top of it. Saves you tokens and gives you consistent design.
+
+## 2. React Bits — for the flashy stuff
+
+Site: [reactbits.dev](https://reactbits.dev)
+Repo: [github.com/DavidHDev/react-bits](https://github.com/DavidHDev/react-bits)
+
+```bash
+npx shadcn@latest add "https://reactbits.dev/r/BlurText-TS-TW"
+```
+
+Backgrounds, text animations, interactive components. Browse the site, pick whatever fits, and the command is right there on the component page — copy, paste, done.
+
+Every component ships in 4 flavors: JS/TS × CSS/Tailwind. Match your stack — I run TypeScript + Tailwind on everything, so I always grab the `-TS-TW` version.
+
+My go-tos for the POVA and Skylrk sites: **Prism**, **Dither**, and **Silk** for backgrounds, **Magic Bento** and **Fluid Glass** for section layouts.
+
+## 3. assistant-ui — if you're shipping anything AI
+
+Site: [assistant-ui.com](https://assistant-ui.com)
+Repo: [github.com/assistant-ui/assistant-ui](https://github.com/assistant-ui/assistant-ui)
+
+```bash
+npx assistant-ui@latest init
+```
+
+Streaming responses, markdown rendering, message history, file attachments, auto-scroll — all the stuff that quietly breaks when you build a chat interface by hand at 2 AM before a hackathon deadline. If you're building anything with an LLM in the loop (RAG chatbot, MCP tool, whatever), start here instead of reinventing it.
+
+New project instead of an existing one? Swap `init` for `create`.
+
+## 4. driver.js — onboarding without the pain
+
+Site: [driverjs.com](https://driverjs.com)
+Repo: [github.com/kamranahmedse/driver.js](https://github.com/kamranahmedse/driver.js)
+
+```bash
+npm install driver.js
+```
+
+The spotlight-tour effect that walks a new user through your product on first login. 4kb, zero dependencies, works with any framework.
+
+Same idea as everything else here — you don't need to hand-code every UI edge case for a first-run tour. Let a 4kb library handle it so you can spend that time on the actual product.
+
+## 5. Tailark — landing page sections that don't look templated
+
+Site: [tailark.com](https://tailark.com)
+Repo: [github.com/tailark/blocks](https://github.com/tailark/blocks)
+
+Heroes, pricing tables, testimonials, FAQs, footers — pre-built marketing sections.
+
+Add the registry to `components.json` first:
+
+```json
+{
+  "registries": {
+    "@tailark-oss": "https://oss.tailark.com/r/{name}.json"
+  }
+}
+```
+
+Then pull any block:
+
+```bash
+npx shadcn@latest add @tailark-oss/dusk-hero-section-one
+```
+
+Free kits: **Mist**, **Dusk**, **Veil**. Quartz and the full-page templates are paid. Stick to `@tailark-oss` and you'll never hit a paywall.
+
+One rule: pick a kit and stay in it. The themes are designed to match within a kit — mixing Mist hero with Dusk pricing is exactly what makes a landing page look stitched together from five tutorials.
+
+---
+
+That's the stack. None of this replaces learning how the underlying code works — but once you get the fundamentals, there's no reason to keep hand-rolling a button component for the hundredth time.
+
+Building something with these? Drop it in the Hexagons community — always happy to take a look and swap notes.
