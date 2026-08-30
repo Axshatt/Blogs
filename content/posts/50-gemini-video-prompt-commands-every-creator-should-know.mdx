@@ -1,0 +1,238 @@
+---
+title: 50 Gemini Video Prompt Commands Every Creator Should Know
+excerpt: >-
+  If you've spent any time on X or Instagram lately, you've probably seen
+  creators dropping slash-style prompts like /reveal, /teardown, and
+  /exploadedview and turning ordinary product shots into cinematic mini-films
+  with Gemini's video generation (Veo). The results look expensive. The prompts
+  behind them are not complicated — they just follow a pattern most people never
+  bother to learn.
+category: build-log
+tags: []
+published: '2026-08-30'
+draft: false
+author: Akshat Singh
+featured: true
+---
+If you've spent any time on X or Instagram lately, you've probably seen creators dropping slash-style prompts like `/reveal`, `/teardown`, and `/exploadedview` and turning ordinary product shots into cinematic mini-films with Gemini's video generation (Veo). The results look expensive. The prompts behind them are not complicated — they just follow a pattern most people never bother to learn.
+
+So I broke that pattern down and built out a complete library: **50 ready-to-use video prompt commands**, organized into six categories, each with a plain-English explanation and a copy-paste template. Replace `[SUBJECT]` with your product, object, or a reference photo/clip, and you're generating.
+
+Here's the full list.
+
+---
+
+## Why "commands" instead of just prompts?
+
+A slash command isn't a special API feature — it's a mental shortcut. Instead of staring at a blank prompt box wondering how to describe what you want, you pick a command, swap in your subject, and go. Once you've used a few of these, you start noticing the shared skeleton behind every good video prompt:
+
+**[Subject] + [What happens to it] + [Camera movement] + [Lighting/mood] + [Duration]**
+
+That's it. Every command below is really just that formula, pre-filled for a specific visual effect.
+
+---
+
+## 🔧 1. Product Breakdown & Technical
+
+These make objects feel engineered, precise, and premium — perfect for tech products, gadgets, and anything you want to look "designed."
+
+1. **`/reveal`** — Camera pulls back and light rises as the subject is dramatically unveiled.
+   > "An 8-second video: [SUBJECT] emerges from darkness as a single spotlight slowly rises, camera slowly pushes in, cinematic reveal, dust particles catching light, dramatic orchestral swell feel"
+
+2. **`/teardown`** — Parts lift off one by one and settle into a neat layout.
+   > "An 8-second video: [SUBJECT] disassembles itself piece by piece, each part lifting off and gliding into a neat flat-lay arrangement, smooth top-down camera, soft click sound cues, clean white surface"
+
+3. **`/exploadedview`** — Parts separate outward along an axis, then reassemble.
+   > "An 8-second video: [SUBJECT] explodes apart along a central axis, all components drifting outward in slow motion, camera slowly orbits, then parts reverse and snap back together, white studio background"
+
+4. **`/crossection`** — Camera glides through a cutaway, revealing internals.
+   > "An 8-second video: the camera glides directly through a cross-section cutaway of [SUBJECT], revealing internal layers and mechanisms in sequence, smooth continuous dolly move, clinical lighting"
+
+5. **`/blueprint`** — Object draws itself in as animated blueprint linework.
+   > "An 8-second video: [SUBJECT] is progressively drawn in as glowing white blueprint linework on a navy background, dimension lines animating in sequence, engineering-drawing style, steady camera"
+
+6. **`/xray`** — A scan line sweeps across, revealing the x-ray interior.
+   > "An 8-second video: a scanning line sweeps across [SUBJECT] revealing its x-ray interior structure as it passes, blue-white radiographic glow, slow linear camera pan, dark background"
+
+7. **`/wireframe`** — The object materializes from a glowing wireframe mesh.
+   > "An 8-second video: [SUBJECT] materializes from a glowing wireframe mesh into a fully solid rendered object, particle build-up effect, slow camera orbit, black background"
+
+8. **`/schematic`** — Circuit-style nodes and lines animate across the subject.
+   > "An 8-second video: glowing schematic circuit lines trace across [SUBJECT], nodes lighting up in sequence like a powering-on animation, dark technical background, steady close-up camera"
+
+9. **`/anatomy`** — Labeled layers peel back to reveal the structure beneath.
+   > "An 8-second video: labeled anatomical layers of [SUBJECT] peel back one at a time to reveal the structure beneath, textbook-illustration style, slow methodical pacing, cream paper background"
+
+10. **`/techspec`** — Camera pans across the product as spec callouts animate in.
+    > "An 8-second video: camera slowly pans across [SUBJECT] on a clean studio background as minimal spec-sheet callout lines animate in one by one, premium tech-launch video style"
+
+---
+
+## 📏 2. Scale & Perspective
+
+Use these when you want the viewer to *understand* the object — its size, its detail, its dimensionality.
+
+11. **`/macro`** — Extreme macro push-in revealing texture.
+    > "An 8-second video: extreme macro push-in on [SUBJECT], revealing fine surface texture and detail as the camera moves closer, shallow depth of field, studio macro lighting"
+
+12. **`/miniature`** — Tilt-shift miniature world with subtle motion.
+    > "An 8-second video: [SUBJECT] shown with a tilt-shift miniature effect, subtle background motion (tiny moving crowds or traffic) making it feel like a toy-scale world, slow pan"
+
+13. **`/360`** — Smooth continuous 360-degree turntable spin.
+    > "An 8-second video: [SUBJECT] rotates smoothly on a 360-degree turntable, consistent studio lighting, camera locked off, seamless loop, product-showcase style"
+
+14. **`/sizecompare`** — Objects animate in beside the subject to show scale.
+    > "An 8-second video: everyday objects (hand, coin, phone) animate into frame one by one beside [SUBJECT] to demonstrate scale, clean infographic motion graphics, white background"
+
+15. **`/scalefigure`** — A human silhouette walks in for scale reference.
+    > "An 8-second video: a minimal human silhouette figure walks into frame and stands beside [SUBJECT] for scale reference, studio lighting, static camera, gray backdrop"
+
+16. **`/isometric`** — Isometric render assembles itself piece by piece.
+    > "An 8-second video: [SUBJECT] assembles itself piece by piece in isometric 3D perspective, soft shadows animating in, pastel color palette, video-game asset reveal style"
+
+---
+
+## 🎨 3. Material & Style Transform
+
+These are the scroll-stoppers — reimagining a familiar object in an unexpected medium.
+
+17. **`/claymation`** — Stop-motion clay animation with handcrafted imperfection.
+    > "An 8-second video: [SUBJECT] animated in claymation stop-motion style, slightly jittery frame-by-frame movement, visible fingerprint textures, soft studio lighting"
+
+18. **`/papercraft`** — Paper layers fold and unfold into a diorama.
+    > "An 8-second video: layered papercraft pieces fold and unfold to construct a diorama of [SUBJECT], visible paper edges and shadows, stop-motion pacing, pastel colors"
+
+19. **`/lego`** — Bricks fly in and snap together to build the subject.
+    > "An 8-second video: LEGO bricks fly in from all directions and snap together in sequence to build [SUBJECT], satisfying assembly motion, bright plastic colors, studio lighting"
+
+20. **`/origami`** — Flat paper folds itself into the subject's form.
+    > "An 8-second video: a flat sheet of paper folds itself step by step into an origami sculpture of [SUBJECT], crisp fold animation, single-color paper, soft directional light"
+
+21. **`/watercolor`** — Watercolor pigment blooms and bleeds into the image.
+    > "An 8-second video: watercolor pigment blooms and bleeds across paper, gradually forming a painting of [SUBJECT], visible paper texture, loose brushwork animating in"
+
+22. **`/sketch`** — Pencil lines draw themselves into a concept sketch.
+    > "An 8-second video: pencil lines draw themselves rapidly to form a concept-art sketch of [SUBJECT], visible construction lines and cross-hatching, sketchbook page, hand-drawn pacing"
+
+23. **`/lineart`** — A single continuous line animates the subject's outline.
+    > "An 8-second video: a single continuous white line draws itself to form the outline of [SUBJECT], minimal line-art animation, black background, smooth steady pacing"
+
+24. **`/hologram`** — Object flickers to life as a holographic projection.
+    > "An 8-second video: [SUBJECT] flickers and materializes as a glowing blue holographic projection, scan lines and light flicker, floating above a dark futuristic surface, sci-fi UI glow"
+
+25. **`/ghostview`** — The shell fades to transparent, revealing structure beneath.
+    > "An 8-second video: the outer shell of [SUBJECT] gradually fades to transparent, revealing the internal structure beneath in a smooth cross-dissolve, soft studio light, slow camera push-in"
+
+26. **`/materialswap`** — The object morphs from one material into another.
+    > "An 8-second video: [SUBJECT] morphs smoothly from its original material into [MATERIAL: marble/wood/glass/chrome], seamless material transition, studio lighting, slow camera orbit"
+
+---
+
+## 🛍️ 4. Studio & Commercial
+
+The bread and butter for anyone making ads, product launches, or e-commerce content.
+
+27. **`/flatlay`** — Accessories slide in to complete an overhead flat lay.
+    > "An 8-second video: accessories slide into frame one by one to complete an overhead flat-lay arrangement around [SUBJECT], soft natural light, top-down locked camera, editorial styling"
+
+28. **`/productgrid`** — Camera cuts between angles in a fast grid montage.
+    > "An 8-second video: quick sequential cuts of [SUBJECT] shown from nine different angles, consistent studio lighting, fast catalog-style montage pacing"
+
+29. **`/colorways`** — The product cycles smoothly through color variations.
+    > "An 8-second video: [SUBJECT] smoothly cycles through five different colorways via seamless color-morph transitions, identical pose and lighting, clean white background"
+
+30. **`/packagingmock`** — The product lifts out of premium retail packaging.
+    > "An 8-second video: [SUBJECT] lifts smoothly out of premium retail packaging as the box opens, soft studio lighting, slow reveal camera move, minimalist branding mockup"
+
+31. **`/catalogshot`** — Slow orbiting hero shot on a seamless backdrop.
+    > "An 8-second video: [SUBJECT] on a seamless white background, camera slowly orbits at eye level, soft even lighting, subtle shadow, e-commerce hero video style"
+
+32. **`/heromode`** — Dramatic lighting sweep across a hero product shot.
+    > "An 8-second video: dramatic rim light sweeps across [SUBJECT] against a dark moody background, slow push-in camera, high-end advertising campaign style"
+
+33. **`/studiolight`** — Lights power on in sequence, three-point setup.
+    > "An 8-second video: three studio lights power on in sequence around [SUBJECT], soft shadows shifting as each light activates, seamless backdrop, professional product video"
+
+34. **`/unboxing`** — First-person unboxing with hands opening the box.
+    > "An 8-second video: first-person POV unboxing of [SUBJECT], hands opening box flaps and peeling back tissue paper, warm natural light, handheld camera feel"
+
+35. **`/lifestyleshot`** — The product used naturally in a real-world moment.
+    > "An 8-second video: [SUBJECT] being used naturally in a real-world lifestyle setting, candid handheld camera movement, warm ambient lighting, authentic pacing"
+
+36. **`/environmentmix`** — The product drifts through a surreal environment.
+    > "An 8-second video: [SUBJECT] slowly drifts through a surreal dreamlike environment (floating clouds / underwater / desert dunes), dramatic scale, cinematic slow-motion camera glide"
+
+---
+
+## 🌈 5. Mood & Aesthetic
+
+For when the vibe matters more than the specs.
+
+37. **`/vintage`** — Retro film-grain advertisement with period motion.
+    > "An 8-second video: [SUBJECT] shot in the style of a 1970s vintage advertisement, visible film grain and flicker, warm faded color grading, slow retro zoom"
+
+38. **`/polaroid`** — The frame develops like an instant photo coming to life.
+    > "An 8-second video: an instant polaroid-style frame of [SUBJECT] develops from blank white into a full image, soft vignette, slightly overexposed, nostalgic pacing"
+
+39. **`/noir`** — High-contrast shadows shift across the subject.
+    > "An 8-second video: [SUBJECT] in dramatic film-noir black and white, venetian-blind shadow pattern slowly shifting across the frame, hard directional light, high contrast"
+
+40. **`/cyberpunk`** — Neon lights pulse and reflect off wet surfaces.
+    > "An 8-second video: [SUBJECT] in a cyberpunk aesthetic, neon pink and cyan lights pulsing and reflecting off rain-slicked surfaces, slow camera drift, futuristic city backdrop"
+
+41. **`/vaporwave`** — A retro grid and gradient animate behind the subject.
+    > "An 8-second video: [SUBJECT] in a vaporwave aesthetic, animated pastel pink-purple gradient sky and scrolling retro grid floor behind it, 80s digital nostalgia, slow pan"
+
+42. **`/nightmode`** — A single warm light source flickers in low-key darkness.
+    > "An 8-second video: [SUBJECT] at night, moody low-key lighting, a single warm light source flickering gently, deep shadows, slow cinematic push-in"
+
+43. **`/futurecast`** — The object morphs into its sleek future concept version.
+    > "An 8-second video: [SUBJECT] morphs smoothly into a futuristic next-generation concept version, sleek minimal design forming in real time, soft ambient studio light"
+
+---
+
+## 🎬 6. Sequence & Narrative
+
+These tell a small story in eight seconds — great for explainer content and "how it's made" style posts.
+
+44. **`/beforeafter`** — A split-screen wipe transition from before to after.
+    > "An 8-second video: a vertical wipe transition sweeps across the frame revealing the after state of [SUBJECT] over the before state, clean divider line, smooth consistent lighting"
+
+45. **`/timelapse`** — The subject evolves through stages in a fast time-lapse.
+    > "An 8-second video: [SUBJECT] shown evolving through five progressive stages in fast time-lapse motion, consistent lighting, smooth stage-to-stage morph transitions"
+
+46. **`/stopmotion`** — A choppy, handcrafted stop-motion animation sequence.
+    > "An 8-second video: [SUBJECT] animated in stop-motion style with deliberately choppy handcrafted frame movement, soft studio lighting, imperfect charming motion"
+
+47. **`/diorama`** — Camera glides through a miniature diorama scene.
+    > "An 8-second video: camera glides slowly through a miniature diorama scene featuring [SUBJECT], handcrafted backdrop, tilt-shift depth of field, warm lighting"
+
+48. **`/floatingparts`** — Components freeze mid-air with motion-blur trails.
+    > "An 8-second video: [SUBJECT] captured mid-disassembly, components drifting and rotating in slow motion as if levitating, subtle motion-blur trails, dark studio background"
+
+49. **`/processflow`** — Numbered stages animate in sequence, left to right.
+    > "An 8-second video: a step-by-step process showing how [SUBJECT] is made or used, five numbered stages animating in sequence left to right, clean infographic icon motion"
+
+50. **`/infographic`** — Callouts and icons animate in around the subject.
+    > "An 8-second video: [SUBJECT] centered on screen as infographic callouts, icons, and short stat highlights animate in around it one by one, modern flat motion-design style"
+
+---
+
+## How to actually use these
+
+1. **Pick a command** that matches the feeling you want — technical, cinematic, playful, or nostalgic.
+2. **Swap in `[SUBJECT]`** with your product, object, or a reference photo/clip attached in Gemini.
+3. **Adjust the duration** — 8 seconds is a solid default, but drop to 4s for a punchy hook or stretch to 15s for a fuller story. Reels and Shorts tend to perform best in the 6–10s range.
+4. **Stack two commands** for a hybrid effect. `/exploadedview` + `/vintage` gives you an exploded diagram shot like it came out of a 1970s ad. `/hologram` + `/beforeafter` gives you a sci-fi transformation reveal.
+5. **Always specify camera movement.** This is the single biggest lever separating a prompt that feels intentional from one that feels generic. Push-in, orbit, pan, static — pick one, every time.
+
+## A few extra tips
+
+- These are built for Gemini's video generation (Veo), and work best with a reference image or short clip attached rather than a blind text-only prompt.
+- The commands aren't literal API syntax — you still need to type out the full template. Think of the slash as a memory aid, not a function call.
+- Lighting and material modifiers (`marble`, `chrome`, `neon`, `golden hour`) can be dropped into almost any template to reskin the mood without changing the structure.
+- Don't be afraid to under-describe. Gemini fills in a lot of visual detail on its own — the prompts above give it just enough direction without over-constraining the result.
+
+---
+
+That's the full 50. If you're a creator, save this list, run a few of these on your next product or personal brand shoot, and see which ones become your go-to's. The commands that consistently perform well are usually the ones with the clearest camera direction — so if a generation feels flat, that's the first thing to sharpen.
