@@ -1,0 +1,196 @@
+---
+title: 20 Open-Source AI Agent & RAG Projects Every Dev Should Build in 2026
+excerpt: >-
+  From multi-agent ops crews to on-chain AI agents — a curated, no-fluff list of
+  20 open-source repos to learn agentic AI, RAG, LLM infra, and MLOps by
+  actually building.
+category: build-log
+tags:
+  - '"ai-agents"'
+  - '"rag"'
+  - '"llm"'
+  - '"opensource"'
+  - '"mlops"'
+  - '"langgraph"'
+  - '"genai-projects"'
+published: '2026-08-31'
+draft: false
+author: Akshat Singh
+featured: true
+canonical_url: 'https://blog.akshatcodes.com/'
+---
+# 20 Open-Source AI Agent & RAG Projects Every Dev Should Build in 2026
+
+Agar aap 2026 mein "AI/ML seekh raha hoon" bol rahe ho lekin sirf tutorials dekh rahe ho — ruko. Recruiters aur hiring managers ab **repos** dekhte hain, resume ke buzzwords nahi.
+
+Yeh list 20 production-grade open-source projects ki hai — agentic frameworks se lekar RAG, LLM infra, aur MLOps tak — jinko clone karke, break karke, aur rebuild karke aap actually agentic AI engineering seekhoge. Har ek ka category, use-case, tech stack, aur difficulty diya hai taaki aap apne level ke hisaab se pick kar sako.
+
+## Why building > watching tutorials
+
+Tutorials teach you syntax. Cloning a real repo teaches you **why** a system is architected the way it is — how retries are handled, how state is persisted, how failures are recovered. That's the exact skill gap between "I know Python" and "I can ship an AI product."
+
+Let's get into it.
+
+---
+
+## Category 1: Agentic Frameworks & Autonomous Agents
+
+### 1. Multi-Agent Ops Crew — [langgraph-101](https://github.com/langchain-ai/langgraph-101)
+A hands-on intro to building multi-agent systems with LangGraph's graph-based orchestration. Great starting point if you want to understand state machines for agents before jumping into anything complex.
+- **Stack:** Python, LangGraph, LangChain
+- **Difficulty:** Beginner–Intermediate
+- **Build it if:** You want to understand agent orchestration fundamentals — nodes, edges, shared state.
+
+### 2. Autonomous Coding Agent — [open-swe](https://github.com/langchain-ai/open-swe)
+An open-source autonomous software engineering agent that can plan, write, and iterate on code with minimal human intervention. This is basically a peek into how tools like Devin-style agents are architected.
+- **Stack:** TypeScript/Python, LangGraph, sandboxed execution
+- **Difficulty:** Advanced
+- **Build it if:** You want to understand planning + execution loops for coding agents.
+
+### 3. Browser Automation Agent — [browser-use](https://github.com/browser-use/browser-use)
+Lets an LLM actually control a browser — click, scroll, fill forms, extract data — using vision + DOM understanding. One of the most practical agent projects for real-world automation.
+- **Stack:** Python, Playwright, vision-LLMs
+- **Difficulty:** Intermediate
+- **Build it if:** You want to build agents that interact with the real web, not just APIs.
+
+### 4. Custom MCP Server — [servers](https://github.com/modelcontextprotocol/servers)
+The official reference implementations for Model Context Protocol servers. This is where you learn how tools/resources are exposed to LLMs in a standardized way — the same protocol Claude, and increasingly the whole industry, is standardizing on.
+- **Stack:** TypeScript/Python, MCP SDK
+- **Difficulty:** Intermediate
+- **Build it if:** You want your agents to plug into real tools (databases, APIs, filesystems) the "right" way.
+
+### 20. On-Chain AI Agent — [eliza](https://github.com/elizaOS/eliza)
+A framework for building autonomous agents that can interact with blockchains — trading, on-chain data reads, wallet actions. Popular in the crypto-AI crossover space.
+- **Stack:** TypeScript, multi-chain adapters
+- **Difficulty:** Advanced
+- **Build it if:** You're curious about the Web3 + AI agent intersection.
+
+---
+
+## Category 2: RAG, Retrieval & Document AI
+
+### 5. Hybrid RAG — [qdrant](https://github.com/qdrant/qdrant)
+A production-grade vector database written in Rust, supporting hybrid (dense + sparse) search. This isn't a toy vector store — companies run this in production at scale.
+- **Stack:** Rust, gRPC/REST APIs
+- **Difficulty:** Intermediate
+- **Build it if:** You want RAG that actually performs well beyond a Chroma demo.
+
+### 6. GraphRAG — [graphrag](https://github.com/microsoft/graphrag)
+Microsoft's approach to RAG that builds a knowledge graph from your documents before retrieval — dramatically better at answering questions that need multi-hop reasoning across a corpus.
+- **Stack:** Python, LLM-based graph extraction
+- **Difficulty:** Intermediate–Advanced
+- **Build it if:** Your RAG use case involves connected, relational information (not just flat FAQ-style docs).
+
+### 7. Document AI Pipeline — [docling](https://github.com/docling-project/docling)
+Converts messy PDFs, PPTs, and scanned docs into clean structured data (tables, layout, reading order) — the unglamorous but essential preprocessing step that makes or breaks RAG quality.
+- **Stack:** Python, layout models, OCR
+- **Difficulty:** Beginner–Intermediate
+- **Build it if:** Garbage-in-garbage-out is killing your RAG pipeline's accuracy.
+
+### 16. Text-to-SQL Agent — [text-to-sql-agent](https://github.com/langchain-ai/text-to-sql-agent)
+An agent that translates natural language into SQL queries, executes them, and self-corrects on errors. One of the highest-ROI enterprise AI use cases right now.
+- **Stack:** Python, LangGraph, SQL databases
+- **Difficulty:** Intermediate
+- **Build it if:** You want a project that's genuinely useful for internal analytics tools.
+
+---
+
+## Category 3: LLM Infra, Ops & Guardrails
+
+### 8. RAG / Agent Eval Harness — [ragas](https://github.com/vibrantlabsai/ragas)
+The go-to framework for evaluating RAG pipelines — faithfulness, answer relevance, context precision/recall — with actual metrics instead of vibes.
+- **Stack:** Python
+- **Difficulty:** Beginner–Intermediate
+- **Build it if:** You're tired of eyeballing RAG outputs and calling it "good enough."
+
+### 9. LLM Observability — [langfuse](https://github.com/langfuse/langfuse)
+Open-source LLM tracing, prompt management, and analytics. Essentially "Datadog for LLM apps" — traces every call, token, and latency spike.
+- **Stack:** TypeScript, Python SDKs, Postgres/ClickHouse
+- **Difficulty:** Intermediate
+- **Build it if:** You want to debug agent pipelines instead of guessing why they failed.
+
+### 10. AI Guardrails — [NeMo Guardrails](https://github.com/NVIDIA-NeMo/Guardrails)
+NVIDIA's toolkit for adding programmable guardrails to LLM apps — topical rails, safety checks, jailbreak resistance.
+- **Stack:** Python, Colang DSL
+- **Difficulty:** Intermediate
+- **Build it if:** You're shipping an LLM feature to real users and need it to stay on-topic and safe.
+
+### 13. LLM Gateway — [litellm](https://github.com/BerriAI/litellm)
+A unified API layer that lets you call 100+ LLM providers (OpenAI, Anthropic, Gemini, local models) through one consistent interface, with load balancing and fallback logic built in.
+- **Stack:** Python
+- **Difficulty:** Beginner–Intermediate
+- **Build it if:** You want to avoid vendor lock-in and learn how model routing actually works.
+
+### 14. AI Quality Monitoring — [evidently](https://github.com/evidentlyai/evidently)
+Monitors data drift, model performance, and LLM output quality over time in production — the "is my model still good?" question, answered with dashboards instead of hope.
+- **Stack:** Python
+- **Difficulty:** Intermediate
+- **Build it if:** You want MLOps skills beyond just training a model once.
+
+### 15. Real-Time Feature Store — [feast](https://github.com/feast-dev/feast)
+An open-source feature store for ML — manages feature definitions, serving, and consistency between training and inference. Core infra for any serious ML system.
+- **Stack:** Python, supports Redis/BigQuery/Snowflake backends
+- **Difficulty:** Advanced
+- **Build it if:** You want to understand how real ML platforms avoid training-serving skew.
+
+---
+
+## Category 4: Fine-Tuning & Self-Hosting LLMs
+
+### 11. LoRA / QLoRA Fine-Tuning — [unsloth](https://github.com/unslothai/unsloth)
+Makes fine-tuning LLMs 2–5x faster with way less VRAM using optimized LoRA/QLoRA kernels. If you've been scared of fine-tuning because of GPU cost, this is your entry point.
+- **Stack:** Python, PyTorch, custom CUDA kernels
+- **Difficulty:** Intermediate
+- **Build it if:** You want to fine-tune a small model on your own dataset without renting an A100 cluster.
+
+### 12. LLM Self-Hosting — [vllm](https://github.com/vllm-project/vllm)
+A high-throughput inference engine for serving LLMs, using PagedAttention for efficient memory management. This is how most companies self-host open models in production.
+- **Stack:** Python, CUDA, PyTorch
+- **Difficulty:** Advanced
+- **Build it if:** You want to understand how inference serving actually scales beyond a single `model.generate()` call.
+
+---
+
+## Category 5: Specialized Agents — Voice, Vision & Code Review
+
+### 17. AI PR Review Bot — [pr-agent](https://github.com/qodo-ai/pr-agent)
+An agent that automatically reviews GitHub PRs — summarizes changes, flags issues, suggests improvements. Genuinely useful for your own repos, not just a demo.
+- **Stack:** Python, GitHub Actions, LLM APIs
+- **Difficulty:** Beginner–Intermediate
+- **Build it if:** You want an agent project that improves your actual dev workflow starting today.
+
+### 18. Real-Time Voice Agent — [pipecat](https://github.com/pipecat-ai/pipecat)
+A framework for building real-time, low-latency voice AI agents — handles audio streaming, VAD, and orchestration between STT, LLM, and TTS.
+- **Stack:** Python, WebRTC, various STT/TTS providers
+- **Difficulty:** Advanced
+- **Build it if:** You want to build the next voice assistant instead of just another chatbot.
+
+### 19. Computer Vision Inspection — [ultralytics](https://github.com/ultralytics/ultralytics)
+Home of YOLO — the most widely used real-time object detection framework, now extended to segmentation, pose, and classification.
+- **Stack:** Python, PyTorch
+- **Difficulty:** Beginner–Intermediate
+- **Build it if:** You want a CV project with immediate visual results (great for content/demos too).
+
+---
+
+
+## How to actually pick one (don't just bookmark this)
+
+- **Naye ho agentic AI mein?** Start with #1 (langgraph-101), #17 (pr-agent), or #19 (ultralytics) — fast feedback loops, low setup pain.
+- **RAG banane ka soch rahe ho for a college project or startup?** #5 (Qdrant) + #7 (Docling) + #8 (Ragas) is a solid trio — retrieval, preprocessing, and evaluation covered.
+- **Placements ke liye kuch "infra-heavy" chahiye jo resume mein alag dikhe?** #12 (vLLM), #13 (LiteLLM), or #15 (Feast) — these show systems thinking, not just prompt-writing.
+
+## FAQ
+
+**Which of these is best for a beginner?**
+Start with the Multi-Agent Ops Crew (langgraph-101) or the AI PR Review Bot (pr-agent) — both have small, well-documented codebases and fast setup.
+
+**Do I need a GPU to try these?**
+Most agentic and RAG projects (#1–#10, #16–#19) run fine on CPU or free-tier cloud credits. Only fine-tuning (#11) and self-hosting (#12) genuinely need GPU access.
+
+**Which project looks best for placements/interviews?**
+A working RAG pipeline with an eval harness (Qdrant + Ragas) or an LLM gateway (LiteLLM) both signal production thinking, not just tutorial-following — that's what stands out.
+
+---
+
+*Which one are you building first? Drop the project number in the comments — I'll reply with the exact setup steps for that repo.* 👇
