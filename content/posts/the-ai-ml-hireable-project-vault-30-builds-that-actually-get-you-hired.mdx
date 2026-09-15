@@ -1,0 +1,158 @@
+---
+title: 'The AI/ML Hireable Project Vault: 30 Builds That Actually Get You Hired'
+excerpt: >-
+  30 project ideas (with reference GitHub repos) that go beyond Titanic and Iris
+  notebooks — picked for AI/ML students who want to stand out in 2026 hiring.
+category: build-log
+tags: []
+published: '2026-09-15'
+draft: false
+author: Akshat Singh
+featured: true
+---
+Most AI/ML portfolios look identical: a Titanic classifier, an Iris predictor, and a sentiment analyzer with 87% accuracy nobody asked about. Recruiters skim past all three in about four seconds.
+
+What actually gets attention in 2026 hiring is different: **deployed, end-to-end systems** with a documented failure case — not just a notebook with a metric at the bottom. Below are 30 project ideas, split into two vaults, each with a reference GitHub repo to study the architecture from.
+
+> **How to use these links:** clone the repo to understand the pattern, then rebuild it with your own dataset, UI, and twist. Submitting the reference repo as your own project is instantly recognizable to anyone who's screened more than ten resumes — the goal is to learn the shape of a real system, not copy it.
+
+---
+
+## Vault 1: Core AI Engineering Builds
+
+### 1. RAG Document Q&A Assistant
+A FastAPI backend + Next.js chat UI over your own PDFs or notes. Deploy it live so it's clickable, not just cloneable.
+**Reference:** [run-llama/llama_index](https://github.com/run-llama/llama_index)
+
+### 2. Local/Offline LLM Chat App
+Run a small open model locally — no API cost, and it demos without burning credits in an interview.
+**Reference:** [ollama/ollama](https://github.com/ollama/ollama)
+
+### 3. Multi-Agent Research/Travel Agent
+Shows you understand tool-calling and agent loops, not just prompting a single call.
+**Reference:** [Shubhamsaboo/awesome-llm-apps](https://github.com/Shubhamsaboo/awesome-llm-apps)
+
+### 4. Browser-Automation AI Agent
+An agent that fills forms, scrapes, or completes tasks from natural language. Strong "wow factor" in interviews.
+**Reference:** [browser-use/browser-use](https://github.com/browser-use/browser-use)
+
+### 5. Real-Time Computer Vision App (Gesture/Face Control)
+Package your MediaPipe/OpenCV experience into a polished, deployed web demo with a slick frontend.
+**Reference:** [google-ai-edge/mediapipe](https://github.com/google-ai-edge/mediapipe)
+
+### 6. YOLO-Based Object Detection Product
+Attendance system, PPE/safety detection, or a people-counting tool — frame it as a business problem, not a toy.
+**Reference:** [ultralytics/ultralytics](https://github.com/ultralytics/ultralytics)
+
+### 7. Fine-Tuned Small Language Model + Eval Suite
+LoRA fine-tune on a niche dataset, with a documented before/after metric — not just "it works."
+**Reference:** [huggingface/peft](https://github.com/huggingface/peft)
+
+### 8. MLOps Pipeline (Train → Deploy → Monitor)
+The #1 thing separating "notebook people" from hires: experiment tracking and a real deployment path.
+**Reference:** [mlflow/mlflow](https://github.com/mlflow/mlflow)
+
+### 9. Voice AI Assistant (STT → LLM → TTS)
+A spoken assistant for a real task — customer support, study buddy. Doubles as demo content for your channel.
+**Reference:** [openai/whisper](https://github.com/openai/whisper)
+
+### 10. IoT + AI Dashboard on ESP32
+Sensor data streamed from your Arduino/ESP32 hardware into a live dashboard with anomaly detection. Few AI candidates can do hardware + ML + frontend together — genuine differentiator.
+**Reference:** [espressif/arduino-esp32](https://github.com/espressif/arduino-esp32)
+
+### 11. 3D AI-Powered Product Configurator
+Three.js/GSAP scene customized live by an LLM from natural language. Almost nobody in a typical AI applicant pool can ship this.
+**Reference:** [pmndrs/react-three-fiber](https://github.com/pmndrs/react-three-fiber)
+
+### 12. AI SaaS with Auth + Payments
+A full product — sign-up, subscription, one real AI feature. Shows you can ship something sellable, not just a script.
+**Reference:** [supabase/supabase](https://github.com/supabase/supabase)
+
+### 13. Mini Workflow/Agent Orchestrator
+A simplified visual builder chaining AI + API calls. Strong systems-design signal.
+**Reference:** [n8n-io/n8n](https://github.com/n8n-io/n8n)
+
+### 14. Resume/Job-Matching AI Tool
+Scores or rewrites resumes against a job description — a strong portfolio piece and organic content for a dev-community audience.
+**Reference:** [Shubhamsaboo/awesome-llm-apps](https://github.com/Shubhamsaboo/awesome-llm-apps)
+
+### 15. Open-Source Contribution to a Popular AI Repo
+A merged PR — bug fix, new agent template, doc improvement — carries more weight than another solo project because it's third-party verified.
+**Reference:** [langchain-ai/langchain](https://github.com/langchain-ai/langchain)
+
+---
+
+## Vault 2: Differentiated & Underused Builds
+
+### 16. AI Code Review Bot
+Auto-reviews GitHub PRs and leaves inline comments — a real dev-workflow tool, not a demo.
+**Reference:** [coderabbitai/ai-pr-reviewer](https://github.com/coderabbitai/ai-pr-reviewer)
+
+### 17. AI-Aware Developer Portfolio
+A chatbot embedded in your own portfolio that talks about your repos and commits in real time.
+**Reference:** [GitHub Topics: ai-portfolio](https://github.com/topics/ai-portfolio)
+
+### 18. Meeting Transcriber + Action-Item Extractor
+Turns raw audio into a transcript and a clean list of action items.
+**Reference:** [SYSTRAN/faster-whisper](https://github.com/SYSTRAN/faster-whisper)
+
+### 19. Synthetic Data Generator for ML Training
+Generates realistic synthetic tabular data — useful when real datasets are scarce or sensitive.
+**Reference:** [sdv-dev/SDV](https://github.com/sdv-dev/SDV)
+
+### 20. Open-Source AI Coding Assistant
+Build your own lightweight Copilot-style assistant integrated into an editor.
+**Reference:** [continuedev/continue](https://github.com/continuedev/continue)
+
+### 21. Personal Finance Tracker with AI Auto-Categorization
+An expense tracker that classifies transactions automatically using a lightweight model.
+**Reference:** [actualbudget/actual](https://github.com/actualbudget/actual)
+
+### 22. Voice Cloning / Custom TTS App
+Clone a voice from a short sample and generate speech from text.
+**Reference:** [coqui-ai/TTS](https://github.com/coqui-ai/TTS)
+
+### 23. Image Generation Playground
+A Stable Diffusion-based tool for text-to-image generation with your own UI layer.
+**Reference:** [AUTOMATIC1111/stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
+
+### 24. Auto-Caption/Subtitle Generator for Videos
+Generates and burns subtitles into video automatically — a natural tie-in for a content-creator audience.
+**Reference:** [m1guelpf/auto-subtitle](https://github.com/m1guelpf/auto-subtitle)
+
+### 25. Autonomous Drone/Robot Navigation Sim
+Simulate navigation and control logic for a drone or robot — a strong robotics/AI crossover project.
+**Reference:** [PX4/PX4-Autopilot](https://github.com/PX4/PX4-Autopilot)
+
+### 26. Recommendation Engine (Deployed, Real Dataset)
+A recommender system trained on a real dataset and served through an API.
+**Reference:** [microsoft/recommenders](https://github.com/microsoft/recommenders)
+
+### 27. Fraud/Anomaly Detection System
+Detect outliers or fraudulent transactions in a dataset using established anomaly-detection algorithms.
+**Reference:** [yzhao062/pyod](https://github.com/yzhao062/pyod)
+
+### 28. Talk-to-Your-Database Agent (Text-to-SQL)
+Ask questions in plain English and get back real SQL queries and results.
+**Reference:** [vanna-ai/vanna](https://github.com/vanna-ai/vanna)
+
+### 29. AI Journal with Long-Term Memory
+A journaling app that remembers past entries and surfaces relevant context over time.
+**Reference:** [mem0ai/mem0](https://github.com/mem0ai/mem0)
+
+### 30. LLM-Powered NPC/Dialogue Engine for a Game
+Give game characters dynamic, LLM-driven dialogue instead of static scripted lines.
+**Reference:** [oobabooga/text-generation-webui](https://github.com/oobabooga/text-generation-webui)
+
+---
+
+## The Pattern Across All 30
+
+A few things hold true across every project on this list:
+
+- **Two or three deep, deployed projects beat ten shallow ones.** Pick a handful and go deep rather than sprinting through the whole list.
+- **A live link plus a README that documents a real failure case** matters more than a leaderboard-topping accuracy number.
+- **Recruiters rarely open your GitHub in detail** — your resume needs to summarize what each project proves in one line, and you need to be ready to talk through the architecture if asked.
+- **Skip anything that reads as a course exercise** — Titanic, Iris, and single-purpose sentiment analyzers signal "completed a tutorial," not "can build."
+
+If you're picking a starting point, projects #10 and #11 above lean on hardware and 3D/frontend skills that most AI applicants simply don't have — that combination is worth leading with.
