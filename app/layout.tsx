@@ -24,6 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable} suppressHydrationWarning>
       <head>
+        <meta name="google-adsense-account" content="ca-pub-1412707032084322" />
         <ThemeInitializer />
       </head>
       <body className="min-h-screen font-sans antialiased overflow-x-hidden">
