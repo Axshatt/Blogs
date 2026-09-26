@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
+import Script from 'next/script';
 import './globals.css';
 import { LayoutShell } from '@/components/layout/LayoutShell';
 import { ThemeInitializer } from '@/components/layout/ThemeInitializer';
@@ -29,6 +30,11 @@ export default function RootLayout({
         <UmamiProvider />
         <LayoutShell>{children}</LayoutShell>
       </body>
+      <Script
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1412707032084322"
+        crossOrigin="anonymous"
+        strategy="afterInteractive"
+      />
     </html>
   );
 }
