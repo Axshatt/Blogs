@@ -15,6 +15,14 @@ export default function robots(): MetadataRoute.Robots {
           '/verify-success',
         ],
       },
+      {
+        userAgent: 'Mediapartners-Google',
+        allow: '/',
+      },
+      {
+        userAgent: 'AdsBot-Google',
+        allow: '/',
+      },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,
   };
