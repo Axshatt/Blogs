@@ -1,0 +1,355 @@
+---
+title: "20 MATLAB and Simulink Final Year Projects Worth Building"
+excerpt: "20 engineering project ideas from MathWorks, with direct GitHub briefs, practical build scopes, suggested tools, and clear ways to measure your results."
+category: build-log
+tags:
+  - MATLAB
+  - Simulink
+  - final year projects
+  - robotics
+  - machine learning
+  - renewable energy
+  - signal processing
+published: '2026-10-22'
+draft: false
+author: Akshat Singh
+featured: true
+---
+
+Choosing a final-year project is easy until you have to explain what you actually built, why it matters, and whether it works outside your demo.
+
+That's why I like the [MathWorks MATLAB and Simulink Challenge Project Hub](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub). It gives you engineering problems to investigate: robots that navigate, batteries that charge under constraints, and models that identify faults from sensor data.
+
+Here are the same 20 projects from my project carousel, expanded into a practical guide. Each entry links to the official brief and suggests a smaller build you can discuss with your supervisor.
+
+**Read this before choosing:** these are challenge briefs, not 20 finished applications you can download and submit. Several full challenges are listed at master's or doctoral level. The MVPs and evaluation ideas below are my suggested student adaptations, not MathWorks requirements or claims of results. Check the original brief, your available hardware, and your institution's MATLAB toolbox licenses before committing.
+
+## Choose the kind of project you want to demonstrate
+
+- **Robotics and autonomous systems, projects 1–5:** perception, planning, coordination, and state estimation.
+- **AI and machine learning, projects 6–10:** audio generation, wearable sensors, geographic analysis, and computer vision.
+- **Energy and sustainability, projects 11–15:** irrigation, charging, microgrids, tracking, and battery design.
+- **Signal processing and smart systems, projects 16–20:** fault detection, wireless signals, hearing-aid simulation, and thermal control.
+
+You do not need to buy a drone, build a race car, or assemble a battery pack to start. Many of these projects have a useful simulation or recorded-data version. Where a hardware deployment is part of the full challenge, label your smaller prototype honestly.
+
+## Robotics and autonomous systems
+
+### 1. Face Detection and Human Tracking Robot
+
+Build a mobile robot that detects a person and adjusts its motion to follow them. The full brief uses Microchip hardware, with vision processing and motor control handled by different parts of the system.
+
+**A manageable MVP:** start with recorded video and a simulated differential-drive robot. Feed the detected person's position into a controller that keeps the target near the center of the camera view. Add physical hardware after the simulation behaves reliably.
+
+**Tools to consider:** MATLAB, Simulink, Computer Vision Toolbox, and Deep Learning Toolbox. The full hardware path adds code generation and the specified Microchip tools.
+
+**Measure:** tracking error, processing latency, and how quickly the system recovers after temporarily losing its target. Include a stop behavior when no target is visible.
+
+[Read the official project brief](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub/blob/main/projects/Face%20Detection%20and%20Human%20Tracking%20Robot/README.md).
+
+### 2. Voice Controlled Robot
+
+Turn spoken commands into robot actions. MathWorks' full challenge combines voice input, visual target identification, navigation, and embedded deployment.
+
+**A manageable MVP:** recognize a small command set such as forward, left, right, and stop, then drive a simulated robot. Include background noise and unrelated speech in your experiments so the system learns when to reject an input.
+
+**Tools to consider:** MATLAB and Simulink, with audio and deep learning tools for keyword recognition. Follow the brief's Microchip deployment path if your lab has the required boards.
+
+**Measure:** command accuracy, false activations, and the delay between speaking and acting. Test speakers who were absent from the training recordings.
+
+A strong demonstration includes misunderstood commands and shows what the controller does next.
+
+[Read the official project brief](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub/blob/main/projects/Voice%20Controlled%20Robot/README.md).
+
+### 3. Warehouse Robotics Simulation
+
+Simulate robots moving items around a warehouse. The interesting problem is what happens when several robots need the same corridor or receive competing jobs.
+
+**A manageable MVP:** create a warehouse map, start with one robot using A* planning, and then introduce a small fleet. Compare a simple job assignment policy with a policy that considers robot position and current workload.
+
+**Tools to consider:** MATLAB, Robotics System Toolbox, and Navigation Toolbox. The brief also discusses Gazebo co-simulation and other perception and simulation tools.
+
+**Measure:** completed deliveries, average task duration, travel distance, and deadlocks across repeated scenarios.
+
+Show the same workload under both policies. That makes an improvement much easier to defend than a single animation.
+
+[Read the official project brief](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub/blob/main/projects/Warehouse%20Robotics%20Simulation/README.md).
+
+### 4. Path Planning for Autonomous Race Cars
+
+Find a racing trajectory while respecting track boundaries and vehicle constraints. A route that looks short on a map may require the car to slow down sharply through corners.
+
+**A manageable MVP:** use a bicycle vehicle model and a known 2D track. Compare the centerline with an optimized path and velocity profile. Begin with one optimization objective, such as curvature or estimated lap time.
+
+**Tools to consider:** MATLAB and Optimization Toolbox. Higher-fidelity vehicle models can come later.
+
+**Measure:** simulated lap time, path curvature, boundary violations, and solver runtime. Repeat the experiment on an unfamiliar track.
+
+Your contribution can be a well-explained comparison of methods, with clear assumptions about tire grip and vehicle dynamics.
+
+[Read the official project brief](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub/blob/main/projects/Path%20Planning%20for%20Autonomous%20Race%20Cars/README.md).
+
+### 5. Sensor Fusion for Autonomous Systems
+
+Combine multiple sensors to estimate a robot's position and orientation. Individual sensors can drift, become noisy, or stop providing useful measurements.
+
+**A manageable MVP:** fuse IMU and GPS measurements with an extended Kalman filter using a recorded dataset or simulated trajectory with known ground truth. Compare the fused estimate against each sensor baseline.
+
+**Tools to consider:** MATLAB, Navigation Toolbox, and Sensor Fusion and Tracking Toolbox.
+
+**Measure:** position error, orientation error, drift during GPS outages, and recovery after measurements resume.
+
+Make sensor failure part of the demo. A trajectory plot showing where one sensor breaks down and how fusion responds tells a clear engineering story.
+
+[Read the official project brief](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub/blob/main/projects/Sensor%20Fusion%20for%20Autonomous%20Systems/README.md).
+
+## AI and machine learning
+
+### 6. Music Composition with Deep Learning
+
+Train a model to generate musical sequences. The official challenge discusses MIDI-based melody generation and is listed at master's and doctoral level.
+
+**A manageable MVP:** limit the task to short, single-instrument melodies in one style. Train a next-note model, then generate sequences from a seed. Keep chord generation and multiple instruments as extensions.
+
+**Tools to consider:** MATLAB, Deep Learning Toolbox, and Audio Toolbox.
+
+**Measure:** held-out prediction loss, repetition, and similarity to training melodies. Add a small listening evaluation with a stated rubric; low prediction loss alone does not establish musical quality.
+
+Use a dataset whose terms permit your intended use, and explain how generated examples were selected.
+
+[Read the official project brief](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub/blob/main/projects/Music%20Composition%20with%20Deep%20Learning/README.md).
+
+### 7. Human Motion Recognition Using IMUs
+
+Recognize activities from accelerometer and gyroscope recordings. This gives you a complete machine learning pipeline without requiring a camera.
+
+**A manageable MVP:** classify a few activities using a public wearable-sensor dataset or MATLAB Mobile recordings. Compare a feature-based classifier with a compact sequence model.
+
+**Tools to consider:** MATLAB, Statistics and Machine Learning Toolbox, and optionally Deep Learning Toolbox. The brief links public human activity datasets.
+
+**Measure:** macro F1, a confusion matrix, and prediction latency. Split training and testing by participant so recordings from the same person do not inflate the apparent result.
+
+Show which activities are confused and investigate whether sensor placement changes the outcome.
+
+[Read the official project brief](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub/blob/main/projects/Human%20Motion%20Recognition%20Using%20IMUs/README.md).
+
+### 8. Landslide Susceptibility Mapping using Machine Learning
+
+Combine historical landslide records with geographic factors to produce a susceptibility map. The official brief proposes a MATLAB workflow using spatial preprocessing, a neural network, and map visualization.
+
+**A manageable MVP:** choose one region with documented data. Build the preprocessing pipeline, compare a simple baseline against a neural model, and display the predicted susceptibility across that region.
+
+**Tools to consider:** MATLAB, Mapping Toolbox, and Deep Learning Toolbox.
+
+**Measure:** precision, recall, and discrimination on a spatially separated test area. Document missing data and class imbalance.
+
+Present the output as a research susceptibility map. It does not establish when a landslide will happen or replace an operational warning system.
+
+[Read the official project brief](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub/blob/main/projects/Landslide%20Susceptibility%20Mapping%20using%20Machine%20Learning/README.md).
+
+### 9. Speech Background Noise Suppression with Deep Learning
+
+Build a system that reduces background noise while preserving speech. The brief points to speech and noise data from the Microsoft DNS Challenge.
+
+**A manageable MVP:** mix clean speech with several noise types, implement a signal-processing baseline, and compare it with a small neural model. Keep an untouched test set with unfamiliar speakers and noises.
+
+**Tools to consider:** MATLAB, Audio Toolbox, Deep Learning Toolbox, and Signal Processing Toolbox.
+
+**Measure:** a stated signal-quality metric, processing latency, and listening-test results. Include cases where suppression damages speech.
+
+For the demo, play the noisy input, baseline output, and neural output at matched playback levels. Let the audience hear the tradeoff.
+
+[Read the official project brief](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub/blob/main/projects/Speech%20Background%20Noise%20Suppression%20with%20Deep%20Learning/README.md).
+
+### 10. Deep Learning for UAV Infrastructure Inspection
+
+Detect infrastructure defects in imagery collected by drones. The full challenge includes simulated training images and transfer to real camera data, and is listed at master's and doctoral level.
+
+**A manageable MVP:** pick one defect type, such as visible cracks, and train a detector on a documented image dataset. Treat drone simulation and deployment as later stages rather than prerequisites for the first result.
+
+**Tools to consider:** MATLAB, Computer Vision Toolbox, and Deep Learning Toolbox. UAV Toolbox supports the full simulation workflow.
+
+**Measure:** precision, recall, inference time, and performance on a separate structure or image source. Avoid splitting near-identical frames between training and testing.
+
+[Read the official project brief](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub/blob/main/projects/Deep%20Learning%20for%20UAV%20Infrastructure%20Inspection/README.md).
+
+## Energy and sustainability
+
+### 11. Smart Watering System with Internet of Things
+
+Connect environmental measurements to irrigation decisions. The official brief describes Microchip-based connected nodes, including a more advanced forecast-aware option.
+
+**A manageable MVP:** collect soil moisture and temperature readings, display them on a dashboard, and compare scheduled watering with a threshold-based controller. Add forecast information only after the basic loop works.
+
+**Tools to consider:** MATLAB and Simulink, a compatible sensor node, and a cloud dashboard. Embedded deployment needs the board support and code generation tools described in the brief.
+
+**Measure:** water delivered, time within a chosen soil-moisture range, and behavior when sensor readings or connectivity fail.
+
+Explain how you calibrated the moisture sensor; raw readings alone are hard to interpret.
+
+[Read the official project brief](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub/blob/main/projects/Smart%20Watering%20System%20with%20Internet%20of%20Things/README.md).
+
+### 12. Battery Fast Charging Optimization
+
+Investigate the tradeoff between charging time and operating constraints. The challenge uses a single-particle battery model to compare charging strategies.
+
+**A manageable MVP:** establish a constant-current/constant-voltage baseline in simulation, then compare a small set of multistage current profiles under the same voltage and temperature limits.
+
+**Tools to consider:** MATLAB, Simulink, and Simscape Battery. Add optimization tools if an automated search becomes part of your scope.
+
+**Measure:** time to the target state of charge, peak temperature, voltage-limit violations, and sensitivity to model parameters.
+
+Keep your conclusions tied to the simulation assumptions. A shorter simulated charging time does not by itself establish battery life improvement or validate a physical charger.
+
+[Read the official project brief](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub/blob/main/projects/Battery%20Fast%20Charging%20Optimization/README.md).
+
+### 13. Intelligent Energy Management Systems for Smart Grids
+
+Decide how a grid should use generation, storage, and consumer demand. The full challenge includes forecasting and dynamic energy management and is listed at master's and doctoral level.
+
+**A manageable MVP:** simulate one solar installation, one battery, and one load profile. Compare a fixed rule-based dispatch policy with a forecast-informed policy.
+
+**Tools to consider:** MATLAB, Simulink, Simscape Electrical, and an optimization or forecasting toolbox appropriate to your method.
+
+**Measure:** energy cost, peak grid import, renewable energy use, and battery constraint violations using identical scenarios.
+
+Test a deliberately inaccurate forecast. An energy manager that performs well only with perfect future information has a limited practical claim.
+
+[Read the official project brief](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub/blob/main/projects/Intelligent%20Energy%20Management%20Systems%20for%20Smart%20Grids/README.md).
+
+### 14. Solar Tracker Control Simulation
+
+Design a controller that changes panel orientation as the sun moves. MathWorks provides a solar-tracker mechanical example as a starting point.
+
+**A manageable MVP:** model one motorized axis, implement a PID controller, and compare its tracking behavior with a fixed panel orientation. Add a second axis only when the first is understood.
+
+**Tools to consider:** Simulink, Simscape Multibody, Control System Toolbox, and electrical motor modeling tools if needed.
+
+**Measure:** angular error, settling time, and estimated energy capture. Include the actuator's energy use when discussing net gains.
+
+State the location, sun-position model, and irradiance assumptions behind your experiment. Results from one simulated day should not become an annual performance claim.
+
+[Read the official project brief](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub/blob/main/projects/Solar%20Tracker%20Control%20Simulation/README.md).
+
+### 15. Battery Pack Design Automation
+
+Create a workflow that evaluates battery pack configurations against electrical, thermal, and packaging requirements. The full brief is listed at master's level.
+
+**A manageable MVP:** accept target pack voltage and energy, generate candidate series-parallel configurations, and simulate their behavior on one drive cycle. Start with an established cell model instead of designing every subsystem yourself.
+
+**Tools to consider:** MATLAB, Simulink, Powertrain Blockset, Optimization Toolbox, and Simulink Design Optimization, depending on the chosen scope.
+
+**Measure:** constraint satisfaction, candidate mass, usable energy, and simulated temperature under stated cell assumptions.
+
+Show several feasible designs and their tradeoffs. A design explorer is more informative than a single configuration labeled optimal without explanation.
+
+[Read the official project brief](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub/blob/main/projects/Battery%20Pack%20Design%20Automation/README.md).
+
+## Signal processing and smart systems
+
+### 16. Fault Detection for Electric Motors Using Vibration Analysis
+
+Use vibration measurements to distinguish normal operation from motor faults. The brief combines simulated fault data, feature extraction, condition monitoring, and potential deployment to an STM board.
+
+**A manageable MVP:** choose a small set of fault conditions and build a reproducible classification pipeline using simulated or documented recorded data. Compare a feature-based model with a simple baseline.
+
+**Tools to consider:** MATLAB, Simulink, Predictive Maintenance Toolbox, and signal-processing tools.
+
+**Measure:** recall for each fault, false alarms, and performance at motor speeds absent from training. Keep separate recording runs in separate dataset splits.
+
+Make the feature plots part of your explanation so the model's decisions connect to the mechanical behavior.
+
+[Read the official project brief](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub/blob/main/projects/Fault%20Detection%20for%20Electric%20Motors%20Using%20Vibration%20Analysis/README.md).
+
+### 17. Classify RF Signals Using AI
+
+Recognize wireless signal types from received data. The official challenge proposes deep learning and software-defined radio testing, including signals that can interfere with one another.
+
+**A manageable MVP:** generate a dataset for two signal families, introduce channel impairments, and classify the resulting signals. Start with simulation; over-the-air testing can follow if suitable radios are available.
+
+**Tools to consider:** MATLAB, Deep Learning Toolbox, and the waveform-generation products required for your selected signals.
+
+**Measure:** accuracy across signal-to-noise levels, confusion between classes, and inference cost. Split by generated transmission or capture session rather than nearby frames from the same recording.
+
+Plot performance as conditions worsen instead of reporting only one easy test score.
+
+[Read the official project brief](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub/blob/main/projects/Classify%20RF%20Signals%20Using%20AI/README.md).
+
+### 18. Simulink Hearing Aid
+
+Model a hearing-aid signal chain with filtering, compression, noise reduction, and feedback handling. The brief allows prerecorded audio or real-time microphone input.
+
+**A manageable MVP:** build an offline chain and add one processing block at a time. Introduce a simulated feedback path, then compare the output before and after feedback suppression.
+
+**Tools to consider:** MATLAB, Simulink, and Audio Toolbox.
+
+**Measure:** processing delay, output levels, compression behavior, and response to feedback. Document which blocks help and which introduce artifacts.
+
+Keep the presentation focused on an educational audio-processing prototype. It does not establish clinical benefit or replace a professionally fitted hearing aid.
+
+[Read the official project brief](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub/blob/main/projects/Simulink%20Hearing%20Aid/README.md).
+
+### 19. Wind Turbine Predictive Maintenance Using Machine Learning
+
+Investigate whether sensor behavior can reveal an emerging turbine fault. The official brief starts from a dynamic turbine and fault model and is listed at master's level.
+
+**A manageable MVP:** simulate one component fault under changing wind conditions. Train a detector using the generated sensor data, then test on different simulated operating conditions.
+
+**Tools to consider:** MATLAB, Simulink, Simscape Driveline, and machine learning tools.
+
+**Measure:** false alarms, detection lead time relative to a defined simulated failure, and robustness across wind loads. Compare different sensor subsets.
+
+Distinguish fault classification from prediction before failure. If your dataset contains only healthy and already-failed examples, it cannot support a claim about advance warning.
+
+[Read the official project brief](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub/blob/main/projects/Wind%20Turbine%20Predictive%20Maintenance%20Using%20Machine%20Learning/README.md).
+
+### 20. Intelligent Fan Air Cooling System
+
+Model a room and use indoor-outdoor temperature differences to control ventilation. The challenge includes building thermal behavior, airflow, and fan control.
+
+**A manageable MVP:** simulate one room, one fan, and a daily outdoor temperature profile. Compare an always-on fan with a controller that ventilates only when conditions are useful.
+
+**Tools to consider:** MATLAB, Simulink, and Simscape. A small sensor-and-fan prototype can be an extension.
+
+**Measure:** time within a defined comfort range, fan energy, switching frequency, and performance across different weather profiles.
+
+The interesting result may be discovering when ventilation helps and when it does not. Explain the climate and building assumptions rather than claiming the system can replace air conditioning everywhere.
+
+[Read the official project brief](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub/blob/main/projects/Intelligent%20Fan%20Air%20Cooling%20System/README.md).
+
+## Which one should you choose?
+
+My starting shortlist depends on what you already have:
+
+- **A laptop and an interest in ML:** human motion recognition with a public dataset, or a small speech-denoising experiment.
+- **An interest in algorithms and simulation:** warehouse robotics, racing-line planning, or sensor fusion.
+- **An electrical or energy focus:** solar tracking, battery charging simulation, or a small energy-management model.
+- **Access to a supervised hardware lab:** irrigation, motor fault detection, or a tracking robot.
+- **A team comfortable with research:** a narrowed version of music generation, UAV inspection, battery pack automation, or turbine maintenance.
+
+Choose the project for which you can obtain data, build a baseline, and explain the measurements. A smaller result that survives testing is easier to defend than a large system with unfinished subsystems.
+
+## Turn the idea into a final-year submission
+
+Write your evaluation plan before you start tuning the model. Define the input, expected output, baseline, and test scenarios. For an ML project, decide how to keep people, recording sessions, structures, or locations separated between training and testing. For a controller, document the plant assumptions and operating limits.
+
+Then build the simplest complete pipeline. Save the dataset version, parameters, random seeds where relevant, and MATLAB release and toolbox requirements. Change one meaningful part of the system and rerun the same experiment.
+
+Your final repository should include:
+
+- A problem statement and a clear explanation of your contribution.
+- Setup instructions, toolbox requirements, and hardware details where applicable.
+- Data sources, usage terms, preprocessing steps, and dataset splits.
+- A baseline comparison with measured results and labeled plots.
+- A short demo showing normal operation and at least one failure case.
+- Limitations and a realistic next step.
+
+You do not need to invent a new neural architecture to make a useful contribution. A careful benchmark, a better controller, a well-tested data pipeline, or a documented simulation can be substantial engineering work.
+
+## Source and further reading
+
+All 20 original ideas come from the [MathWorks MATLAB and Simulink Challenge Project Hub](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub). The individual project briefs linked above were reviewed for this article on October 22, 2026. They contain the authoritative challenge scope, background references, and any participation requirements. The suggested MVPs and evaluation plans in this post are editorial guidance.
+
+If you plan to enter the MathWorks challenge program, check its [program wiki](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub/wiki) and [generative AI guidelines](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub/wiki/Generative-AI-Guidelines) directly before submitting.
+
+For more project ideas, read [Final Year Projects That Get You Hired](/blog/final-year-projects-that-get-you-hired) and [20 AI + Web Dev Projects You Can Build in a Week](/blog/20-ai-web-dev-projects-you-can-build-in-a-week-final-year-ready).
