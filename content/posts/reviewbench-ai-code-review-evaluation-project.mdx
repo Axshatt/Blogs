@@ -1,0 +1,137 @@
+---
+title: "ReviewBench: Turn AI Code Review Into a Measurable Project"
+excerpt: "GitHub's ReviewBench gives AI reviewers a shared evaluation target. Here is how to turn that idea into a focused project that measures useful findings, missed bugs, noise, and cost."
+category: build-log
+tags:
+  - AI
+  - code review
+  - GitHub
+  - evaluation
+  - final year projects
+published: '2026-10-27'
+draft: false
+author: Akshat Singh
+featured: true
+---
+
+An AI reviewer that leaves ten comments has produced ten comments. Whether it found a bug is a separate question.
+
+That is a useful starting point for a developer-tool project: build a reviewer, then measure what its findings are worth.
+
+GitHub announced **ReviewBench on October 5, 2026**. Its launch describes a benchmark for AI code review using real pull requests, a reference set of findings, and evaluation broken down by factors such as severity and category. This is an October release worth exploring if your next project involves AI-assisted development. [Source: GitHub's announcement](https://github.blog/ai-and-ml/reviewbench-an-open-benchmark-for-ai-code-review/).
+
+This article proposes a smaller student project inspired by that benchmark. It does not report results from a reviewer I have run or claim that a local experiment is an official leaderboard submission.
+
+## What ReviewBench provides
+
+The repository currently documents a **25-task test set** and a **219-task full set**, alongside reference findings, an agent contract, scripts, and evaluation documentation. It supports local development runs, but explicitly distinguishes those from results submitted through the official leaderboard process. [Source: ReviewBench repository](https://github.com/review-bench/ReviewBench).
+
+That distinction matters. You can use an offline experiment to investigate your own system without describing it as a verified leaderboard result.
+
+My recommendation is to read the current repository instructions and inspect one task before choosing your implementation. Pin the repository revision in your notes, because a reproducible project needs a specific dataset and scoring setup, not just a link to a changing main branch.
+
+## Choose a question smaller than “can AI review code?”
+
+Here is a project question I would start with:
+
+**Does giving the reviewer relevant file context improve its useful findings compared with giving it only the diff?**
+
+This gives you a baseline, an intervention, and an experiment. You can investigate it with one model rather than building an elaborate multi-agent system first.
+
+Keep the first version read-only. Have it inspect a pinned change and write findings to a local file. Posting comments, editing code, and automatically merging pull requests add product behavior that is unnecessary for answering the evaluation question.
+
+## Define a finding before you write the prompt
+
+For this proposed project, I would require each finding to contain:
+
+- The file and changed line or relevant location.
+- A specific failure condition.
+- The behavior that could go wrong.
+- Evidence from the supplied code or a reproducible test.
+- A category and a proposed severity, with a short explanation.
+
+For example, “improve error handling” is too vague to evaluate consistently. “When this request times out, the rejection bypasses the handler and the caller receives no response” gives the reviewer and evaluator something concrete to investigate.
+
+Treat the model's severity as a proposal. A confident label is not independent evidence that the issue is critical.
+
+## Use a consistent experimental setup
+
+Run both configurations on the same pinned changes. Keep the model version, output budget, instructions, and evaluation rubric fixed. Change only how much repository context the reviewer receives.
+
+Save the input manifest for every run. Include the base and head revisions, files supplied, model identifier, prompt version, and any truncation. If a large file was shortened, record that instead of silently treating the run as full-context review.
+
+A practical folder structure for your own harness could be:
+
+```text
+runs/
+  diff-only-01/
+    manifest.json
+    findings.json
+    evaluation.json
+  file-context-01/
+    manifest.json
+    findings.json
+    evaluation.json
+```
+
+This is an example structure for the proposed project, not ReviewBench's required adapter format. Follow its current contract when integrating with the official harness.
+
+## Measure usefulness and missed issues separately
+
+GitHub's announcement distinguishes **precision**, the share of surfaced findings judged valid, from **recall**, the share of known valid issues found. It also discusses grounded and augmented metrics rather than treating the initial reference set as the only possible source of valid discoveries. [Source: benchmark methodology](https://github.blog/ai-and-ml/reviewbench-an-open-benchmark-for-ai-code-review/).
+
+For a small educational experiment, explain your own matching and adjudication rules before calculating scores. Do not silently equate a simple string match with the official benchmark's judging method.
+
+I would record:
+
+- Confirmed findings and known issues missed.
+- Unsupported findings and duplicate comments.
+- Findings that remain unresolved after investigation.
+- Time and model cost per completed task.
+- Failed runs, including malformed output or missing context.
+
+Keep unresolved cases visible. Excluding them without explanation can make a weak evaluation look cleaner than it is.
+
+## Add cases where the correct answer is silence
+
+For a separate local fixture suite, include small changes with no intentionally introduced defect. Keep these clearly labeled as your own fixtures rather than part of the official corpus.
+
+Why include them? You want to observe whether the reviewer invents problems when there is little to criticize.
+
+Useful fixture ideas include a harmless variable rename, a formatting-only patch, and a documented refactor whose tests still exercise the original behavior. Human review is still needed to establish that your supposedly clean example is reasonable.
+
+Also include a few explicit fault cases, such as an off-by-one boundary or a missing branch for an empty collection. The point is to test your harness and rubric before spending money on a larger experiment.
+
+## Do not let the evaluator become a hidden variable
+
+If you use a model to judge another model's findings, save the judge configuration and rubric too. Investigate a sample manually, especially disputed and high-impact findings.
+
+Avoid tuning prompts against the same final tasks you later use to claim general improvement. Keep development examples and a held-out evaluation set separate where your scope permits, and describe any overlap.
+
+Repeat selected runs to see how stable the output is. One fortunate response is a demo; a documented pattern across comparable runs is stronger evidence.
+
+## A manageable MVP and its extensions
+
+The MVP should accept a pinned change, run one reviewer configuration, validate the finding structure, and produce a report that a human can audit. Add the second context configuration once that path works end to end.
+
+For an extension, build a dashboard that lets a reader open each finding beside the supplied code and its evaluation. Show the source evidence and unresolved cases alongside summary metrics.
+
+Another extension is a context-budget experiment: compare diff-only input, selected file input, and a fixed-size retrieval step. Keep the budget explicit so that a costly configuration is not presented as a free improvement.
+
+This is a proposed implementation path. It is not a finished adapter or a guarantee that any particular model will benefit from more context.
+
+## What a strong final report looks like
+
+Write your conclusion around the actual experiment:
+
+“On this pinned subset, under these model and judging settings, configuration B changed confirmed findings, unsupported findings, latency, and cost by the amounts shown.”
+
+Fill that statement with your own measurements. Do not substitute a vendor's headline score or extrapolate a small sample to all languages and repositories.
+
+Include failures and limitations in the repository README. A project that reveals where its reviewer fails is useful to another developer deciding whether to trust it.
+
+## Start with the primary sources
+
+Read [GitHub's October 5 launch article](https://github.blog/ai-and-ml/reviewbench-an-open-benchmark-for-ai-code-review/) for the benchmark rationale and the [ReviewBench repository](https://github.com/review-bench/ReviewBench) for current setup, contracts, and submission rules. Check its cost and credential documentation before running hosted evaluations.
+
+Sources were checked on **October 27, 2026**. The proposed experiment, fixture suite, and MVP plan are editorial recommendations. For more project directions, explore the [AI/ML project vault](/blog/the-ai-ml-hireable-project-vault-30-builds-that-actually-get-you-hired).
