@@ -1,0 +1,122 @@
+---
+title: "A2A CLI: A Practical Starting Point for Agent Workflow Projects"
+excerpt: "The official A2A CLI connects terminal workflows to compatible agents. Explore what it does and plan a small, testable project around discovery, task tracking, and useful output."
+category: build-log
+tags:
+  - AI agents
+  - A2A
+  - developer tools
+  - automation
+  - final year projects
+published: '2026-10-28'
+draft: false
+author: Akshat Singh
+featured: true
+---
+
+Before building a dashboard for an agent system, try making one task work from a terminal. Can you discover the service, send it work, understand its progress, and recognize when it has failed?
+
+The **official A2A CLI**, introduced in the protocol project's **October 1, 2026 announcement**, makes that a useful experiment. It provides a command-line client for Agent2Agent-compatible services, including agent-card discovery, messaging, streaming, and workflow-friendly output. [Source: A2A CLI introduction](https://a2a-protocol.org/latest/blog/2026/10/01/introducing-a2a-cli/).
+
+Google's [October open source roundup](https://opensource.googleblog.com/2026/10/) also highlighted the CLI. The announcement is from earlier this month, rather than a launch today. For students exploring agent interoperability, it is a concrete tool to investigate without starting with a full web application.
+
+This article outlines a project you could build around it. It does not claim that a working integration or measured performance results are included here.
+
+## What the CLI changes
+
+The launch describes a client built from the A2A Go SDK that speaks protocol v1.0. It can also wrap a program using standard input and output as an A2A server through its execution mode, with a streaming option. That gives an ordinary script a path into a protocol-based demonstration. [Source: official walkthrough](https://a2a-protocol.org/latest/blog/2026/10/01/introducing-a2a-cli/).
+
+My interest is in the workflow boundary: an agent becomes something you can inspect and call from another tool, rather than something accessible only through a particular chat screen.
+
+That does not establish that the service is useful, reliable, or appropriate for your data. Those are properties your project still needs to examine.
+
+## Start with a deliberately boring service
+
+For the first milestone, I would use a deterministic text-processing service. Given a short document, have it return a word count and a list of headings. You can calculate the expected answer yourself.
+
+This separates protocol integration from model behavior. If the response is missing, malformed, or associated with the wrong input, you can investigate the plumbing without wondering whether an LLM misunderstood the request.
+
+The official [a2a-cli repository](https://github.com/a2aproject/a2a-cli) contains installation instructions and examples. Use its current instructions for your operating system, then record the exact release you installed. Pin the example revision in your project notes too.
+
+A sensible first demonstration has three visible steps:
+
+1. Discover the local service and display its declared capabilities.
+2. Submit a fixed, non-sensitive sample document.
+3. Compare the completed output against the expected result.
+
+Keep discovery and successful execution as separate checks. A service description alone cannot show that a task will complete correctly.
+
+## A useful project: the agent task workbench
+
+Once the basic call works, build a small workbench that records task inputs and outcomes. Begin with a local command-line report; a dashboard can follow after the data model is stable.
+
+For this proposed project, I would store:
+
+- A locally generated run identifier.
+- The selected service endpoint and client version.
+- The task input or a fixture identifier.
+- Submission time and observed progress events.
+- The final result or an explicit failure classification.
+- Elapsed time and validation results.
+
+Do not collapse every failure into “the agent did not work.” An unavailable service, rejected request, malformed response, and incorrect answer require different fixes.
+
+Also distinguish your own run identifier from identifiers returned by the service. That makes it easier to trace what happened across the workbench and the remote system.
+
+## Make streaming observable
+
+Streaming is useful when it reveals meaningful progress. A moving text cursor is not enough evidence that the task is approaching completion.
+
+My suggested experiment is to compare a buffered result with streamed output for the same deterministic workload. Record time to the first observed event and time to the completed result separately.
+
+For example, a service might produce an early status event but take much longer to finish its work. Showing only the first-event time would hide the actual wait experienced by the user.
+
+Preserve event order in the report. If the client disconnects, record that fact instead of turning the partial output into a successful final answer. Your workbench should be able to represent an unfinished run honestly.
+
+## Add failures before adding another agent
+
+An attractive demo is two services handing work to one another. A more useful first test is what happens when one service cannot be reached.
+
+Build a fixture suite around situations you control:
+
+- An endpoint with no running server.
+- A valid request with an empty document.
+- Input large enough to exceed your own stated limit.
+- A service that returns an output missing a required field.
+- A connection interrupted before the result is complete.
+
+Set clear timeouts in your application. If you implement retries, document which operations can safely repeat and how duplicate work is detected. A retry policy that accidentally submits the same expensive job several times is a product defect, even if the last attempt succeeds.
+
+These are recommended application tests, not claims about built-in retry guarantees in the CLI.
+
+## Introduce an LLM only when you can evaluate the result
+
+After the deterministic service passes, replace one task with something narrow, such as classifying a short issue report into a small set of categories.
+
+Prepare a labeled fixture set before changing the implementation. Keep some examples aside for evaluation, and include ambiguous inputs that should produce an uncertain or rejected result.
+
+Measure task quality separately from transport success. A completed request with the wrong classification is an integration success and a task-quality failure. Your report should show both.
+
+If the service uses a paid model, record the cost information you can actually observe. Do not estimate exact spending from elapsed time or assume that every provider exposes the same usage fields.
+
+## Keep remote calls explicit
+
+Use a local service and synthetic documents while learning. When you add a remote endpoint, make the destination and submitted content clear in the workbench.
+
+Treat returned text as output to inspect, not permission to run another command. A document-processing result should not silently expand into shell access or additional data uploads.
+
+For a student project, a read-only workflow is enough to demonstrate discovery, structured communication, event handling, and evaluation. Publishing files or modifying repositories can be a separate extension with its own controls.
+
+## What to put in the final repository
+
+Show the smallest complete path from request to validated result. Include setup instructions, pinned versions, sample fixtures, expected outputs, and an explanation of your failure categories.
+
+Then report the experiment you actually ran: which service was used, which inputs were tested, how results were validated, and where the system failed. Include a short terminal recording or screenshots that let another developer follow one run end to end.
+
+Avoid calling the project a general-purpose autonomous platform when it implements one narrow workflow. A modest tool with repeatable behavior is easier to understand and build on.
+
+## Where to start
+
+Read the [official October announcement](https://a2a-protocol.org/latest/blog/2026/10/01/introducing-a2a-cli/) for the guided introduction and the [project repository](https://github.com/a2aproject/a2a-cli) for current releases, command details, and examples. The repository identifies the project as Apache-2.0 licensed; check the applicable license and dependency terms when reusing code.
+
+Sources were checked on **October 28, 2026**. The workbench, fixture suite, and evaluation plan above are proposed project directions, not features claimed to ship with the CLI.
