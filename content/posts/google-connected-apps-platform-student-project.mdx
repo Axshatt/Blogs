@@ -1,0 +1,107 @@
+---
+title: "Google Connected Apps Preview: Build a Useful Campus Equipment Finder"
+excerpt: "Google's new Connected Apps Platform preview puts MCP integrations in focus. Here is a practical project plan for an equipment finder, with clear tool contracts and measurable results."
+category: tutorial
+tags:
+  - AI agents
+  - MCP
+  - Gemini
+  - final year projects
+  - developer tools
+published: '2026-11-01'
+draft: false
+author: Akshat Singh
+featured: true
+---
+
+Imagine asking an assistant which lab has an available oscilloscope and receiving a current inventory result with a location, a timestamp, and a link to the equipment record. That is a more useful student project than a chatbot that invents an answer from a static description of the campus.
+
+There is a timely reason to explore this integration pattern. **On October 28, 2026, Google announced the preview of its Connected Apps Platform**, covering integrations with Search and the Gemini app. Google describes a registration, testing, and submission process through its Connected Console, with developers choosing their intended Google surfaces before review. Access is opening in phases. [Source: Google's announcement](https://blog.google/innovation-and-ai/technology/developers-tools/connected-apps-one-place/).
+
+The project below is my proposed learning exercise. It does not depend on getting preview access, and it is not a claim that a campus application has been approved or published through Google.
+
+## Understand the integration choices
+
+Google's developer overview describes a remote MCP server path for exposing tools and authorized data. It also describes Android AppFunctions as a path for local execution on an Android device and links to an OAuth 2.1 implementation guide for authorization. [Source: Connected Apps developer overview](https://developers.google.com/connected-apps).
+
+For this exercise, I would choose a backend service backed by a small inventory database. That keeps the main engineering question clear: can an assistant retrieve the right equipment records through a narrow, testable interface?
+
+Keep the ordinary web interface working too. A tool integration should reuse the same inventory rules rather than creating a second, inconsistent definition of availability.
+
+## Model the data before adding the assistant
+
+Begin with a synthetic inventory of perhaps 30 items across three fictional labs. Include fields such as an equipment ID, category, display name, location, working status, availability, and the time of the last update.
+
+Define what availability means. For example, your demo could distinguish items ready for use, items checked out, and items under maintenance. An item marked as working is not necessarily available to borrow.
+
+Do not label synthetic inventory as live campus data. In the demo, display that it is a sample dataset. If a department later supplies an actual inventory, record who updates it and how frequently.
+
+This is where the project becomes interesting: the assistant can only give a reliable answer if your underlying records and rules support it.
+
+## Expose two small tools
+
+My initial tool design would contain only two operations:
+
+| Proposed tool | Input | Output |
+| --- | --- | --- |
+| `search_equipment` | Category, optional lab, availability filter, result limit | Matching IDs and short summaries |
+| `get_equipment` | One equipment ID | Detailed record, timestamp, and record URL |
+
+These names are application design suggestions, not Google API names or a complete MCP implementation.
+
+A sample search result might look like this:
+
+```json
+{
+  "dataset": "synthetic-demo",
+  "items": [
+    {
+      "id": "eq-017",
+      "name": "Digital Oscilloscope",
+      "lab": "Electronics Lab B",
+      "availability": "available",
+      "updated_at": "2026-11-01T09:00:00+05:30"
+    }
+  ],
+  "truncated": false
+}
+```
+
+Separate an empty search result from a service failure. “No matching equipment” and “the inventory service did not respond” should never become the same answer.
+
+Also make missing records explicit. If someone asks for an unknown equipment ID, return a clear application error instead of selecting a similar item silently.
+
+## Keep permissions in the service
+
+Use fictional users and records while developing. If you later add restricted department data, the backend must decide which records each authenticated user can access.
+
+Do not let a tool argument such as `user_id` become the sole proof of identity. The assistant can supply search criteria; the service should derive access from the authenticated session.
+
+For the first version, omit reservations and checkout actions. A search-only integration already demonstrates schema design, data access, error handling, and answer grounding. You can evaluate those parts without introducing competing bookings or duplicate writes.
+
+If reservations become an extension, design that operation separately: show the exact item and time window, handle an item becoming unavailable, and ensure a retry cannot accidentally create a second booking.
+
+## Evaluate questions against expected records
+
+Build a small question set before tuning prompts. Include straightforward requests, ambiguous terms, missing equipment, stale records, and a simulated backend timeout.
+
+For example:
+
+- “Find an available oscilloscope in Lab B” should return only records satisfying both conditions.
+- “Is eq-017 ready to borrow?” should use that item's record and availability rule.
+- “Find a scope” should follow your documented alias policy or request clarification.
+- A timeout should produce an unavailable-service explanation rather than an inventory claim.
+
+Score the selected records and the final answer separately. Correct tool output can still be summarized incorrectly. Check whether the answer preserves the location, status, timestamp, and any uncertainty.
+
+Publish the actual test cases and results in your project report. If you test 20 questions, report 20 questions; do not describe that as a broad benchmark of model reliability.
+
+## Treat platform publication as an additional milestone
+
+Google's announcement describes monitoring traffic, latency, and errors after an app goes live. It also makes clear that the platform is a phased preview. A working remote service is therefore a development artifact, not evidence of platform approval. [Source: launch and availability details](https://blog.google/innovation-and-ai/technology/developers-tools/connected-apps-one-place/).
+
+Start by demonstrating your service with a compatible development client. If you receive preview access, check the current developer guide and submission requirements before adapting it for Google's platform. Record the client and environment you actually used in the report.
+
+The useful deliverables are a working inventory UI, a tested service interface, a small evaluation set, and a clear account of what happens when data is missing or inaccessible. Those make a substantial project even before any external distribution milestone.
+
+Facts and preview status were checked on **November 1, 2026**. The campus equipment finder, tool names, sample data, and evaluation plan are editorial suggestions. Begin with the [official platform overview](https://developers.google.com/connected-apps) for current documentation and access details.
