@@ -1,0 +1,91 @@
+---
+title: "GKE Workspaces: Test Whether Your ML Notebook Really Resumes"
+excerpt: "Google introduced GKE Workspaces on November 4. Explore the launch through a practical ML systems project that checks state, readiness, and the cost of pausing notebook compute."
+category: tutorial
+tags:
+  - machine learning
+  - Kubernetes
+  - Google Cloud
+  - developer tools
+  - final year projects
+published: '2026-11-05'
+draft: false
+author: Akshat Singh
+featured: true
+---
+
+An ML notebook is more than a saved file. It can contain a loaded model, intermediate arrays, open connections, and an experiment halfway through execution. Saving the notebook does not automatically preserve all of that running state.
+
+**On November 4, 2026, Google introduced GKE Workspaces**, a self-hosted AI/ML development platform built on Kubeflow Workspaces for Google Kubernetes Engine. Its announcement describes browser-based JupyterLab and VS Code environments, administrator-selected hardware options, and CPU/GPU stateful pause and resume built on Pod Snapshots. [Source: Google Open Source announcement](https://opensource.googleblog.com/2026/11/gke-workspaces-notebooks-on-google-ai-infrastructure.html).
+
+For students interested in ML infrastructure, the useful question is measurable: after pausing a workspace, how long does it take to produce a correct result again?
+
+Here is a proposed project for investigating that question. It is an evaluation plan, not a benchmark I have run or a claim of savings on a deployed cluster.
+
+## Understand where this tool fits
+
+This is infrastructure for a team operating a GKE cluster. The announcement separates the platform team's job of configuring capacity from the researcher's job of choosing an environment. The source repository describes a standalone deployment derived from upstream Kubeflow Workspaces. [Sources: launch announcement](https://opensource.googleblog.com/2026/11/gke-workspaces-notebooks-on-google-ai-infrastructure.html), [GKE Workspaces repository](https://github.com/gke-labs/workspaces).
+
+My recommendation is to evaluate it with a department or team that already has suitable infrastructure. A small local notebook remains a useful place to design the test workload, but it cannot demonstrate GKE snapshot behavior.
+
+Start with the project's current deployment documentation. Record the repository revision, cluster version, image, and hardware used. A launch article is context; it is not a substitute for the requirements of the exact configuration you deploy.
+
+## Separate three kinds of state
+
+Before running anything, write down what you expect to survive each operation:
+
+| State you care about | Example | How to check it |
+| --- | --- | --- |
+| Files | A dataset manifest or saved model | Compare a checksum |
+| Process memory | An array created in a notebook cell | Check its contents without recreating it |
+| External services | A database connection | Make a fresh request and handle reconnection |
+
+Google's Pod Snapshots documentation distinguishes process and filesystem state from persistent volumes and external connections. It says active external connections close on restore. Whole-Pod restoration also has hardware compatibility requirements, and Pod Snapshots currently do not support TPUs. [Source: snapshot contents and limitations](https://docs.cloud.google.com/kubernetes-engine/docs/concepts/pod-snapshots).
+
+That makes the experiment more specific. Test a documented CPU or GPU configuration, and treat TPU development capabilities separately from snapshot compatibility.
+
+## Create a workload with an answer you can verify
+
+Choose a small model or deterministic numerical task. The point is to observe lifecycle behavior, so you do not need to begin with an expensive training run.
+
+In the notebook, create an in-memory marker with a unique run ID, load your chosen workload, and compute a reference result. Write a separate manifest containing the environment information and an input checksum.
+
+Then pause and resume using the supported workflow. Check the marker before rerunning initialization cells. Otherwise, you may accidentally rebuild the state and report that it survived.
+
+Compare the output with the reference using a documented tolerance where floating-point calculations require it. Track the notebook's file checksum separately: surviving files and surviving process memory answer different questions.
+
+For an external connection test, use a disposable service and verify that the application can reconnect. Do not interpret an old connection object remaining in memory as proof that the remote connection still works.
+
+## Measure useful readiness
+
+Google's documentation notes that a restored Pod can appear to be running while memory is still being populated. It recommends checking model readiness, including metrics such as time to first token for relevant workloads. [Source: restore readiness](https://docs.cloud.google.com/kubernetes-engine/docs/concepts/pod-snapshots#restore-readiness-and-background-loading).
+
+For your experiment, define three timestamps:
+
+1. The time you request a start or resume.
+2. The time the notebook becomes reachable.
+3. The time the workload returns its first validated result.
+
+Use the third interval as your main comparison. Keep the others because they help explain where a delay happened.
+
+Compare a fresh start with a resume using the same image, workload, and compatible hardware. Repeat each condition, record failed attempts, and report the spread of results. One unusually fast run is a weak basis for an architectural decision.
+
+## Evaluate cost at the project boundary
+
+The announcement describes releasing compute hardware when pausing. That is a reason to investigate idle time, not a complete cost estimate for your deployment. [Source: pause and resume announcement](https://opensource.googleblog.com/2026/11/gke-workspaces-notebooks-on-google-ai-infrastructure.html).
+
+Build your report from actual billing and resource records. Include storage and other remaining infrastructure alongside active compute. Use a bounded experiment and clean up its resources afterward.
+
+Choose the comparison carefully. A workspace used continuously has a different workload pattern from one opened for a short lab session each day. State the assumed schedule and show how changing it affects the result.
+
+If you only have timing data, report timing data. Leave financial savings unclaimed until you have the relevant usage and pricing evidence.
+
+## Make the final submission reproducible
+
+A useful student submission would include the workload, input manifest, deployment revision, lifecycle test steps, raw measurements, and a short explanation of unsuccessful restores.
+
+Add a small results viewer if you want a software component: let someone compare cold-start time, resume time, output validation, and resource usage across recorded runs. Populate it with measurements you actually collected, clearly labeling any demonstration data.
+
+The strongest outcome is an answer to a narrow engineering question: under which tested conditions does pausing preserve useful state and shorten the path back to a correct result? That is more valuable than repeating a platform's feature list.
+
+Product details were checked on **November 5, 2026**. The experiment and reporting approach are editorial recommendations. Use the [source repository](https://github.com/gke-labs/workspaces) and [Pod Snapshots documentation](https://docs.cloud.google.com/kubernetes-engine/docs/concepts/pod-snapshots) for current deployment and compatibility information.
