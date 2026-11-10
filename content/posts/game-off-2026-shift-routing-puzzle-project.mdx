@@ -1,0 +1,113 @@
+---
+title: "Game Off 2026: Build a SHIFT Routing Puzzle This November"
+excerpt: "GitHub's Game Off theme is SHIFT. Turn it into a small browser puzzle with deterministic rules, replayable levels, and a realistic plan to finish before the deadline."
+category: tutorial
+tags:
+  - JavaScript
+  - game development
+  - GitHub
+  - project ideas
+  - portfolio
+published: '2026-11-10'
+draft: false
+author: Akshat Singh
+featured: true
+---
+
+If your project folder contains more unfinished prototypes than playable demos, a game jam offers a useful constraint: pick a mechanic, make it understandable, and ship it by a fixed date.
+
+**GitHub announced SHIFT as the Game Off 2026 theme on November 1.** The annual jam runs during November, and the submission deadline is **December 1, 2026, at 13:37 PST**. In India, that is **December 2 at 03:07 IST**. You can work alone or with a team and choose your tools. [Source: official announcement](https://github.blog/open-source/gaming/game-off-2026-the-theme-is-shift/).
+
+As of November 10, there is still time to build a small entry. Here is my proposed project: a browser puzzle called **Route Shift**, where changing a junction's direction determines whether delivery tokens reach their destination or get stuck in a loop.
+
+This is a design and implementation plan, not a finished game or an official Game Off example.
+
+## The mechanic: rotate, advance, observe
+
+Start with a six-by-six board. Some cells contain directional junctions; others are empty or blocked. A token follows the arrow on its current cell when the player advances the simulation.
+
+The player can rotate one junction clockwise before each advance. Every rotation changes the route, so SHIFT becomes a change in the board's behavior rather than just a word in the title.
+
+For the first playable version, use one token and one destination. Reaching the destination wins. Attempting to leave the board, enter a wall, or move from a cell without an arrow loses. Make those rules visible beside the board.
+
+Do not add moving enemies or multiple deliveries yet. First find out whether a person can understand the puzzle and enjoy solving it.
+
+## Keep the simulation independent of rendering
+
+Use a plain data structure for the board and a pure function for movement. The renderer should draw the returned state, not decide what the game rules mean.
+
+For example, this is a small movement primitive, not a complete game loop:
+
+```javascript
+const vectors = {
+  north: [0, -1],
+  east: [1, 0],
+  south: [0, 1],
+  west: [-1, 0],
+};
+
+function advance(token, direction, width, height, walls) {
+  const vector = vectors[direction];
+  if (!vector) return { ...token, status: "blocked" };
+
+  const [dx, dy] = vector;
+  const x = token.x + dx;
+  const y = token.y + dy;
+  const outside = x < 0 || y < 0 || x >= width || y >= height;
+
+  if (outside || walls.has(`${x},${y}`)) {
+    return { ...token, status: "blocked" };
+  }
+  return { x, y, status: "moving" };
+}
+```
+
+Decide the order of operations explicitly: read the player's rotation, update the arrow, calculate movement, then check the destination. Do not let animation speed change that order.
+
+Keeping the model separate also gives you somewhere to add a level solver or replay system later without rewriting the visual interface.
+
+## Make three levels that teach the rules
+
+Your first level should need one obvious rotation. The second can introduce a wall. The third can contain a loop that the player must break.
+
+For each level, store the initial board, token position, destination, and a known solution. A playable level should have at least one verified route to the goal.
+
+Write the explanation after watching a new player. If everyone fails because they cannot tell which arrow belongs to which cell, change the visual design before changing the puzzle's difficulty.
+
+Use arrows and shapes as well as color. Give keyboard users a visible selected cell and a documented way to rotate it. A touch-friendly button can perform the same action as the keyboard control.
+
+## Test the rules that can ruin a session
+
+Check board edges, walls, unknown directions, victory, restart, and undo. Verify that resetting a level restores the original arrows as well as the token position.
+
+Record player actions as a sequence of cell rotations and advance commands. Replaying that sequence from the same initial state should produce the same result. If it does not, investigate whether timing or hidden mutable state has entered the rules.
+
+A replay log also makes bug reports useful. A player can share a short action sequence instead of trying to describe a fleeting animation problem.
+
+If you add a solver, show its scope accurately: finding a solution for your small board is different from proving that the solver handles every possible puzzle efficiently.
+
+## A schedule for the remaining weeks
+
+Here is the schedule I would use from November 10:
+
+| Dates | Deliverable |
+| --- | --- |
+| November 10–13 | One complete level, movement rules, restart |
+| November 14–18 | Three levels, keyboard controls, readable feedback |
+| November 19–23 | Playtesting, replay logs, fixes for confusing rules |
+| November 24–27 | Sound, credits, instructions, browser checks |
+| November 28–30 | Submission rehearsal and final playable build |
+
+Treat those dates as a suggested plan, not jam requirements. If you fall behind, reduce the level count and finish the basic experience. A reliable five-minute game is a strong outcome for this scope.
+
+## Finish the submission, not just the repository
+
+GitHub's instructions require a public source repository and a separate itch.io submission. Pushing the code does not submit the entry. The rules also allow AI-assisted development and say the submission asks about its use. [Source: participation and rules](https://github.blog/open-source/gaming/game-off-2026-the-theme-is-shift/).
+
+Check the [Game Off 2026 jam page](https://itch.io/jam/game-off-2026) for the submission workflow. Leave time to verify the uploaded game in a fresh browser session, including instructions, restart, and the final level.
+
+For your portfolio, explain the state model, show one replay, and describe a change you made after testing. Credit assets and tools accurately. If you later expand the game into an academic project, agree on the required scope with your supervisor; entering a jam does not itself establish final-year project suitability.
+
+Route Shift gives you a manageable reason to practice state transitions, input handling, level design, testing, and deployment in one project. Start with a single token reaching a single destination, then earn every additional feature by finishing the previous one.
+
+Event details were checked on **November 10, 2026**. The game concept, code, and schedule above are editorial suggestions.
