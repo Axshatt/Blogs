@@ -1,0 +1,119 @@
+---
+title: ".NET 11 File-Based Apps: Build a Two-File C# CLI"
+excerpt: "Use the .NET 11 launch to try a small C# command-line project. Split the entry point from its rules with #:include, then decide when a project file earns its place."
+category: tutorial
+tags:
+  - C#
+  - .NET
+  - developer tools
+  - project ideas
+published: '2026-11-11'
+draft: false
+author: Akshat Singh
+featured: true
+---
+
+A command-line tool can start with one useful job: read a file, report what needs fixing, and tell the caller whether the check passed. You can learn a lot from getting those three things right before setting up an entire solution.
+
+Microsoft announced general availability of **.NET 11 on November 10, 2026**, alongside the launch keynote at .NET Conf. One of the practical SDK improvements highlighted in the announcement is support for growing a file-based app across source files using `#:include`. [Microsoft's .NET 11 announcement](https://devblogs.microsoft.com/dotnet/announcing-dotnet-11/) · [.NET Conf launch session](https://dotnet.microsoft.com/en-us/conf/2026/agenda/key001)
+
+File-based apps themselves arrived with .NET 10. Microsoft's SDK guide also documents `#:include` support in .NET SDK 10.0.300 and later, so this example is a way to explore the workflow on .NET 11, not a reason to upgrade a whole codebase. [File-based apps documentation](https://learn.microsoft.com/en-us/dotnet/core/sdk/file-based-apps)
+
+## Build a checklist reviewer
+
+Suppose your project team writes release steps in a plain-text checklist. You want a quick check that says which tasks are still open and refuses to pass if someone accidentally submits an empty file. You only need two files: an entry point for input and output, and a helper for the checklist rules.
+
+Create `review.cs` in a new directory:
+
+```csharp
+#:include Checklist.cs
+
+if (args.Length != 1)
+{
+    Console.Error.WriteLine("Usage: review <checklist.txt>");
+    return 2;
+}
+
+try
+{
+    var (pending, total) = Checklist.Read(File.ReadLines(args[0]));
+    if (total == 0)
+    {
+        Console.Error.WriteLine("The checklist has no tasks.");
+        return 2;
+    }
+
+    foreach (var task in pending)
+        Console.WriteLine($"Open: {task}");
+
+    Console.WriteLine($"{total - pending.Count}/{total} tasks complete");
+    return pending.Count == 0 ? 0 : 1;
+}
+catch (Exception error) when (error is IOException or UnauthorizedAccessException
+    or ArgumentException)
+{
+    Console.Error.WriteLine(error.Message);
+    return 2;
+}
+```
+
+Next to it, create `Checklist.cs`:
+
+```csharp
+static class Checklist
+{
+    public static (List<string> Pending, int Total) Read(IEnumerable<string> lines)
+    {
+        var pending = new List<string>();
+        int total = 0;
+        int number = 0;
+
+        foreach (var raw in lines)
+        {
+            number++;
+            var line = raw.Trim();
+            if (line.Length == 0) continue;
+
+            bool isOpen = line.StartsWith("- [ ] ", StringComparison.Ordinal);
+            bool isDone = line.StartsWith("- [x] ", StringComparison.Ordinal);
+            if (!isOpen && !isDone)
+                throw new ArgumentException($"Invalid task on line {number}.");
+
+            total++;
+            if (isOpen) pending.Add(line[6..]);
+        }
+
+        return (pending, total);
+    }
+}
+```
+
+The directive tells the SDK to compile the helper with the entry point. Keep the top-level statements in `review.cs`; included C# files can define types and methods but cannot add their own top-level statements. [SDK guide to supported directives](https://learn.microsoft.com/en-us/dotnet/core/sdk/file-based-apps#supported-directives)
+
+## Try a pass, a failure, and a bad input
+
+Save this as `release.txt`:
+
+```text
+- [x] Run the test suite
+- [ ] Verify the deployed page
+```
+
+With the .NET 11 SDK installed, run:
+
+```bash
+dotnet --version
+dotnet run --file review.cs -- release.txt
+```
+
+The expected output is `Open: Verify the deployed page` followed by `1/2 tasks complete`. The expected exit code is `1`. Change the second checkbox to `[x]` and expect `2/2 tasks complete` and exit code `0`. Try a missing file, an empty file, and an unrecognized task line; each should return `2`.
+
+That distinction is useful if the CLI later runs in CI. A checklist with unfinished work deserves a different message from a checker that never read a valid file. In a POSIX shell, run `echo $?` immediately after the command to inspect the exit code. In PowerShell, inspect `$LASTEXITCODE`.
+
+## Know when to use a project file
+
+My recommendation is to keep the file-based form while the tool has one entry point, few dependencies, and a clear set of inputs. When you want a separate test project or more control over packaging, move to a conventional project. The SDK documents `dotnet project convert` for generating a project file from an existing file-based app. [Conversion documentation](https://learn.microsoft.com/en-us/dotnet/core/sdk/file-based-apps)
+
+For a portfolio demo, show three runs: an incomplete checklist, a complete one, and a malformed one. Include the sample files and the SDK version you used. You can then add one feature your team actually wants, such as a JSON report, while keeping the parser independent of how results are printed.
+
+The checklist format and exit codes are choices for this example. The CLI outputs above are expected results for readers to verify.
