@@ -1,0 +1,278 @@
+---
+title: 20 Projects That Can Actually Get You Hired in 2026
+excerpt: >-
+  Skip the to-do apps. Here are 20 unique, interview-worthy projects across AI
+  agents, RAG, systems and hardware, each with a GitHub reference repo to learn
+  from.
+category: build-log
+tags:
+  - '"projects"'
+  - '"placements"'
+  - '"ai"'
+  - '"github"'
+  - '"career"'
+published: '2026-11-12'
+draft: false
+author: Akshat Singh
+featured: true
+---
+Everyone's resume has a weather app, a to-do list and a Netflix clone. Recruiters have seen them a thousand times.
+
+What gets attention in 2026 is different: projects that solve a real problem, ship with a live demo, and show you can measure quality, not just build features.
+
+This post lists **20 projects** across AI, systems and hardware. Each one comes with a GitHub reference repo to study. Use the repo for architecture ideas, then build **your own version** with your own twist.
+
+## What hiring teams actually look for
+
+- **Real users.** A simple project with real usage beats a complex project nobody touched. Launch it to your college, your community, or a niche audience.
+- **Evals and measurement.** Don't just say "it works". Show accuracy, latency, cost per query or recall.
+- **Business impact.** Anything that saves money, saves time or could become a product stands out.
+- **Proof it's yours.** AI-written repos are everywhere now, so show your process: a demo video, a "what broke" write-up and honest trade-offs.
+
+## Pick your path
+
+| If you want to be a... | Build these |
+| --- | --- |
+| AI / LLM engineer | 1, 2, 5, 7, 9, 10 |
+| Backend / systems engineer | 12, 13, 15, 17, 10 |
+| ML research / infra | 11, 12, 14, 16 |
+| Standing out with hardware + AI | 19, 20 |
+
+Don't build all 20. Pick 4 or 5 and go deep.
+
+---
+
+## Part 1: RAG and Data Pipelines
+
+### 1. Real-User AI Product With Evals
+
+Pick a problem your community actually has (placement doubts, resume feedback, notes search) and ship it as a web app. The key is the eval layer: build a test set, score your answers automatically, and show how quality improved over versions.
+
+**Why it impresses:** Most people stop at the demo. You show measured quality.
+
+**Repo:** [explodinggradients/ragas](https://github.com/explodinggradients/ragas)
+
+![Ragas GitHub repository preview](https://opengraph.githubassets.com/1/explodinggradients/ragas)
+
+### 2. Hybrid RAG Over a Niche Corpus
+
+Choose a narrow dataset (a university syllabus, legal acts, a game's wiki) and combine keyword search with vector search plus reranking. Compare against plain vector search and publish the numbers.
+
+**Why it impresses:** Shows you understand retrieval trade-offs, not just "call the embedding API".
+
+**Repo:** [qdrant/qdrant](https://github.com/qdrant/qdrant)
+
+![Qdrant GitHub repository preview](https://opengraph.githubassets.com/1/qdrant/qdrant)
+
+### 3. Document-AI Ingestion Pipeline
+
+Build a pipeline that takes messy PDFs, tables and scanned pages and turns them into clean, structured chunks ready for retrieval. Add a quality dashboard that shows what failed to parse.
+
+**Why it impresses:** Real companies drown in ugly documents. Few candidates handle them well.
+
+**Repo:** [docling-project/docling](https://github.com/docling-project/docling)
+
+![Docling GitHub repository preview](https://opengraph.githubassets.com/1/docling-project/docling)
+
+### 4. GraphRAG Knowledge System
+
+Turn a corpus into a knowledge graph of entities and relationships, then answer multi-hop questions that normal RAG fails on. Show side-by-side examples where graph retrieval wins.
+
+**Why it impresses:** It's a clear step beyond the standard chatbot-over-PDF project.
+
+**Repo:** [microsoft/graphrag](https://github.com/microsoft/graphrag)
+
+![GraphRAG GitHub repository preview](https://opengraph.githubassets.com/1/microsoft/graphrag)
+
+---
+
+## Part 2: Agents and Tooling
+
+### 5. Multi-Agent Ops Crew
+
+Build a small team of agents with different roles (planner, researcher, executor, reviewer) that handles a real workflow, such as triaging support tickets or preparing a weekly report. Add retries, human approval steps and a trace of every decision.
+
+**Why it impresses:** Shows you can design reliable agent workflows, not just prompt a model.
+
+**Repo:** [langchain-ai/langgraph](https://github.com/langchain-ai/langgraph)
+
+![LangGraph GitHub repository preview](https://opengraph.githubassets.com/1/langchain-ai/langgraph)
+
+### 6. Autonomous Bug-Fixing Agent (Sandboxed)
+
+Create an agent that reads a GitHub issue, edits code inside a sandbox, runs tests and proposes a patch. Evaluate it on a set of real issues and report the success rate honestly.
+
+**Why it impresses:** It combines agents, sandboxing, tooling and benchmarking in one project.
+
+**Repo:** [SWE-agent/SWE-agent](https://github.com/SWE-agent/SWE-agent)
+
+![SWE-agent GitHub repository preview](https://opengraph.githubassets.com/1/SWE-agent/SWE-agent)
+
+### 7. Browser-Automation Agent With Safety Guardrails
+
+Build an agent that completes web tasks (filling forms, comparing prices, booking slots). The important part is safety: confirmation before payments, allow-lists for sites and a full action log.
+
+**Why it impresses:** Guardrails show maturity. Anyone can make an agent click buttons.
+
+**Repo:** [browser-use/browser-use](https://github.com/browser-use/browser-use)
+
+![Browser Use GitHub repository preview](https://opengraph.githubassets.com/1/browser-use/browser-use)
+
+### 8. Real-Time Voice AI Agent
+
+Build a voice assistant for a specific use case (mock interviews, language practice, a support line) and tune it for latency and interruptions. Publish your latency breakdown for speech-to-text, the model and text-to-speech.
+
+**Why it impresses:** Real-time systems are hard, and the metrics prove you handled it.
+
+**Repo:** [pipecat-ai/pipecat](https://github.com/pipecat-ai/pipecat)
+
+![Pipecat GitHub repository preview](https://opengraph.githubassets.com/1/pipecat-ai/pipecat)
+
+### 9. Your Own MCP Server Suite
+
+Write MCP servers that connect an AI assistant to tools you actually use: your college portal, analytics, notes, calendar or a custom API. Document each tool well and add authentication and rate limits.
+
+**Why it impresses:** MCP is the integration standard right now, and a working server is a concrete, demo-able skill.
+
+**Repo:** [modelcontextprotocol/servers](https://github.com/modelcontextprotocol/servers)
+
+![MCP servers GitHub repository preview](https://opengraph.githubassets.com/1/modelcontextprotocol/servers)
+
+### 10. LLM Cost and Observability Dashboard
+
+Trace every prompt, response, token count and latency, then surface the most expensive queries and regressions. Add a feature that suggests cheaper models for simple requests.
+
+**Why it impresses:** It directly attacks cost, which every company running LLMs cares about.
+
+**Repo:** [langfuse/langfuse](https://github.com/langfuse/langfuse)
+
+![Langfuse GitHub repository preview](https://opengraph.githubassets.com/1/langfuse/langfuse)
+
+---
+
+## Part 3: Model and Inference Engineering
+
+### 11. Train Your Own Mini ChatGPT
+
+Build the whole stack at small scale: tokenizer, pretraining, fine-tuning and a chat interface. Write up the loss curves and what you'd change with more compute.
+
+**Why it impresses:** It proves you understand what happens inside the model, not just the API.
+
+**Repo:** [karpathy/nanochat](https://github.com/karpathy/nanochat)
+
+![nanochat GitHub repository preview](https://opengraph.githubassets.com/1/karpathy/nanochat)
+
+### 12. LLM Inference Engine With Paged KV-Cache
+
+Implement a simplified serving engine with continuous batching and a paged KV-cache. Benchmark throughput against a naive baseline and plot the difference.
+
+**Why it impresses:** Inference efficiency is one of the hottest areas in AI infrastructure.
+
+**Repo:** [vllm-project/vllm](https://github.com/vllm-project/vllm)
+
+![vLLM GitHub repository preview](https://opengraph.githubassets.com/1/vllm-project/vllm)
+
+### 13. On-Device Quantized LLM Runtime
+
+Quantize a small model and run it on a laptop, phone or Raspberry Pi. Report memory use, tokens per second and quality loss at different bit widths.
+
+**Why it impresses:** Shows low-level thinking and a real trade-off analysis.
+
+**Repo:** [ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp)
+
+![llama.cpp GitHub repository preview](https://opengraph.githubassets.com/1/ggml-org/llama.cpp)
+
+### 14. Tiny Deep-Learning Compiler
+
+Build a small tensor library with lazy evaluation and operation fusion, then run a real model on it. Even a minimal version teaches you more than ten tutorials.
+
+**Why it impresses:** Very few candidates can explain how their framework works underneath.
+
+**Repo:** [tinygrad/tinygrad](https://github.com/tinygrad/tinygrad)
+
+![tinygrad GitHub repository preview](https://opengraph.githubassets.com/1/tinygrad/tinygrad)
+
+---
+
+## Part 4: Systems and Backend Depth
+
+### 15. Distributed SQL Database With Raft
+
+Build a small replicated database with leader election, a log and basic transactions. Test it by killing nodes at random and document how it recovers.
+
+**Why it impresses:** Distributed systems skill is rare and respected in backend interviews.
+
+**Repo:** [erikgrinaker/toydb](https://github.com/erikgrinaker/toydb)
+
+![toyDB GitHub repository preview](https://opengraph.githubassets.com/1/erikgrinaker/toydb)
+
+### 16. Vector Search Engine From Scratch
+
+Implement an HNSW index yourself and compare it with brute-force search. Publish a recall-versus-speed chart and explain the parameters you tuned.
+
+**Why it impresses:** It connects algorithms knowledge to a technology everyone in AI uses.
+
+**Repo:** [nmslib/hnswlib](https://github.com/nmslib/hnswlib)
+
+![hnswlib GitHub repository preview](https://opengraph.githubassets.com/1/nmslib/hnswlib)
+
+### 17. Container Runtime From Scratch
+
+Use Linux namespaces and cgroups to run an isolated process with its own filesystem and resource limits. Then add a simple image format and networking.
+
+**Why it impresses:** You'll understand Docker instead of just using it.
+
+**Repo:** [lizrice/containers-from-scratch](https://github.com/lizrice/containers-from-scratch)
+
+![Containers from scratch GitHub repository preview](https://opengraph.githubassets.com/1/lizrice/containers-from-scratch)
+
+### 18. Real-Time Collaborative Editor With CRDTs
+
+Build a multi-user editor with live cursors that works offline and merges changes without conflicts. Test it with deliberately messy network conditions.
+
+**Why it impresses:** Real-time sync is a genuinely hard full-stack problem.
+
+**Repo:** [yjs/yjs](https://github.com/yjs/yjs)
+
+![Yjs GitHub repository preview](https://opengraph.githubassets.com/1/yjs/yjs)
+
+---
+
+## Part 5: Vision and Hardware
+
+### 19. Gesture-Controlled Interface Linked to Hardware
+
+Use camera-based hand or pose tracking to control something real: a browser game, a presentation, or a device over serial or Wi-Fi. Record a short demo video showing it working live.
+
+**Why it impresses:** Visual demos stick in memory, and hardware plus AI is hard to fake.
+
+**Repo:** [google-ai-edge/mediapipe](https://github.com/google-ai-edge/mediapipe)
+
+![MediaPipe GitHub repository preview](https://opengraph.githubassets.com/1/google-ai-edge/mediapipe)
+
+### 20. TinyML on an ESP32
+
+Train a small model for keyword spotting or anomaly detection and run it on an ESP32. Report accuracy, latency, memory and power use.
+
+**Why it impresses:** Edge AI under tight constraints shows real engineering judgment.
+
+**Repo:** [espressif/esp-tflite-micro](https://github.com/espressif/esp-tflite-micro)
+
+![esp-tflite-micro GitHub repository preview](https://opengraph.githubassets.com/1/espressif/esp-tflite-micro)
+
+---
+
+## How to make any of these count
+
+1. **Ship a live demo.** A link beats a screenshot every time.
+2. **Add numbers.** Latency, accuracy, throughput, cost or user count.
+3. **Record a 2-minute video.** Show the project working, then show the architecture.
+4. **Write one post per project.** Focus on what broke and what you learned.
+5. **Get real users.** Launch to your college, your community or a niche forum and report the usage.
+6. **Be honest about AI assistance.** Say what you built yourself and where tools helped. Transparency builds trust.
+
+## Final thoughts
+
+Twenty ideas is a menu, not a checklist. Choose projects that match the role you want, build them properly, and measure them. Four strong projects with demos and numbers will beat twenty half-finished repos.
+
+Pick one today, make a repo, and ship the first version this week.
