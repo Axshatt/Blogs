@@ -1,0 +1,55 @@
+---
+title: "Rust 1.100: Try Cargo Dependency Cooldowns Without Breaking Your Build"
+excerpt: "Cargo can now wait before selecting newly published crate versions. Learn how to test the policy, review the lockfile, and keep urgent fixes moving."
+category: tutorial
+tags:
+  - Rust
+  - Cargo
+  - developer tools
+  - dependencies
+published: '2026-11-16'
+draft: false
+author: Akshat Singh
+featured: true
+---
+
+When you run a dependency update a few hours before a project demo, do you want Cargo to pick a crate version published five minutes ago? Often the update can wait. Rust 1.100 gives teams a way to make that waiting period explicit.
+
+The Rust team [released Rust 1.100.0 on November 12, 2026](https://blog.rust-lang.org/2026/11/12/Rust-1.100.0/). The release stabilized Cargo's ability to consider publication age when picking dependency versions. Cargo can defer versions that are too new, giving maintainers and users time to spot problems before your project picks them up. That extra time is useful, but it does not tell you whether a crate is safe.
+
+## Set the policy in one repository
+
+Start in a branch of a small Rust application with a committed `Cargo.lock`. Check `cargo --version` first; use Cargo 1.100 or later for this exercise. If a repository already has a `.cargo/config.toml`, merge the setting into the existing `[registry]` table.
+
+```toml
+[registry]
+global-min-publish-age = "3 days"
+```
+
+Three days is an example for a team that already reviews updates regularly, not a recommended minimum for every application. Cargo's default is no waiting period. A registry-specific setting can override the global value, and Cargo needs publication timestamps from the registry to apply the rule. See the [Cargo configuration reference](https://doc.rust-lang.org/cargo/reference/config.html#registryglobal-min-publish-age).
+
+## Review what an update actually changes
+
+Pick a direct dependency that your team already plans to update. In the example below, replace `clap` with a crate from your own lockfile if your project doesn't use it.
+
+```bash
+cargo update -p clap
+git diff -- Cargo.lock
+cargo test --locked
+```
+
+Read the resolver's output alongside the diff. It can explain when a newer version was held back. The lockfile shows what was actually selected, including any changes to indirect dependencies. Running the tests with `--locked` prevents Cargo from updating the lockfile during the test step, so the test applies to the resolution you just reviewed.
+
+A run may produce no difference. The crate might have no recent releases, or the dependency constraints might already exclude the newer version. If you want a controlled comparison, run the same update from the same starting commit in two separate checkouts, one with the policy and one without. Record the Cargo version, time, resolver messages, and the two lockfile diffs. Because registry versions age over time, a classmate repeating the exercise later might get a different result.
+
+## Know what the policy leaves alone
+
+The default resolver behavior can retain a too-new version that is already in the lockfile. Adding a cooldown therefore does not clean up a dependency you previously accepted. The [resolver settings](https://doc.rust-lang.org/cargo/reference/config.html#resolverincompatible-publish-age) document that exception. The release announcement also notes that `cargo install` ignores this policy, so review developer tool versions separately from application dependencies.
+
+Keep an urgent update path. If a fix needs to land before the waiting period expires, have the team review the specific version and its release notes, then record why an exception was needed alongside the lockfile change. Don't let a routine waiting period turn into an unexamined delay for a verified fix.
+
+## Make it a portfolio exercise
+
+Use a small Rust application and submit three artifacts: the policy in the repository, an annotated lockfile diff, and a short write-up about one version Cargo selected or held back. Include a test that exercises a real application feature affected by the update, such as parsing the command-line arguments after updating a CLI library.
+
+The useful result is an update your teammate can explain: which versions changed, why Cargo chose them, and what you checked before merging. The cooldown gives you more time to do that work; the review and tests give you the evidence.
