@@ -1,0 +1,47 @@
+---
+title: "Hugging Face and OpenRouter: Test Routing on One Model Before You Switch"
+excerpt: "Hugging Face changed how it routes language model requests. Compare automatic routing with a fixed provider using a small, repeatable test."
+category: tutorial
+tags:
+  - AI
+  - Hugging Face
+  - OpenRouter
+  - LLM evaluation
+published: '2026-11-17'
+draft: false
+author: Akshat Singh
+featured: true
+---
+
+Your chat API call can stay exactly the same while the service that answers it changes. That's the part of the [November 16 Hugging Face and OpenRouter announcement](https://huggingface.co/blog/openrouter) I'd pay attention to if I were building a student project or maintaining an app on Hugging Face Inference Providers.
+
+Hugging Face says it switched language model routing to OpenRouter on the day of the announcement. The default policy considers price, speed, and reliability, and can retry through another provider if the first one fails. There's a migration catch: Hugging Face says custom provider keys no longer work for these language model requests, which are now billed to the Hugging Face account or organization. The announcement says image, video, and audio generation continue on the existing path.
+
+## Compare the route while keeping the model fixed
+
+Take an existing task, such as classifying fictional campus helpdesk tickets into `network`, `accounts`, and `other`. Write down the expected label before running any requests. Include at least a few cases where a keyword points in the wrong direction. For instance, “The campus Wi-Fi works, but I can't reset my portal password” should be labeled `accounts` under a rule that classifies the action needed.
+
+Use two configurations:
+
+| Configuration | What to send | What it helps you learn |
+| --- | --- | --- |
+| Default routing | The bare model ID | How the app behaves when the router chooses a provider |
+| Fixed provider | The same model ID with a supported `:provider` suffix | How the same app behaves when that provider serves its requests |
+
+Use the model's Providers tab to choose an available provider. Keep the prompts, output limit, and sampling settings the same. The [chat completion API reference](https://huggingface.co/docs/inference-providers/tasks/chat-completion) documents the compatible endpoint and token permission. For a first check, confirm that one synthetic request succeeds in both configurations before testing the full set.
+
+## Define success before sending requests
+
+For the helpdesk task, accept only one of the three labels after trimming surrounding whitespace. Record three outcomes separately: whether the request completed, whether the response followed the required format, and whether the label was correct. If one route returns helpful prose where your app requires a single label, count that as a format failure. It would still break the integration.
+
+Use a small repeated run, such as 12 fixtures with two passes per configuration. Alternate which route goes first for each fixture so that one configuration doesn't always run earlier. Record the timestamp, requested model and suffix, attempt duration, token usage if returned, and outcome. When you can verify the actual provider from usage records, keep that in a separate column; a routing policy is not a provider identity.
+
+If you measure a nonstreaming request from start to finish, label the metric **end-to-end latency**. It does not tell you when the first token arrived. Report timeouts and other failures separately from the median for completed requests. Otherwise, a route with more failures can look fast because the slowest attempts never made it into the summary.
+
+## Turn the result into a decision
+
+My recommendation is to rank the criteria before seeing the numbers. For a ticket classifier, require valid labels first, then compare latency and observed usage. If you look at cost, check your own [Hugging Face billing and usage guidance](https://huggingface.co/docs/inference-providers/pricing) and distinguish recorded charges from estimates. A small sample describes that run, at that time, with that model. It doesn't establish which provider is fastest in general.
+
+For an existing app, review token permissions, the billing account, and which providers the organization allows before moving real traffic. Use synthetic fixtures while testing and keep credentials out of logs and the repository. If one successfully completed request is the only evidence you have, describe it as a smoke test. It cannot establish how often a fallback occurred or whether the router would handle a provider outage.
+
+A portfolio version can be three files: versioned fixtures, a runner that writes structured observations, and a report explaining your choice. The interesting part is being able to say why you picked a route for your application, with examples of where its answers or operating behavior differed.
