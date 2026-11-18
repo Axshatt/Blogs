@@ -1,0 +1,72 @@
+---
+title: "llama.cpp v1.0.0: Make Your Local AI Project Rebuildable"
+excerpt: "The llama.cpp team has introduced library versioning with explicit compatibility rules. Use the milestone to document what your local AI app actually depends on."
+category: tutorial
+tags:
+  - local AI
+  - llama.cpp
+  - C++
+  - project ideas
+published: '2026-11-18'
+draft: false
+author: Akshat Singh
+featured: true
+---
+
+Your local AI demo works on your laptop. Then a teammate builds it with a newer inference library and gets a compiler error before the model even loads. That is an integration problem worth solving before you add another feature.
+
+On **November 13, 2026**, the llama.cpp team [announced v1.0.0 for its libraries](https://huggingface.co/blog/ggml-org/llama-cpp-v1). The announcement says llama.cpp and ggml will make API and ABI incompatibilities visible through major-version bumps. Its versioning rules distinguish breaking changes to public C headers, backward-compatible additions, and fixes without API changes.
+
+For a student team building a local AI application, this is a useful milestone: make the inference dependency something another person can identify and rebuild.
+
+## Find the boundary your app uses
+
+Start by sketching how the app reaches the model. A native C++ program linking against `libllama` has a different integration boundary from a web app calling a separately running model server. A wrapper library introduces another version to track.
+
+For a native application, record the library revision, public headers, build options, and libraries shipped with the executable. For a server client, record the server build and the request and response shapes the application needs. If you use a wrapper, identify how it selects or bundles the underlying runtime.
+
+My recommendation is to write this down before updating anything. “Uses llama.cpp” is too broad to tell a teammate what they need.
+
+## Treat v1 as a migration
+
+The [v1.0.0 release notes](https://github.com/ggml-org/llama.cpp/releases/tag/v1.0.0) explicitly list removals of deprecated public functions, a renamed context-state function, and changes to public parameters. A new compatibility policy does not mean every older integration will compile unchanged.
+
+For your own application, make a branch for the update and build against the public headers from the selected revision. Resolve compilation failures in the small component that owns your runtime integration. Keep that component's interface to the rest of your app narrow: loading a model, accepting an input, producing output, and releasing resources.
+
+This separation helps when a native API changes. Your UI should not need to know which low-level function used to initialize a context.
+
+## Save a compact environment manifest
+
+Alongside the source, keep a human-readable record such as:
+
+```text
+Application commit:
+Runtime library tag and commit:
+Wrapper version, if used:
+Compiler and operating system:
+Build options and selected backend:
+Model source and exact revision:
+Model file name and checksum:
+Model license:
+Prompt format and generation settings:
+```
+
+Fill those fields with values from your build rather than copying somebody else's machine details. Keep model identity separate from runtime identity. Changing either can affect the result, and you want to know which one changed during an upgrade.
+
+For a large model file, document how to obtain the exact artifact instead of committing it blindly into the application repository. Verify that redistribution and download instructions respect its license.
+
+## Make a fresh-machine rehearsal part of the demo
+
+Ask a teammate to follow the setup instructions in a clean directory. Have them build the app, locate the documented model, and perform one ordinary task. Record missing steps while they work.
+
+Then exercise a few failure paths: a missing model, an invalid model path, cancellation during generation, and application shutdown after a failed load. The application should give a useful explanation and remain restartable. Decide what happens to partially produced output so that it does not masquerade as a finished answer.
+
+These are suggested application checks, not claims about tests the upstream release has passed. For generated text, use task-level criteria rather than requiring every run to produce identical wording.
+
+## Give your portfolio a release someone can use
+
+For a local document assistant, a good handoff includes a small public sample document, a reproducible setup, the manifest, and a screenshot or recording of a complete request. Explain whether documents stay on the device and verify any network behavior before making privacy claims.
+
+Describe the supported configuration precisely. If you tested one laptop and one backend, say so. You can expand the compatibility matrix later as other people reproduce it.
+
+The v1 announcement gives native integrations a clearer compatibility boundary. Your project's contribution is the work around it: a documented build, a known model artifact, and an application that handles failures well enough for someone else to run.
