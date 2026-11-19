@@ -1,0 +1,75 @@
+---
+title: "GitHub CLI Can Now Wait for PR Events: Build a Small Review Watcher"
+excerpt: "The new gh event listen preview can replace a polling loop. Use it to build a review watcher that refreshes the PR before deciding what to do."
+category: tutorial
+tags:
+  - GitHub
+  - developer tools
+  - CLI
+  - automation
+published: '2026-11-19'
+draft: false
+author: Akshat Singh
+featured: true
+---
+
+A script waiting for a pull request review often spends most of its life asking GitHub the same question. The new GitHub CLI event commands offer a different starting point: wait for a change, then inspect it.
+
+On **November 18, 2026**, GitHub announced Event Streams support in **GitHub CLI v2.105.0**. The commands are in preview and require Event Streams preview access; upgrading the CLI alone does not grant access. See the [launch announcement and waitlist information](https://github.blog/changelog/2026-11-18-wait-for-pull-request-events-with-github-cli/).
+
+A useful first project is a terminal review watcher. Its job is modest: wait for a review, refresh the pull request, and show the developer what needs attention. It should not merge anything.
+
+## Listen for a review with a time limit
+
+Check `gh --version` and `gh event listen --help` in your own environment first. Once you have preview access, replace the example URL below with a pull request you can read:
+
+```bash
+gh event listen \
+  --resource https://github.com/OWNER/REPO/pull/123 \
+  --event com.github.pull_request.review.submitted.v1 \
+  --timeout 10m
+```
+
+By default the command returns after one event. It prints a CloudEvent JSON object on stdout and status messages on stderr. If the timeout wins, the exit status is 8. The [CLI manual](https://cli.github.com/manual/gh_event_listen) documents the flags and event types.
+
+Keep the raw event during development. Before reducing it to a notification, inspect what information the actual payload contains. A message saying “a review arrived” is a better first feature than a premature claim that the PR is approved and ready.
+
+## Use the event as a reason to refresh
+
+The manual describes thin event payloads with a `data.api_url` for the changed object. It also says that earlier events are not replayed and that events during a disconnection are missed. Read the current PR state after the stream attaches and reconcile again after reconnecting. [Event delivery behavior](https://cli.github.com/manual/gh_event_listen)
+
+For your watcher, separate two responsibilities. The listener tells it when to look. A state reader decides what is true now.
+
+My recommendation is to have the state reader return a short summary: the PR URL, current head commit, whether it remains open, and the review information relevant to your team's process. Record the time of that refresh. If the refresh fails, display that failure rather than carrying forward an old “ready” label.
+
+This matters when the author pushes a new commit while someone is reviewing. A notification about an earlier event is not enough evidence to act on the latest code.
+
+## Keep check completion separate from readiness
+
+The CLI can also listen for completed check suites. One suite completing is not the same as all required checks passing; the manual recommends reading the PR checks after each such event. [Check-suite guidance](https://cli.github.com/manual/gh_event_listen)
+
+In a project dashboard, use separate labels for “event received,” “state refreshed,” and “decision available.” That small distinction makes failures easier to diagnose. If a workflow fails, you want the dashboard to show the failed check, not merely celebrate that a check finished.
+
+For a first version, link to the checks instead of implementing your own merge policy. You can improve the summary after confirming it matches what a human sees on the PR.
+
+## Test the watcher as a workflow
+
+Use a disposable PR in a test repository. Write down the expected display before trying these cases:
+
+- A review arrives while the listener is attached.
+- A review already exists before listening starts.
+- The author pushes another commit after a review.
+- The wait expires without an event.
+- The state refresh fails after an event arrives.
+
+Record the actual event and refreshed state for each case, excluding credentials. Your test result should explain both what the watcher observed and what it could not establish.
+
+If you later add multiple event types, avoid sending the same notification repeatedly just because several events prompted the same state refresh. A summary keyed to the PR and current head commit is a useful design starting point, with explicit handling for new review information.
+
+## Make a small tool worth keeping
+
+A portfolio version needs a listener, a state reader, and a terminal summary. Keep the event-handling logic testable with saved, sanitized fixtures so development does not require submitting another review every time.
+
+Include the CLI version and preview requirements in the README. Distinguish a demonstration using saved payloads from a run connected to GitHub. Both can show useful engineering work, but they establish different things.
+
+The opportunity here is to remove a repetitive polling loop while keeping the decision grounded in current state. Start with a watcher that helps a developer notice and understand a change. That is a complete, useful outcome before adding any automated action.
