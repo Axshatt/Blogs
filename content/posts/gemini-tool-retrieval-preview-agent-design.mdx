@@ -1,0 +1,81 @@
+---
+title: "Gemini Tool Retrieval Preview: Give Your Agent a Searchable Toolbox"
+excerpt: "Google's new preview loads tool schemas on demand. Build a small campus assistant to explore tool discovery, clear descriptions, and permissions."
+category: tutorial
+tags:
+  - AI agents
+  - Gemini
+  - developer tools
+  - project ideas
+published: '2026-11-20'
+draft: false
+author: Akshat Singh
+featured: true
+---
+
+An agent with five tools is easy to inspect. An agent with fifty tools starts to raise another question: how much information does it need before it can choose the right one?
+
+On **November 19, 2026**, Google [introduced Tool Retrieval in preview in the Gemini Interactions API](https://blog.google/innovation-and-ai/technology/developers-tools/gemini-api-tool-retrieval/). Deferred tools keep their names and descriptions visible while their parameter schemas load on demand. You enable the mechanism with a `tool_search` tool and `defer_loading: true` on selected tools. Your application still executes the resulting function call.
+
+For a student project, I would explore this with a campus information assistant. The interesting work is defining a toolbox that the assistant can navigate without confusing similar functions.
+
+## Design a small but realistic toolbox
+
+Use synthetic records for timetables, room availability, equipment, and library books. Give the assistant a few distinct operations in each category. Don't create fifty copies of the same function just to make a large tool count.
+
+Separate operations that answer different questions. Finding a book by title and checking whether a particular copy is available deserve different descriptions. So do finding a classroom and checking whether it is free at a particular time.
+
+Here is a proposed declaration for one function, following the shape in Google's announcement:
+
+```json
+{
+  "type": "function",
+  "name": "lookup_book_copies",
+  "description": "List physical library copies for an exact catalog book ID, including each copy's availability. Does not search titles or reserve books.",
+  "defer_loading": true,
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "book_id": {"type": "string"}
+    },
+    "required": ["book_id"]
+  }
+}
+```
+
+The function name and schema are suggestions for this project. Use the current [setup guide linked by Google](https://blog.google/innovation-and-ai/technology/developers-tools/gemini-api-tool-retrieval/#how-to-get-started) for a complete request and supported SDK configuration.
+
+## Write descriptions for discovery
+
+A description should help someone decide whether to select the function before seeing its parameters. In this example, “exact catalog book ID” signals that a title-search step may need to happen first.
+
+Try these two requests:
+
+- “Find books about digital signal processing.”
+- “Is there an available copy of book B-104?”
+
+The first request should lead to catalog search. The second can go directly to the copy lookup. A response that skips the search and invents a book ID should fail your test, even if the rest of the answer looks plausible.
+
+Keep an expected tool sequence beside each fixture. Include ambiguous requests, missing records, and requests outside the catalog's scope. Let the assistant ask a clarifying question when the input doesn't identify a book adequately.
+
+## Observe discovery and execution separately
+
+Google's announcement describes tool-search and function-call steps in `interaction.steps`. It also explains that loaded schemas contribute input tokens later in the conversation, so savings depend on which tools are actually loaded. [Source: retrieval behavior and billing](https://blog.google/innovation-and-ai/technology/developers-tools/gemini-api-tool-retrieval/)
+
+For your report, distinguish a successful lookup of a tool schema from a successful application operation. Record whether the selected function was appropriate, whether its arguments matched your contract, and whether the final answer reflected the returned record.
+
+Compare two configurations on the same fixture set: all schemas supplied initially, and selected schemas deferred. Keep the model, descriptions, prompts, and records unchanged. Measure completed-task correctness alongside token usage and elapsed time. A smaller initial prompt is not enough evidence that the full interaction became cheaper or faster.
+
+## Keep authorization in the backend
+
+Start with information lookups. If you later add reservations, have the service derive identity from authentication and check access before every operation. A tool being discoverable is not proof that the caller may use it.
+
+For a demonstration, include a request for a restricted record and show that the service denies it regardless of how confidently the assistant asks. Use fictional users and data so your published test traces can be inspected safely.
+
+Also distinguish “no copies available” from a backend failure. An error fetching the inventory should not become an invented availability answer.
+
+## Package the reasoning, not just the chat UI
+
+A useful submission contains the tool catalog, synthetic records, fixtures with expected operations, and a trace viewer that shows discovery followed by execution. Annotate at least one case where a better description corrected the choice of tool.
+
+Describe what you actually tested, including model and SDK versions and whether the run used the preview API or saved demonstration traces. The project becomes valuable when another developer can understand why the assistant chose an operation and reproduce what happened afterward.
