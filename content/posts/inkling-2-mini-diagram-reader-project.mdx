@@ -1,0 +1,77 @@
+---
+title: "Inkling 2 Mini: Build a Diagram Reader That Shows Its Evidence"
+excerpt: "Thinking Machines' new multimodal model suggests a useful student project: read simple diagrams, preserve visible labels, and separate observations from guesses."
+category: tutorial
+tags:
+  - machine learning
+  - multimodal AI
+  - project ideas
+  - computer vision
+published: '2026-11-21'
+draft: false
+author: Akshat Singh
+featured: true
+---
+
+A diagram assistant that confidently explains the wrong arrow is worse than one that asks for a clearer image. For an engineering project, the interesting challenge is getting the assistant to distinguish what it sees from what it infers.
+
+**Thinking Machines released Inkling 2 Mini on November 20, 2026.** Its [model card](https://huggingface.co/thinkingmachines/Inkling-2-Mini) describes an open-weight model that accepts text and images and produces text, under an Apache 2.0 license. Hugging Face's [release article](https://huggingface.co/blog/inkling2mini) describes a looped mixture-of-experts architecture and integrations with Transformers, llama.cpp, and MLX.
+
+That is a timely reason to explore a small visual application. My proposed project is a diagram reader for simple flowcharts: upload an image, inspect the labels and connections it reports, and ask a question about the visible process. This is a project design, not a tested claim about the new model's diagram accuracy.
+
+## Begin with flowcharts you can verify
+
+Create ten original diagrams using a drawing tool. Use three to six labeled boxes per diagram, with unambiguous arrowheads. Keep the source files so you can export different sizes without changing the underlying diagram.
+
+For each image, write the correct list of nodes and directed edges before running the model. Include one branch, one loop, and two diagrams with similar layouts but different arrow directions. That last pair helps expose an assistant that guesses from a familiar arrangement instead of reading the image.
+
+Use public or synthetic content. A fictional assignment-submission flow is enough to test the mechanics without uploading private student records.
+
+## Ask for observations before an explanation
+
+Have the application request a structured first response: visible labels, connections between labels, and unreadable regions. An application-level response shape could be:
+
+```json
+{
+  "nodes": [
+    {"id": "n1", "visible_label": "Submit"},
+    {"id": "n2", "visible_label": "Review"}
+  ],
+  "edges": [
+    {"from": "n1", "to": "n2", "basis": "visible arrow"}
+  ],
+  "unreadable_regions": []
+}
+```
+
+This is a suggested contract for your app, not a built-in Inkling API response or a guarantee of structured-output support. Validate any returned JSON before using it, and reject references to nonexistent node IDs.
+
+After that, request a short explanation using the extracted graph and the image. In the interface, show the original picture next to the observations. Let the user correct a label or connection before asking follow-up questions.
+
+Keeping these stages separate makes errors easier to understand. If the graph is wrong, improving the final explanation's wording will not fix the source of the problem.
+
+## Test image quality deliberately
+
+For each source diagram, export a clear image and a smaller version. Add a version with one intentionally obscured label. Keep the correct answer tied to the source file, not to what you remember seeing in the screenshot.
+
+Score label transcription and edge direction independently. Count invented nodes as errors. For the obscured version, check whether the assistant identifies missing information instead of filling it in from context.
+
+Don't let an “uncertain” response become an automatic pass. Asking for clarification on every image is unhelpful too. Report correct extraction, incorrect extraction, and abstention separately for clear and degraded inputs.
+
+These are proposed tests. Publish the results only after running them, with the exact model revision, image files, prompts, and inference settings.
+
+## Choose the runtime before promising a local demo
+
+Hugging Face positions the model for local setups, but that does not establish fit for your laptop. Check the current runtime instructions, supported model format, and available memory before downloading large artifacts. Start with one image and a short response before attempting a full demo.
+
+Record model loading time separately from request latency. If you use a hosted service instead, label the demo accordingly. A working hosted prototype and a verified offline build are different deliverables.
+
+Also verify network behavior before describing the application as private or offline. The model running locally does not by itself establish where the upload handler, logs, or frontend assets send data.
+
+## Make the interface explain failures
+
+If an image cannot be decoded, say so before calling the model. If the model request fails, preserve the upload and offer a retry without showing stale results from the previous image. If parsing fails, display an application error rather than treating malformed output as an empty graph.
+
+For follow-up questions, distinguish visible evidence from domain knowledge. “The diagram shows Review after Submit” is an image observation. “A reviewer should check plagiarism” is an additional recommendation unless that step appears in the diagram.
+
+A useful final submission includes the editable diagrams, expected graphs, raw model outputs, a small results table, and a recording of a corrected extraction. Your contribution is the evidence-preserving workflow around the model: someone can see where an answer came from and repair it when the picture was misread.
