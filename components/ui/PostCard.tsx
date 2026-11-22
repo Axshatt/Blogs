@@ -66,7 +66,7 @@ export function PostCard({ post }: PostCardProps) {
       <div className="flex items-center gap-xs text-label-sm text-primary font-inter">
         <Link href="/about" className="shrink-0 relative w-6 h-6 rounded-full overflow-hidden border border-outline-variant/40 hover:opacity-85 transition-opacity">
           <Image
-            src="/images/akshat_profile.png"
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/images/akshat_profile.png`}
             alt="Akshat Singh"
             fill
             sizes="24px"

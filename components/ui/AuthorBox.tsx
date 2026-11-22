@@ -9,7 +9,7 @@ export function AuthorBox() {
         {/* Avatar */}
         <div className="shrink-0 relative w-20 h-20 md:w-24 md:h-24">
           <Image
-            src="/images/akshat_profile.jpg"
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/images/akshat_profile.jpg`}
             alt="Akshat Singh"
             fill
             sizes="(max-width: 768px) 80px, 96px"

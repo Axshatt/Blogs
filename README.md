@@ -34,3 +34,17 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## GitHub Pages
+
+In the repository's **Settings → Pages**, select **GitHub Actions** as the source.
+Push to `main` or run **Publish blog to GitHub Pages** from the Actions tab.
+The workflow reads the site's URL and base path from the Pages configuration.
+
+Run `npm ci` and `npm run build:pages` to export the public site into `out/`.
+Local exports default to `https://axshatt.github.io/Blogs`. Set
+`NEXT_PUBLIC_BASE_PATH` and `NEXT_PUBLIC_SITE_URL` to preview another address.
+
+Pages hosts the homepage, posts, search and filters, reading library, About page,
+RSS, and sitemap. Admin, newsletter subscriptions, and scheduled jobs require
+the full Next.js server build (`npm run build`).

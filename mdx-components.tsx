@@ -42,7 +42,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     a: ({ href, children }) => (
       <a
-        href={href}
+        href={href?.startsWith('/') && !href.startsWith('//') ? (process.env.NEXT_PUBLIC_BASE_PATH || '') + href : href}
         className="text-secondary underline decoration-secondary/30 underline-offset-2 transition-colors hover:text-primary hover:decoration-primary/50"
         target={href?.startsWith('http') ? '_blank' : undefined}
         rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}

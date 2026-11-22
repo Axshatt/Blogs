@@ -134,7 +134,7 @@ export function LibraryClient({ posts }: { posts: PostData[] }) {
 
   // Copy list link
   const copyListLink = (listName: string) => {
-    const url = `${window.location.origin}/library?list=${encodeURIComponent(listName)}`;
+    const url = `${window.location.origin}${process.env.NEXT_PUBLIC_BASE_PATH || ''}/library?list=${encodeURIComponent(listName)}`;
     navigator.clipboard.writeText(url).then(() => {
       alert('Link copied to clipboard!');
     });

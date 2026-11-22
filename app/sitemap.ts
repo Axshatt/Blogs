@@ -8,7 +8,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   
   let newsletters: any[] = [];
   try {
-    newsletters = await getNewsletters('sent');
+    newsletters = process.env.PAGES_EXPORT === 'true' ? [] : await getNewsletters('sent');
   } catch (e) {
     console.error('Failed to load newsletters for sitemap:', e);
   }
@@ -62,5 +62,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  return [...staticPages, ...postPages, ...newsletterPages];
+  return [...staticPages.filter(page => process.env.PAGES_EXPORT !== 'true' || page.url !== `${SITE_URL}/newsletter`), ...postPages, ...newsletterPages];
 }

@@ -49,7 +49,7 @@ export default function HomePage() {
       <PostBentoGrid posts={allPosts} />
 
       {/* Newsletter — Full Width */}
-      <NewsletterSection />
+      {process.env.PAGES_EXPORT !== 'true' && <NewsletterSection />}
     </div>
   );
 }

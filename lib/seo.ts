@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import type { PostFrontmatter } from '@/types/post';
 
-const SITE_URL = 'https://blog.akshatcodes.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://blog.akshatcodes.com';
 const SITE_NAME = 'AkshatCodes';
 const SITE_DESCRIPTION =
   'Personal log of experiments, technical deep-dives, and aesthetic explorations. Focused on high-performance web experiences and minimalist systems.';

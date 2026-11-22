@@ -16,7 +16,8 @@ interface PostPageProps {
 }
 
 export async function generateStaticParams() {
-  return getAllSlugs().map((slug) => ({ slug }));
+  const slugs = process.env.PAGES_EXPORT === 'true' ? getAllPosts().map(post => post.slug) : getAllSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PostPageProps): Promise<Metadata> {

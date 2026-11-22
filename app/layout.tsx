@@ -1,17 +1,11 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter } from 'next/font/google';
+import { inter } from '@/lib/site-font';
 import Script from 'next/script';
 import './globals.css';
 import { LayoutShell } from '@/components/layout/LayoutShell';
 import { ThemeInitializer } from '@/components/layout/ThemeInitializer';
 import { UmamiProvider } from '@/components/analytics/UmamiProvider';
 import { getBaseMetadata, viewport as seoViewport } from '@/lib/seo';
-
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-sans',
-});
 
 export const metadata: Metadata = getBaseMetadata();
 export const viewport: Viewport = seoViewport;

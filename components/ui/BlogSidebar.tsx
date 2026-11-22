@@ -3,12 +3,12 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
 import type { Post } from '@/types/post';
 import { trackEvent } from '@/lib/analytics';
 
 interface BlogSidebarProps {
   posts: Post[];
+  activeTag?: string;
 }
 
 const RECOMMENDED_TOPICS = [
@@ -40,9 +40,7 @@ const FOOTER_LINKS = [
   'Text to speech',
 ];
 
-export function BlogSidebar({ posts }: BlogSidebarProps) {
-  const searchParams = useSearchParams();
-  const activeTag = searchParams.get('tag');
+export function BlogSidebar({ posts, activeTag }: BlogSidebarProps) {
   
   const [bookmarkedSlugs, setBookmarkedSlugs] = useState<string[]>([]);
   const [showAllTopics, setShowAllTopics] = useState(false);

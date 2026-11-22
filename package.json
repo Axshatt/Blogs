@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "build:pages": "bash scripts/build-pages.sh",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"

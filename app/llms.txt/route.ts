@@ -9,7 +9,7 @@ export async function GET() {
   
   let newsletters: any[] = [];
   try {
-    newsletters = await getNewsletters('sent');
+    newsletters = process.env.PAGES_EXPORT === 'true' ? [] : await getNewsletters('sent');
   } catch (e) {
     console.error('Failed to load newsletters for llms.txt:', e);
   }
@@ -51,8 +51,7 @@ This file provides a structured, LLM-friendly index of pages, guides, recent art
 
 - [Homepage](${SITE_URL}/): The main landing page with post highlights, projects, and email subscription.
 - [Blog](${SITE_URL}/blog): The directory of articles, system build logs, and experiments.
-- [Newsletter](${SITE_URL}/newsletter): Subscriptions and digital archive of periodic insights.
-- [About](${SITE_URL}/about): Professional bio, contact info, and technology stack of Akshat Singh.
+${process.env.PAGES_EXPORT === 'true' ? '' : `- [Newsletter](${SITE_URL}/newsletter): Subscriptions and digital archive of periodic insights.\n`}- [About](${SITE_URL}/about): Professional bio, contact info, and technology stack of Akshat Singh.
 
 ## Feeds and Metadata
 

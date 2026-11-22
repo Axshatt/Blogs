@@ -86,7 +86,7 @@ body {
   font-style: normal;
   font-weight: 300;
   font-display: block;
-  src: url('/fonts/material-symbols-300.woff2') format('woff2');
+  src: url('../public/fonts/material-symbols-300.woff2') format('woff2');
 }
 
 @font-face {
@@ -94,7 +94,7 @@ body {
   font-style: normal;
   font-weight: 400;
   font-display: block;
-  src: url('/fonts/material-symbols-400.woff2') format('woff2');
+  src: url('../public/fonts/material-symbols-400.woff2') format('woff2');
 }
 
 .material-symbols-outlined {

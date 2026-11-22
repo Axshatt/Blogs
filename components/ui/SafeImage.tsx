@@ -5,6 +5,7 @@ interface SafeImageProps extends Omit<ImageProps, 'src'> {
 }
 
 export function SafeImage({ src, alt, fill, ...props }: SafeImageProps) {
+  if (src.startsWith('/') && !src.startsWith('//')) src = (process.env.NEXT_PUBLIC_BASE_PATH || '') + src;
   const isLocal =
     src.startsWith('/') ||
     src.startsWith('http://localhost') ||
