@@ -27,8 +27,16 @@ jobs:
       - run: npm ci
       - run: npm run build:pages
         env:
-          NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
           NEXT_PUBLIC_SITE_URL: ${{ steps.pages.outputs.base_url }}
+      # The project URL mounts the artifact at /Blogs/, while the custom domain
+      # mounts it at /. Serve the same prefixed asset and navigation URLs on both.
+      - name: Include project paths for the custom domain
+        env:
+          REPO_NAME: ${{ github.event.repository.name }}
+        run: |
+          cp -R out "$RUNNER_TEMP/project-site"
+          mv "$RUNNER_TEMP/project-site" "out/$REPO_NAME"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out
